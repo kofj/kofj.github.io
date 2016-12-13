@@ -162,7 +162,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;本博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></div><div class="line"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</div><div class="line"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
+        <p><strong>阅读提示</strong></p>
+<pre><code>- 文章领域：计算机专业
+- 阅读时长：大约3分钟
+</code></pre><h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;我博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></div><div class="line"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</div><div class="line"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<code>$tags</code> 是一个 <code>NodeList</code> 对象，在 Macbook <strong>Chrome</strong> 上 <code>forEach</code> 方法对其进行遍历没有问题，但是在 Android 手机的原生浏览器和 Chrome浏览器都会出现错误。<br>
         
       
 
@@ -256,15 +260,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">编辑器</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -280,15 +288,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -304,6 +304,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">感言</a>
               </li>
              
@@ -312,11 +320,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
+                <a href="javascript:void(0)">golang</a>
               </li>
              
               <li class="article-tag-list-item">
