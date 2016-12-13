@@ -20,6 +20,7 @@ function init() {
 
 	// 标签
 	var $tags = document.querySelectorAll('.tagcloud a')
+	NodeList.prototype.forEach = Array.prototype.forEach
 	$tags.forEach(($em) => {
 		$em.style.fontSize = '12px'
 		var num = $em.innerHTML.length % 5 + 1

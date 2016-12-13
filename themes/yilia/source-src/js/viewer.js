@@ -6,6 +6,7 @@ import 'photoSwipe/dist/photoswipe.css'
 
 window.PhotoSwipe = PhotoSwipe
 window.PhotoSwipeUI_Default = PhotoSwipeUI_Default
+NodeList.prototype.forEach = Array.prototype.forEach
 
 function init() {
 	let pswpElement = document.querySelectorAll('.pswp')[0];
