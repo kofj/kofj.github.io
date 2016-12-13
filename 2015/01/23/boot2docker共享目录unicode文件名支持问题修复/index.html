@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="//blog.kongfanjian.com">
+  <title>boot2docker共享目录unicode文件名支持问题修复 | 慕薇</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;emsp;&amp;emsp;这是一篇补记,问题在两周之前就已经解决了,并且给官方发送了pull request.目前官方只是把这个PR添加到了v1.5.0版的milestone当中,如果你需要.可以看我fork修改后的代码,或者直接下载生成好的ISO镜像.
+0x1 问题&amp;emsp;&amp;emsp;Docker是个非常不错的工具,但是源于其本身的实现原理(依赖于Linux的LXC)的原因,Windows和O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="boot2docker共享目录unicode文件名支持问题修复">
+<meta property="og:url" content="//blog.kongfanjian.com/2015/01/23/boot2docker共享目录unicode文件名支持问题修复/index.html">
+<meta property="og:site_name" content="慕薇">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;这是一篇补记,问题在两周之前就已经解决了,并且给官方发送了pull request.目前官方只是把这个PR添加到了v1.5.0版的milestone当中,如果你需要.可以看我fork修改后的代码,或者直接下载生成好的ISO镜像.
+0x1 问题&amp;emsp;&amp;emsp;Docker是个非常不错的工具,但是源于其本身的实现原理(依赖于Linux的LXC)的原因,Windows和O">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/6816152bgw1eojcme1s2rj20fa0a6dgp.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/6816152bgw1eojce2nyzrj20fa0a6dh1.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/6816152bgw1eojedcbf5kj20nu05wgm9.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/6816152bgw1eojek6sk49j20nu0ci0uy.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/6816152bgw1eojez26e6yj20cf05it95.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/6816152bgw1eojium0q9qj20il0ci0uy.jpg">
+<meta property="og:updated_time" content="2016-12-13T03:14:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="boot2docker共享目录unicode文件名支持问题修复">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;这是一篇补记,问题在两周之前就已经解决了,并且给官方发送了pull request.目前官方只是把这个PR添加到了v1.5.0版的milestone当中,如果你需要.可以看我fork修改后的代码,或者直接下载生成好的ISO镜像.
+0x1 问题&amp;emsp;&amp;emsp;Docker是个非常不错的工具,但是源于其本身的实现原理(依赖于Linux的LXC)的原因,Windows和O">
+<meta name="twitter:image" content="https://ww2.sinaimg.cn/large/6816152bgw1eojcme1s2rj20fa0a6dgp.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
+  
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://ww2.sinaimg.cn/crop.0.0.180.180.180/6816152bjw1e8qgp5bmzyj2050050aa8.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" title="by 疯魔慕薇">慕薇</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">不疯魔，不成活</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/%E6%B5%AE%E7%94%9F/">浮生</a></li>
+	        
+				<li><a href="/categories/%E6%9C%AF%E4%B8%9A/">术业</a></li>
+	        
+				<li><a href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a></li>
+	        
+				<li><a href="/archives/">归档</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/kofj" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="twitter" target="_blank" href="https://twitter.com/kfanjian" title="twitter"><i class="icon-twitter"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">慕薇</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://ww2.sinaimg.cn/crop.0.0.180.180.180/6816152bjw1e8qgp5bmzyj2050050aa8.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">慕薇</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">不疯魔，不成活</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/%E6%B5%AE%E7%94%9F/">浮生</a></li>
+		        
+					<li><a href="/categories/%E6%9C%AF%E4%B8%9A/">术业</a></li>
+		        
+					<li><a href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a></li>
+		        
+					<li><a href="/archives/">归档</a></li>
+		        
+		        
+		        	<li><a href="/archives/">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/kofj" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/kfanjian" title="twitter"><i class="icon-twitter"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-boot2docker共享目录unicode文件名支持问题修复" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      boot2docker共享目录unicode文件名支持问题修复
+    </h1>
+  
+
+        <a href="/2015/01/23/boot2docker共享目录unicode文件名支持问题修复/" class="archive-article-date">
+  	<time datetime="2015-01-22T17:08:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-23</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;这是一篇补记,问题在两周之前就已经解决了,并且给官方发送了pull request.目前官方只是把这个PR添加到了v1.5.0版的milestone当中,如果你需要.可以看我fork修改后的代码,或者直接下载生成好的<a href="http://pan.baidu.com/s/1hqKiLgw" target="_blank" rel="external">ISO镜像</a>.</p>
+<h3 id="0x1-问题"><a href="#0x1-问题" class="headerlink" title="0x1 问题"></a>0x1 问题</h3><p>&emsp;&emsp;Docker是个非常不错的工具,但是源于其本身的实现原理(依赖于Linux的LXC)的原因,Windows和OS X系统的用户是没有办法使用原生的docker的.幸运的是,docker官方为我们这一类<code>非Linux用户</code>提供了一个很好的工具——boot2docker.<a id="more"></a><br>&emsp;&emsp;正如官方项目描述所言,boot2docker实质就是一个轻量级的支持Docker的Linux系统,事实上它就是基于<code>Tiny Core Linux</code>这一五脏俱全的小麻雀定制而成的.boot2docker虽是好用,但是在实际运用当中我却遇到了麻烦:boot2docker中的容器无法正常处理文件名使用unicode编码的文件的问题(注意:是文件名编码为unicode,而不是文件内容).<br>&emsp;&emsp;或者简单点说,这个问题就是boot2docker中无法显示(<code>ls -al</code>)出自动挂载的VBox共享目录中的中文文件名的文件.</p>
+<h3 id="0x2-溯源"><a href="#0x2-溯源" class="headerlink" title="0x2 溯源"></a>0x2 溯源</h3><p>&emsp;&emsp;存在即合理,既然必须要在docker容器当中处理中文文件名的文件,那么这个问题就应该解决掉.找准病因,才能对症下药.面对困难我们应当大胆假设,小心求证.<br>&emsp;&emsp;首先怀疑是docker官方提供的image不支持中文,启动一个容器使用<code>locale</code>查看系统默认编码并不是GBK或者UTF-8.<br><img src="https://ww2.sinaimg.cn/large/6816152bgw1eojcme1s2rj20fa0a6dgp.jpg" alt="docker CentOS 默认编码"><br>&emsp;&emsp;回想起来,当时这个假设还是相当的粗放,大胆的,根本没有仔细思考为什么是<code>不显示文件</code>而非<code>文件名乱码</code>.无知无畏,既然有了假设,不管这个假设正确与否,只有实践验证方知结果.通过<code>localedef</code>生成中文locale文件,并设置系统默认编码集为UTF-8.<br><img src="https://ww2.sinaimg.cn/large/6816152bgw1eojce2nyzrj20fa0a6dh1.jpg" alt="修改系统locale和编码集"><br>&emsp;&emsp;但是,结果还是让人让人失望的,依然无法显示中文名的文件.<br><img src="https://ww3.sinaimg.cn/large/6816152bgw1eojedcbf5kj20nu05wgm9.jpg" alt="试验失败"><br>&emsp;&emsp;既然在容器中修改系统编码,同样是无法列出中文名的文件.那只能猜测是boot2docker这个轻量级的Linux系统存在问题了.<br><img src="https://ww1.sinaimg.cn/large/6816152bgw1eojek6sk49j20nu0ci0uy.jpg" alt="boot2docker中无法列出VBox共享目录中的中文文件"><br>&emsp;&emsp;通过ssh登录到boot2docker,在Home目录当中创建和查看中文名文件,验证了boot2docker本身是能够处理中文名文件的.而在VBox挂载进来的共享目录当中却是不能正常处理中文名文件.这说明问题是出在了boot2docker挂载共享目录这一环节.<br><img src="https://ww4.sinaimg.cn/large/6816152bgw1eojez26e6yj20cf05it95.jpg" alt="在boot2docker的home目录中测试中文名文件"></p>
+<h3 id="0x3-除病"><a href="#0x3-除病" class="headerlink" title="0x3 除病"></a>0x3 除病</h3><p>&emsp;&emsp;既然找到了病症所在,那我们就能够开始下药方了.通过阅读boot2docker代码得知,它是使用<code>rootfs/rootfs/etc/rc.d/automount-shares</code>这一脚本自动挂载共享目录的.脚本中核心函数如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># try mounting "$name" (which defaults to "$dir") at "$dir",</span></div><div class="line"><span class="comment"># but quietly clean up empty directories if it fails</span></div><div class="line"><span class="function"><span class="title">try_mount_share</span></span>() &#123;</div><div class="line">	dir=<span class="string">"<span class="variable">$1</span>"</span></div><div class="line">	name=<span class="string">"<span class="variable">$&#123;2:-$dir&#125;</span>"</span></div><div class="line">	</div><div class="line">	mkdir -p <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null</div><div class="line">	<span class="keyword">if</span> ! mount -t vboxsf -o <span class="string">"<span class="variable">$mountOptions</span>"</span> <span class="string">"<span class="variable">$name</span>"</span> <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null; <span class="keyword">then</span></div><div class="line">		rmdir <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null || <span class="literal">true</span></div><div class="line">		<span class="keyword">while</span> [ <span class="string">"<span class="variable">$(dirname "$dir")</span>"</span> != <span class="string">"<span class="variable">$dir</span>"</span> ]; <span class="keyword">do</span></div><div class="line">			dir=<span class="string">"<span class="variable">$(dirname "$dir")</span>"</span></div><div class="line">			rmdir <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null || <span class="built_in">break</span></div><div class="line">		<span class="keyword">done</span></div><div class="line">		</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">fi</span></div><div class="line">	</div><div class="line">	<span class="built_in">return</span> 0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;&emsp;boot2docker是基于<code>Tiny Core Linux</code>构建的,而Tiny Core Linux的rootfs是使用<code>busybox</code>构建的.并且Tiny Core Linux中mount工具源自busybox工具集,挂载共享目录时的默认编码并非UTF-8,这就导致了在宿主机中使用UTF-8编码的中文名文件挂载进boot2docker后无法显示出来.<br>&emsp;&emsp;幸运的是,boot2docker集成了VBox的Gust Additions,其中包含了共享目录的专用挂载工具<code>mount.vboxsf</code>.我们可以通过<code>mount.vboxsf</code>的参数<code>iocharset</code>来设定挂载共享目录的编码集为UTF-8.修改后的shell脚本代码如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># try mounting "$name" (which defaults to "$dir") at "$dir",</span></div><div class="line"><span class="comment"># but quietly clean up empty directories if it fails</span></div><div class="line"><span class="function"><span class="title">try_mount_share</span></span>() &#123;</div><div class="line">	dir=<span class="string">"<span class="variable">$1</span>"</span></div><div class="line">	name=<span class="string">"<span class="variable">$&#123;2:-$dir&#125;</span>"</span></div><div class="line">	</div><div class="line">	mkdir -p <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null</div><div class="line">	<span class="keyword">if</span> ! mount.vboxsf -o <span class="string">"<span class="variable">$mountOptions</span>"</span> <span class="string">"<span class="variable">$name</span>"</span> <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null; <span class="keyword">then</span></div><div class="line">		rmdir <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null || <span class="literal">true</span></div><div class="line">		<span class="keyword">while</span> [ <span class="string">"<span class="variable">$(dirname "$dir")</span>"</span> != <span class="string">"<span class="variable">$dir</span>"</span> ]; <span class="keyword">do</span></div><div class="line">			dir=<span class="string">"<span class="variable">$(dirname "$dir")</span>"</span></div><div class="line">			rmdir <span class="string">"<span class="variable">$dir</span>"</span> 2&gt;/dev/null || <span class="built_in">break</span></div><div class="line">		<span class="keyword">done</span></div><div class="line">		</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">fi</span></div><div class="line">	</div><div class="line">	<span class="built_in">return</span> 0</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;最后,让我们一起来看一下是使用修改了<code>automount-shares</code>的boot2docker中对中文名文件的支持情况:<br><img src="https://ww4.sinaimg.cn/large/6816152bgw1eojium0q9qj20il0ci0uy.jpg" alt="能够显示中文名文件,虽然是乱码"><br>&emsp;&emsp;目前已经能够显示中文名文件,虽然是乱码,但是并不影响容器当中处理文件.</p>
+<h3 id="0x4-结语"><a href="#0x4-结语" class="headerlink" title="0x4 结语"></a>0x4 结语</h3><p>&emsp;&emsp;通过boot2docker的Dockfile来构建镜像是比较耗费资源的,而且由于大陆网络的原因,还有可能无法下载构建过程中的某些包.为了方便大家使用,我在本地重新构建了一个修改自动挂载脚本后的boot2docker的ISO镜像上传到了百度网盘.<br>下载地址:<a href="http://pan.baidu.com/s/1hqKiLgw" target="_blank" rel="external">共享目录支持中文文件名的boot2dokcer镜像</a><br>密码: 5qoc</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/boot2docker/">boot2docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a><a class="article-category-link" href="/categories/术业/docker/">docker</a>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2015/01/30/golang解析html模板到字符串/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          golang解析html模板到字符串
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/22/岁末重逢/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">岁末重逢</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 疯魔慕薇
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">appleid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">spam</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">归档</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">增量</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">感言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">美食</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">西蜀</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">&lt;b&gt;不为己丑而羞，不为己笨而愧，不为己弱而退。&lt;/b&gt;</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
