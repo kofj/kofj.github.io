@@ -12,13 +12,14 @@
 <meta property="og:title" content="慕薇">
 <meta property="og:url" content="//blog.kongfanjian.com/categories/术业/index.html">
 <meta property="og:site_name" content="慕薇">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="慕薇">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
   
-  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  <link rel="stylesheet" href="/main.css?v=4.0.0">
   
 
 </head>
@@ -162,7 +163,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="0x1-开篇"><a href="#0x1-开篇" class="headerlink" title="0x1 开篇"></a>0x1 开篇</h3><p>&emsp;&emsp;区块链，时下最火的技术。一篇<a href="https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54">《A blockchain in 200 lines of code》</a>更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。<br>&emsp;&emsp;纸上得来终觉浅，要深入了解一门技术，终究是需要自己造一次轮子。于是，我着手用 Go 语言仿造着实现了一个 <strong><a href="https://github.com/kofj/naivechain">naivechain</a></strong>。</p>
+        <h3 id="0x1-开篇"><a href="#0x1-开篇" class="headerlink" title="0x1 开篇"></a>0x1 开篇</h3><p>&emsp;&emsp;区块链，时下最火的技术。一篇<a href="https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54" target="_blank" rel="external">《A blockchain in 200 lines of code》</a>更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。<br>&emsp;&emsp;纸上得来终觉浅，要深入了解一门技术，终究是需要自己造一次轮子。于是，我着手用 Go 语言仿造着实现了一个 <strong><a href="https://github.com/kofj/naivechain" target="_blank" rel="external">naivechain</a></strong>。</p>
         
       
 
@@ -224,7 +225,7 @@
         <p><strong>阅读提示</strong></p>
 <pre><code>- 文章领域：计算机专业
 - 阅读时长：大约3分钟
-</code></pre><h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;我博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></div><div class="line"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</div><div class="line"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
+</code></pre><h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;我博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></span></div><div class="line"><span class="function"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</span></div><div class="line"><span class="function"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;<code>$tags</code> 是一个 <code>NodeList</code> 对象，在 Macbook <strong>Chrome</strong> 上 <code>forEach</code> 方法对其进行遍历没有问题，但是在 Android 手机的原生浏览器和 Chrome浏览器都会出现错误。<br>
         
       
@@ -479,7 +480,7 @@
 	}
 </script>
 
-<script src="/./main.js?v=4.0.0.js"></script>
+<script src="/./main.js?v=4.0.0"></script>
 
 
     
@@ -516,35 +517,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vsc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">编辑器</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">appleid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">spam</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">email</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,11 +545,31 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">古诗词</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">美食</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">西蜀</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,11 +589,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">美食</a>
+                <a href="javascript:void(0)">暴风音影</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">西蜀</a>
+                <a href="javascript:void(0)">政治正确</a>
               </li>
             
             <div class="clearfix"></div>
