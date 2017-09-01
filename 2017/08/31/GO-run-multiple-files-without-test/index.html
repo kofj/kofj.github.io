@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>GO run multiple files without test | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;When I written a new project that has multiple files in the main package,I can’t use go run *.go. It will tell me:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;Afte">
+  <meta name="description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;WTF?! So">
 <meta name="keywords" content="Golang,skill">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GO run multiple files without test">
 <meta property="og:url" content="//blog.kongfanjian.com/2017/08/31/GO-run-multiple-files-without-test/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;When I written a new project that has multiple files in the main package,I can’t use go run *.go. It will tell me:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;Afte">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;WTF?! So">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-31T02:54:29.000Z">
+<meta property="og:updated_time" content="2017-08-31T03:31:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GO run multiple files without test">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;When I written a new project that has multiple files in the main package,I can’t use go run *.go. It will tell me:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;Afte">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;WTF?! So">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -166,15 +166,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;When I written a new project that has multiple files in the main package,I can’t use <code>go run *.go</code>. It will tell me:</p>
+        <p>&emsp;&emsp;I am writing a project which has multiple files in the main package, after run <code>go run *.go</code>, I get this assert:</p>
 <blockquote>
 <p>go run: cannot run *_test.go files (shortener_test.go)</p>
 </blockquote>
-<p>&emsp;&emsp;After seach with Google, somebody suggestion me:</p>
+<p>&emsp;&emsp;WTF?! So I search Google and get this suggestion:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build &amp;&amp; ./&lt;executable&gt;</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;But,I don’t like this solution. So, I find another suggestion:</p>
+<p>&emsp;&emsp;I don’t think this one is a good solution, so I find another one:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run !(*_test).go</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;Ok, it it perfect!</p>
+<p>&emsp;&emsp;Wow, this one is perfect!</p>
 
       
 
@@ -305,19 +305,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">编辑器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -163,15 +163,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;When I written a new project that has multiple files in the main package,I can’t use <code>go run *.go</code>. It will tell me:</p>
+        <p>&emsp;&emsp;I am writing a project which has multiple files in the main package, after run <code>go run *.go</code>, I get this assert:</p>
 <blockquote>
 <p>go run: cannot run *_test.go files (shortener_test.go)</p>
 </blockquote>
-<p>&emsp;&emsp;After seach with Google, somebody suggestion me:</p>
+<p>&emsp;&emsp;WTF?! So I search Google and get this suggestion:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build &amp;&amp; ./&lt;executable&gt;</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;But,I don’t like this solution. So, I find another suggestion:</p>
+<p>&emsp;&emsp;I don’t think this one is a good solution, so I find another one:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run !(*_test).go</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;Ok, it it perfect!</p>
+<p>&emsp;&emsp;Wow, this one is perfect!</p>
 
       
 
@@ -541,19 +541,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">编辑器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
               </li>
              
               <li class="article-tag-list-item">
