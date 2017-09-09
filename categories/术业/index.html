@@ -145,6 +145,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-talk-about-CAA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/09/talk-about-CAA/">说说CAA记录</a>
+    </h1>
+  
+
+        <a href="/2017/09/09/talk-about-CAA/" class="archive-article-date">
+  	<time datetime="2017-09-09T14:59:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-09</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。</p>
+<h3 id="0x1-什么是-CAA-DNS-记录？"><a href="#0x1-什么是-CAA-DNS-记录？" class="headerlink" title="0x1 什么是 CAA DNS 记录？"></a>0x1 什么是 CAA DNS 记录？</h3><p>&emsp;&emsp;CAA 是  <code>Certificate Authority Authorization</code>（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书的特殊 DNS 记录。<br>&emsp;&emsp;CAA 可以让 CA 在收到新证书签发请求的时候通过邮件向你发送警报。CAA 记录有三种类型：<code>issue</code>，<code>issuewild</code> 和 <code>iodef</code>，更多详细内容可以阅读 <a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">CAA官方标准文档</a>：<a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">https://tools.ietf.org/html/rfc6844</a> 。</p>
+<h3 id="0x2-如果我的域名没有-CAA-记录，是否还能正常签发证书？"><a href="#0x2-如果我的域名没有-CAA-记录，是否还能正常签发证书？" class="headerlink" title="0x2 如果我的域名没有 CAA 记录，是否还能正常签发证书？"></a>0x2 如果我的域名没有 CAA 记录，是否还能正常签发证书？</h3><p>&emsp;&emsp;能，答案是肯定的。所有的 CA 都必须检查 CAA 记录，但是，如果没有 CAA 记录的话，等同于任意 CA 都可以为你的域名签发证书。当然，CA 依然会在实际签发证书前做所有的验证。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CAA/">CAA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DNS/">DNS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/09/talk-about-CAA/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-GO-run-multiple-files-without-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -393,65 +454,6 @@
 
 
   
-    <article id="post-永久删除git仓库中的文件与历史记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/02/永久删除git仓库中的文件与历史记录/">永久删除git仓库中的文件与历史记录</a>
-    </h1>
-  
-
-        <a href="/2015/03/02/永久删除git仓库中的文件与历史记录/" class="archive-article-date">
-  	<time datetime="2015-03-02T07:14:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-02</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;之前托管在git@osc的私有项目<code>神马磁力搜索</code>想要开源,作为个人技能展示作品.这就遇到了一个问题,脱离敏感数据.通过<code>git rm file</code>肯定是不能够满足这一需求的,git历史记录中还是能够查看被删除的内容的,导致敏感数据的泄露.那么,就必须要彻底删除git的历史记录了.<br>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/03/02/永久删除git仓库中的文件与历史记录/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/categories/术业/page/2/">2</a><a class="extend next" rel="next" href="/categories/术业/page/2/">Next &raquo;</a>
@@ -541,14 +543,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">编辑器</a>
               </li>
              
@@ -561,11 +555,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">暴风音影</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
