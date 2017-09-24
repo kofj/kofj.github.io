@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="慕薇">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-12-47-25.png">
-<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-49-37.png">
-<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-50-10.png">
-<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-50-37.png">
-<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-48-48.png">
-<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-51-24.png">
-<meta property="og:updated_time" content="2017-09-24T05:54:30.000Z">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-12-47-25.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-49-37.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-50-10.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-50-37.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-48-48.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-51-24.png">
+<meta property="og:updated_time" content="2017-09-24T05:57:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分层确定密钥及 Golang 实现">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。">
-<meta name="twitter:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-12-47-25.png">
+<meta name="twitter:image" content="//blog.kongfanjian.com/images/2017-09-24-12-47-25.png">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -182,12 +182,12 @@
 </blockquote>
 <p>&emsp;&emsp;一旦用户没有及时备份私钥而私钥丢失了，将永久的失去对该私钥所控制的地址上控制。人们需要一种安全并更容易的方案来备份自己的私钥，BIP32 比特币改善协议应运而生，其核心技术便是<code>分层确定密钥</code>。</p>
 <h3 id="0x2-「道生一，一生二，二生三，三生万物」"><a href="#0x2-「道生一，一生二，二生三，三生万物」" class="headerlink" title="0x2 「道生一，一生二，二生三，三生万物」"></a>0x2 「道生一，一生二，二生三，三生万物」</h3><p>&emsp;&emsp;<code>分层确定密钥</code> 首先需要生成一个随机数当做种子（Seed），用于创建 <code>确定性密钥链</code>。然后由种子通过一个称为 <strong><code>单项离散方程</code></strong>（哈希） 的算法得出的 <code>主密钥</code>，主密钥再使用自身和子密钥索引（子密钥序号）生成 <code>子密钥</code>， 继而由 <code>子密钥</code> 生成 <code>孙密钥</code>，由此依次不断生成密钥，无穷无尽的密钥呈现出树形结构。</p>
-<p><img src="../images/2017-09-24-12-47-25.png" alt="种子生成密钥"></p>
+<p><img src="/images/2017-09-24-12-47-25.png" alt="种子生成密钥"></p>
 <h3 id="0x3-术"><a href="#0x3-术" class="headerlink" title="0x3 术"></a>0x3 术</h3><p>&emsp;&emsp;讲完基本原理的，接下来我们使用 golang 的 <a href="github.com/bitgoin/address">bitgoin/address</a> 包来实现确定性分层密钥。<br>&emsp;&emsp; 第一步，生成随机数作为种子：</p>
-<p><img src="../images/2017-09-24-13-49-37.png" alt=""></p>
-<p>&emsp;&emsp;接着，使用种子生成主密钥：<br><img src="../images/2017-09-24-13-50-10.png" alt=""></p>
-<p>&emsp;&emsp;最后，我们可以逐层生成子密钥了：<br><img src="../images/2017-09-24-13-50-37.png" alt=""></p>
-<p>&emsp;&emsp;完整示例如下：<br><img src="../images/2017-09-24-13-48-48.png" alt=""><br>&emsp;&emsp;示例运行结果：<br><img src="../images/2017-09-24-13-51-24.png" alt=""></p>
+<p><img src="/images/2017-09-24-13-49-37.png" alt=""></p>
+<p>&emsp;&emsp;接着，使用种子生成主密钥：<br><img src="/images/2017-09-24-13-50-10.png" alt=""></p>
+<p>&emsp;&emsp;最后，我们可以逐层生成子密钥了：<br><img src="/images/2017-09-24-13-50-37.png" alt=""></p>
+<p>&emsp;&emsp;完整示例如下：<br><img src="/images/2017-09-24-13-48-48.png" alt=""><br>&emsp;&emsp;示例运行结果：<br><img src="/images/2017-09-24-13-51-24.png" alt=""></p>
 
       
 
@@ -286,22 +286,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">测试</a>
               </li>
              
@@ -310,11 +294,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">keys</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vsc</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -331,6 +331,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">hotkey</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -366,27 +374,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">感言</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -398,11 +398,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
+                <a href="javascript:void(0)">职业</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
+                <a href="javascript:void(0)">反思</a>
               </li>
             
             <div class="clearfix"></div>
