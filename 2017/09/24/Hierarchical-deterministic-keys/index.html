@@ -6,15 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
-  <title>Tag: 职业 | 慕薇</title>
+  <title>分层确定密钥及 Golang 实现 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="慕薇">
-<meta property="og:url" content="//blog.kongfanjian.com/tags/职业/index.html">
+  <meta name="description" content="0x1 分层确定性密钥——应运而生&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。 &amp;emsp;&amp;emsp;比特币钱包中保存的是一系列的 &amp;lt;地址, 私钥&amp;gt; 键值对。地址由 Base58(Hash">
+<meta name="keywords" content="golang,Hierarchical Deterministic,keys">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分层确定密钥及 Golang 实现">
+<meta property="og:url" content="//blog.kongfanjian.com/2017/09/24/Hierarchical-deterministic-keys/index.html">
 <meta property="og:site_name" content="慕薇">
+<meta property="og:description" content="0x1 分层确定性密钥——应运而生&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。 &amp;emsp;&amp;emsp;比特币钱包中保存的是一系列的 &amp;lt;地址, 私钥&amp;gt; 键值对。地址由 Base58(Hash">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-12-47-25.png">
+<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-49-37.png">
+<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-50-10.png">
+<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-50-37.png">
+<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-48-48.png">
+<meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-51-24.png">
+<meta property="og:updated_time" content="2017-09-24T05:51:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="慕薇">
+<meta name="twitter:title" content="分层确定密钥及 Golang 实现">
+<meta name="twitter:description" content="0x1 分层确定性密钥——应运而生&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。 &amp;emsp;&amp;emsp;比特币钱包中保存的是一系列的 &amp;lt;地址, 私钥&amp;gt; 键值对。地址由 Base58(Hash">
+<meta name="twitter:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-12-47-25.png">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -143,59 +155,84 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hierarchical-deterministic-keys" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/04/03/始与终/" class="archive-article-date">
-  	<time datetime="2015-04-03T05:05:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-04-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/04/03/始与终/">始与终</a>
+    <h1 class="article-title" itemprop="name">
+      分层确定密钥及 Golang 实现
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        <a href="/2017/09/24/Hierarchical-deterministic-keys/" class="archive-article-date">
+  	<time datetime="2017-09-24T02:43:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-24</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x1-分层确定性密钥——应运而生"><a href="#0x1-分层确定性密钥——应运而生" class="headerlink" title="0x1 分层确定性密钥——应运而生"></a>0x1 分层确定性密钥——应运而生</h3><p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="external">BIP32 分层确定性钱包</a></strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。</p>
+<p>&emsp;&emsp;比特币钱包中保存的是一系列的 <strong>&lt;地址, 私钥&gt;</strong> 键值对。地址由 <strong>Base58(Hash(公钥))</strong> 计算得出；私钥是一个随机数，作为证明、控制地址上存储的比特币唯一凭证。所以管理、备份私钥就显得尤其重要了。</p>
+<a id="more"></a>
+<p>&emsp;&emsp;但是，早期的比特币钱包被称之为<strong>不确定性钱包</strong>，其中的私钥都是随机生成的，没有任何关联。BIP32 的贡献开发者 Eric Lombrozo 指出 Bitcoin Core 初始钱包的密钥管理非常复杂：</p>
+<blockquote>
+<p>当新地址生成的时候，你必须不断备份钱包，以此来保证安全，这种方式非常烦人。</p>
+</blockquote>
+<p>&emsp;&emsp;一旦用户没有及时备份私钥而私钥丢失了，将永久的失去对该私钥所控制的地址上控制。人们需要一种安全并更容易的方案来备份自己的私钥，BIP32 比特币改善协议应运而生，其核心技术便是<code>分层确定密钥</code>。</p>
+<h3 id="0x2-「道生一，一生二，二生三，三生万物」"><a href="#0x2-「道生一，一生二，二生三，三生万物」" class="headerlink" title="0x2 「道生一，一生二，二生三，三生万物」"></a>0x2 「道生一，一生二，二生三，三生万物」</h3><p>&emsp;&emsp;<code>分层确定密钥</code> 首先需要生成一个随机数当做种子（Seed），用于创建 <code>确定性密钥链</code>。然后由种子通过一个称为 <strong><code>单项离散方程</code></strong>（哈希） 的算法得出的 <code>主密钥</code>，主密钥再使用自身和子密钥索引（子密钥序号）生成 <code>子密钥</code>， 继而由 <code>子密钥</code> 生成 <code>孙密钥</code>，由此依次不断生成密钥，无穷无尽的密钥呈现出树形结构。</p>
+<p><img src="../images/2017-09-24-12-47-25.png" alt="种子生成密钥"></p>
+<h3 id="0x3-术"><a href="#0x3-术" class="headerlink" title="0x3 术"></a>0x3 术</h3><p>&emsp;&emsp;讲完基本原理的，接下来我们使用 golang 的 <a href="github.com/bitgoin/address">bitgoin/address</a> 包来实现确定性分层密钥。<br>&emsp;&emsp; 第一步，生成随机数作为种子：</p>
+<p><img src="../images/2017-09-24-13-49-37.png" alt=""></p>
+<p>&emsp;&emsp;接着，使用种子生成主密钥：<br><img src="../images/2017-09-24-13-50-10.png" alt=""></p>
+<p>&emsp;&emsp;最后，我们可以逐层生成子密钥了：<br><img src="../images/2017-09-24-13-50-37.png" alt=""></p>
+<p>&emsp;&emsp;完整示例如下：<br><img src="../images/2017-09-24-13-48-48.png" alt=""><br>&emsp;&emsp;示例运行结果：<br><img src="../images/2017-09-24-13-51-24.png" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/职业/">职业</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hierarchical-Deterministic/">Hierarchical Deterministic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keys/">keys</a></li></ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/浮生/">浮生</a>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/09/talk-about-CAA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">说说CAA记录</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
 
 
           </div>
@@ -218,9 +255,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

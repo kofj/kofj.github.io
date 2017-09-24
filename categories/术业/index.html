@@ -145,6 +145,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Hierarchical-deterministic-keys" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/24/Hierarchical-deterministic-keys/">分层确定密钥及 Golang 实现</a>
+    </h1>
+  
+
+        <a href="/2017/09/24/Hierarchical-deterministic-keys/" class="archive-article-date">
+  	<time datetime="2017-09-24T02:43:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-24</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x1-分层确定性密钥——应运而生"><a href="#0x1-分层确定性密钥——应运而生" class="headerlink" title="0x1 分层确定性密钥——应运而生"></a>0x1 分层确定性密钥——应运而生</h3><p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="external">BIP32 分层确定性钱包</a></strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。</p>
+<p>&emsp;&emsp;比特币钱包中保存的是一系列的 <strong>&lt;地址, 私钥&gt;</strong> 键值对。地址由 <strong>Base58(Hash(公钥))</strong> 计算得出；私钥是一个随机数，作为证明、控制地址上存储的比特币唯一凭证。所以管理、备份私钥就显得尤其重要了。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hierarchical-Deterministic/">Hierarchical Deterministic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keys/">keys</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/24/Hierarchical-deterministic-keys/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-talk-about-CAA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -395,65 +455,6 @@
 
 
   
-    <article id="post-使用git-archive构建增量包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/使用git-archive构建增量包/">使用git archive增量包</a>
-    </h1>
-  
-
-        <a href="/2015/03/16/使用git-archive构建增量包/" class="archive-article-date">
-  	<time datetime="2015-03-16T08:22:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-16</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;在没有项目版本仓库的使用权限的情况时,或者客户的生产环境没有自动化部署工具时,我们在修改了程序后需要生成一个增量包给同事/客户.逐个的检出文件到压缩包里面是个笨办法,若你马虎一下,便可能会落下个文件.保持代码的目录结构也是个麻烦事儿.使用<code>git archive</code>生成增量包则要方便很多.当然,前提是你本地有用git管理代码版本.<br>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/增量/">增量</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/归档/">归档</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/03/16/使用git-archive构建增量包/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/categories/术业/page/2/">2</a><a class="extend next" rel="next" href="/categories/术业/page/2/">Next &raquo;</a>
@@ -511,10 +512,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">测试</a>
               </li>
              
@@ -528,6 +525,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vsc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,7 +552,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,6 +565,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
