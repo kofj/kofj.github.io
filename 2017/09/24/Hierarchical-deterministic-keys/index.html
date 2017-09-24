@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>分层确定密钥及 Golang 实现 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x1 分层确定性密钥——应运而生&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。 &amp;emsp;&amp;emsp;比特币钱包中保存的是一系列的 &amp;lt;地址, 私钥&amp;gt; 键值对。地址由 Base58(Hash">
+  <meta name="description" content="&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。">
 <meta name="keywords" content="golang,Hierarchical Deterministic,keys">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分层确定密钥及 Golang 实现">
 <meta property="og:url" content="//blog.kongfanjian.com/2017/09/24/Hierarchical-deterministic-keys/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="0x1 分层确定性密钥——应运而生&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。 &amp;emsp;&amp;emsp;比特币钱包中保存的是一系列的 &amp;lt;地址, 私钥&amp;gt; 键值对。地址由 Base58(Hash">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-12-47-25.png">
 <meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-49-37.png">
@@ -22,10 +22,10 @@
 <meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-50-37.png">
 <meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-48-48.png">
 <meta property="og:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-13-51-24.png">
-<meta property="og:updated_time" content="2017-09-24T05:51:50.000Z">
+<meta property="og:updated_time" content="2017-09-24T05:54:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分层确定密钥及 Golang 实现">
-<meta name="twitter:description" content="0x1 分层确定性密钥——应运而生&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。 &amp;emsp;&amp;emsp;比特币钱包中保存的是一系列的 &amp;lt;地址, 私钥&amp;gt; 键值对。地址由 Base58(Hash">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确定密钥可以帮助用户更加方便的备份、找回自己的密钥串。">
 <meta name="twitter:image" content="//blog.kongfanjian.com/2017/09/24/images/2017-09-24-12-47-25.png">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
@@ -173,9 +173,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="0x1-分层确定性密钥——应运而生"><a href="#0x1-分层确定性密钥——应运而生" class="headerlink" title="0x1 分层确定性密钥——应运而生"></a>0x1 分层确定性密钥——应运而生</h3><p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="external">BIP32 分层确定性钱包</a></strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。</p>
-<p>&emsp;&emsp;比特币钱包中保存的是一系列的 <strong>&lt;地址, 私钥&gt;</strong> 键值对。地址由 <strong>Base58(Hash(公钥))</strong> 计算得出；私钥是一个随机数，作为证明、控制地址上存储的比特币唯一凭证。所以管理、备份私钥就显得尤其重要了。</p>
+        <p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="external">BIP32 分层确定性钱包</a></strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。</p>
 <a id="more"></a>
+<h3 id="0x1-分层确定性密钥——应运而生"><a href="#0x1-分层确定性密钥——应运而生" class="headerlink" title="0x1 分层确定性密钥——应运而生"></a>0x1 分层确定性密钥——应运而生</h3><p>&emsp;&emsp;比特币钱包中保存的是一系列的 <strong>&lt;地址, 私钥&gt;</strong> 键值对。地址由 <strong>Base58(Hash(公钥))</strong> 计算得出；私钥是一个随机数，作为证明、控制地址上存储的比特币唯一凭证。所以管理、备份私钥就显得尤其重要了。</p>
 <p>&emsp;&emsp;但是，早期的比特币钱包被称之为<strong>不确定性钱包</strong>，其中的私钥都是随机生成的，没有任何关联。BIP32 的贡献开发者 Eric Lombrozo 指出 Bitcoin Core 初始钱包的密钥管理非常复杂：</p>
 <blockquote>
 <p>当新地址生成的时候，你必须不断备份钱包，以此来保证安全，这种方式非常烦人。</p>
@@ -286,11 +286,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
+                <a href="javascript:void(0)">golang</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -302,11 +298,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
+                <a href="javascript:void(0)">测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">基准测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -323,22 +331,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -403,6 +395,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">西蜀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
               </li>
             
             <div class="clearfix"></div>
