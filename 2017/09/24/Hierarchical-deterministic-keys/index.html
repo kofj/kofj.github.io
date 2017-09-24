@@ -22,7 +22,7 @@
 <meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-50-37.png">
 <meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-48-48.png">
 <meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-24-13-51-24.png">
-<meta property="og:updated_time" content="2017-09-24T07:50:35.000Z">
+<meta property="og:updated_time" content="2017-09-24T11:35:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分层确定密钥及 Golang 实现">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;本文三章节分别讲述 分层确定密钥 的起源、基本原理、程序实现。前两节面向所有人科普，第三节需要阅读者掌握 Go 编程语言。阅读全文预计需要 3-5 分钟，感谢 Tinvee 帮助审阅。 &amp;emsp;&amp;emsp;分层确定密钥(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 BIP32 分层确定性钱包。使用分层确">
@@ -174,7 +174,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>&emsp;&emsp;本文三章节分别讲述 <code>分层确定密钥</code> 的起源、基本原理、程序实现。前两节面向所有人科普，第三节需要阅读者掌握 Go 编程语言。阅读全文预计需要 3-5 分钟，感谢 <strong>Tinvee</strong> 帮助审阅。</p>
-<p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="external">BIP32 分层确定性钱包</a></strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。</p>
+<p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="external">BIP32 分层确定性钱包</a></strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。<br><a id="more"></a></p>
 <h3 id="0x1-分层确定性密钥——应运而生"><a href="#0x1-分层确定性密钥——应运而生" class="headerlink" title="0x1 分层确定性密钥——应运而生"></a>0x1 分层确定性密钥——应运而生</h3><p>&emsp;&emsp;比特币钱包中保存的是一系列的 <strong>&lt;地址, 私钥&gt;</strong> 对；地址通过 <strong>Base58(Hash(公钥))</strong> 算法计算得出；私钥是一个随机数，是用于控制地址上存储的比特币的<strong>唯一凭证</strong>。所以，安全便捷的管理、备份私钥尤其重要。<br>&emsp;&emsp;但是，早期的比特币钱包被称为<strong>不确定性钱包</strong>，备份私钥并不方便。其中的私钥都是随机生成的，私钥之间没有任何关联。BIP32 的贡献开发者 Eric Lombrozo 指出 Bitcoin Core 初始钱包的密钥管理非常复杂：</p>
 <blockquote>
 <p>当新地址生成的时候，你必须不断备份钱包，以此来保证安全，这种方式非常烦人。</p>
@@ -213,6 +213,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/09/24/小米高管一言鸣条破块/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          小米高管一言鸣条破块
+        
+      </div>
+    </a>
   
   
     <a href="/2017/09/09/talk-about-CAA/" id="article-nav-older" class="article-nav-link-wrap">
@@ -285,14 +294,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">测试</a>
               </li>
              
@@ -301,7 +302,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vsc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">blockchain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skill</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -321,14 +338,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -337,15 +346,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">暴风音影</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">政治正确</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -369,19 +378,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">古诗词</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
