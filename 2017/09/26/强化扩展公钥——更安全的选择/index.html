@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
-  <title>Archives: 2015/4 | 慕薇</title>
+  <title>强化扩展公钥——更安全的选择 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="慕薇">
-<meta property="og:url" content="//blog.kongfanjian.com/archives/2015/04/index.html">
+  <meta name="description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。 &amp;emsp;&amp;emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善">
+<meta name="keywords" content="安全,密钥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化扩展公钥——更安全的选择">
+<meta property="og:url" content="//blog.kongfanjian.com/2017/09/26/强化扩展公钥——更安全的选择/index.html">
 <meta property="og:site_name" content="慕薇">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。 &amp;emsp;&amp;emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-26T15:17:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="慕薇">
+<meta name="twitter:title" content="强化扩展公钥——更安全的选择">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。 &amp;emsp;&amp;emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -143,59 +148,77 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-强化扩展公钥——更安全的选择" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/04/03/始与终/" class="archive-article-date">
-  	<time datetime="2015-04-03T05:05:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-04-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/04/03/始与终/">始与终</a>
+    <h1 class="article-title" itemprop="name">
+      强化扩展公钥——更安全的选择
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        <a href="/2017/09/26/强化扩展公钥——更安全的选择/" class="archive-article-date">
+  	<time datetime="2017-09-26T15:11:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-26</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。</p>
+<p>&emsp;&emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善方案，但是不管你怎么设置地址池的大小，地址总归会有用完的一天，反复多次的生成、导入地址既不方便也不安全。</p>
+<p>&emsp;&emsp;我们需要一个能够完全隔离公钥私钥，又能不断生成新的公钥与地址的方案。</p>
+<p>&emsp;&emsp;使用分层确定密钥，我们可以通过 Kpar （父扩展公钥），cpar（父码链）加上子密钥索引号生成 Ki （子扩展公钥）和ci（子码链）。自此，我们可以不用在服务器上部署私钥来生成公钥了。这非常便于我们在不安全的环境下使用。</p>
+<p>&emsp;&emsp;但是需要特别注意的是，如果知道了父扩展公钥和父扩展密钥衍生的任何非强化私钥，就相当于知道了父扩展私钥，因而会泄露父扩展密钥衍生的所有私钥。所以为了安全起见，从主密钥衍生扩展密钥的第一层开始就使用强化密钥。</p>
+<p>&emsp;&emsp;那么，什么是强化子密钥呢？</p>
+<p>&emsp;&emsp;每个扩展密钥有2^31 个普通子密钥，2^31个强化子密钥。这些子密钥都有一个索引。 普通子密钥使用索引0到2^31-1；强化的子密钥使用索引 2^31 到 2^32-1。</p>
+<p>&emsp;&emsp;请记住，在不安全的环境中一定要使用强化扩展公钥来生成子公钥。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/职业/">职业</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密钥/">密钥</a></li></ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/浮生/">浮生</a>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/25/OneNote代码高亮/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OneNote 代码高亮</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
 
 
           </div>
@@ -218,8 +241,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

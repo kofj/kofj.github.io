@@ -145,6 +145,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GO-run-multiple-files-without-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/31/GO-run-multiple-files-without-test/">GO run multiple files without test</a>
+    </h1>
+  
+
+        <a href="/2017/08/31/GO-run-multiple-files-without-test/" class="archive-article-date">
+  	<time datetime="2017-08-31T02:43:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-31</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;I am writing a project which has multiple files in the main package, after run <code>go run *.go</code>, I get this assert:</p>
+<blockquote>
+<p>go run: cannot run *_test.go files (shortener_test.go)</p>
+</blockquote>
+<p>&emsp;&emsp;WTF?! So I search Google and get this suggestion:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build &amp;&amp; ./&lt;executable&gt;</div></pre></td></tr></table></figure>
+<p>&emsp;&emsp;I don’t think this one is a good solution, so I find another one:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run !(*_test).go</div></pre></td></tr></table></figure>
+<p>&emsp;&emsp;Wow, this one is perfect!</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/31/GO-run-multiple-files-without-test/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-my-boyfriend-has-been-kill-by-his-company" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -387,65 +454,6 @@
 
 
   
-    <article id="post-使用git-archive构建增量包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/使用git-archive构建增量包/">使用git archive增量包</a>
-    </h1>
-  
-
-        <a href="/2015/03/16/使用git-archive构建增量包/" class="archive-article-date">
-  	<time datetime="2015-03-16T08:22:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-16</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;在没有项目版本仓库的使用权限的情况时,或者客户的生产环境没有自动化部署工具时,我们在修改了程序后需要生成一个增量包给同事/客户.逐个的检出文件到压缩包里面是个笨办法,若你马虎一下,便可能会落下个文件.保持代码的目录结构也是个麻烦事儿.使用<code>git archive</code>生成增量包则要方便很多.当然,前提是你本地有用git管理代码版本.<br>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/增量/">增量</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/归档/">归档</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/03/16/使用git-archive构建增量包/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -508,14 +516,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">hexo</a>
               </li>
              
@@ -525,6 +525,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">blockchain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">基准测试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,10 +584,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">暴风音影</a>
               </li>
              
@@ -593,6 +597,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">CAA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -633,6 +641,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">公众形象</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">密钥</a>
               </li>
              
               <li class="article-tag-list-item">
