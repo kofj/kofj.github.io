@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>强化扩展公钥——更安全的选择 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。 &amp;emsp;&amp;emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善">
+  <meta name="description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。">
 <meta name="keywords" content="安全,密钥">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化扩展公钥——更安全的选择">
 <meta property="og:url" content="//blog.kongfanjian.com/2017/09/26/强化扩展公钥——更安全的选择/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。 &amp;emsp;&amp;emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-26T15:17:07.000Z">
+<meta property="og:updated_time" content="2017-09-26T15:18:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强化扩展公钥——更安全的选择">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。 &amp;emsp;&amp;emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -167,6 +167,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>&emsp;&emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。</p>
+<a id="more"></a>
 <p>&emsp;&emsp;当然，我们可以在安全的离线环境大批量的生成地址，然后导入到服务器的地址池中。这是个改善方案，但是不管你怎么设置地址池的大小，地址总归会有用完的一天，反复多次的生成、导入地址既不方便也不安全。</p>
 <p>&emsp;&emsp;我们需要一个能够完全隔离公钥私钥，又能不断生成新的公钥与地址的方案。</p>
 <p>&emsp;&emsp;使用分层确定密钥，我们可以通过 Kpar （父扩展公钥），cpar（父码链）加上子密钥索引号生成 Ki （子扩展公钥）和ci（子码链）。自此，我们可以不用在服务器上部署私钥来生成公钥了。这非常便于我们在不安全的环境下使用。</p>
@@ -272,18 +273,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">blockchain</a>
               </li>
              
@@ -296,19 +285,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
+                <a href="javascript:void(0)">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
+                <a href="javascript:void(0)">vsc</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -328,6 +309,26 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skill</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">keys</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">编辑器</a>
               </li>
              
@@ -341,6 +342,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -360,7 +365,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">密钥</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -373,42 +390,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">增量</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">自省</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">谨言慎行</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">公众形象</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">安全</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">密钥</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -425,6 +406,26 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">西蜀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">自省</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">谨言慎行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">公众形象</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
             
             <div class="clearfix"></div>
