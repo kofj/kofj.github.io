@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>说说CAA记录 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。 0x1 什么是 CAA DNS 记录？&amp;emsp;&amp;emsp;CAA 是  Certificate Authority Authorization（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书">
-<meta name="keywords" content="DNS,CAA">
+  <meta name="description" content="&amp;emsp;&amp;emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。">
+<meta name="keywords" content="CAA,DNS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="说说CAA记录">
 <meta property="og:url" content="//blog.kongfanjian.com/2017/09/09/talk-about-CAA/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。 0x1 什么是 CAA DNS 记录？&amp;emsp;&amp;emsp;CAA 是  Certificate Authority Authorization（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-09T15:47:09.000Z">
+<meta property="og:updated_time" content="2017-09-28T22:44:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="说说CAA记录">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。 0x1 什么是 CAA DNS 记录？&amp;emsp;&amp;emsp;CAA 是  Certificate Authority Authorization（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -160,14 +160,14 @@
   
 
         <a href="/2017/09/09/talk-about-CAA/" class="archive-article-date">
-  	<time datetime="2017-09-09T14:59:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-09</time>
+  	<time datetime="2017-09-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-09</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。</p>
-<h3 id="0x1-什么是-CAA-DNS-记录？"><a href="#0x1-什么是-CAA-DNS-记录？" class="headerlink" title="0x1 什么是 CAA DNS 记录？"></a>0x1 什么是 CAA DNS 记录？</h3><p>&emsp;&emsp;CAA 是  <code>Certificate Authority Authorization</code>（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书的特殊 DNS 记录。<br>&emsp;&emsp;CAA 可以让 CA 在收到新证书签发请求的时候通过邮件向你发送警报。CAA 记录有三种类型：<code>issue</code>，<code>issuewild</code> 和 <code>iodef</code>，更多详细内容可以阅读 <a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">CAA官方标准文档</a>：<a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">https://tools.ietf.org/html/rfc6844</a> 。</p>
+        <p>&emsp;&emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。<br><a id="more"></a></p>
+<h3 id="0x1-什么是-CAA-DNS-记录？"><a href="#0x1-什么是-CAA-DNS-记录？" class="headerlink" title="0x1 什么是 CAA DNS 记录？"></a>0x1 什么是 CAA DNS 记录？</h3><p>&emsp;&emsp;CAA 是 <code>Certificate Authority Authorization</code>（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书的特殊 DNS 记录。<br>&emsp;&emsp;CAA 可以让 CA 在收到新证书签发请求的时候通过邮件向你发送警报。CAA 记录有三种类型：<code>issue</code>，<code>issuewild</code> 和 <code>iodef</code>，更多详细内容可以阅读 <a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">CAA官方标准文档</a>：<a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">https://tools.ietf.org/html/rfc6844</a> 。</p>
 <h3 id="0x2-如果我的域名没有-CAA-记录，是否还能正常签发证书？"><a href="#0x2-如果我的域名没有-CAA-记录，是否还能正常签发证书？" class="headerlink" title="0x2 如果我的域名没有 CAA 记录，是否还能正常签发证书？"></a>0x2 如果我的域名没有 CAA 记录，是否还能正常签发证书？</h3><p>&emsp;&emsp;能，答案是肯定的。所有的 CA 都必须检查 CAA 记录，但是，如果没有 CAA 记录的话，等同于任意 CA 都可以为你的域名签发证书。当然，CA 依然会在实际签发证书前做所有的验证。</p>
 
       
@@ -200,7 +200,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/24/Hierarchical-deterministic-keys/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/09/24/hierarchical-deterministic-keys/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -210,7 +210,7 @@
     </a>
   
   
-    <a href="/2017/08/31/GO-run-multiple-files-without-test/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/08/31/go-run-multiple-files-without-test/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">GO run multiple files without test</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -276,63 +276,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -340,7 +284,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">微软</a>
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -352,6 +304,22 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">appleid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">spam</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -360,23 +328,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">mount</a>
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">奇巧淫技</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">暴风音影</a>
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -384,11 +356,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">DNS</a>
+                <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">CAA</a>
+                <a href="javascript:void(0)">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -412,11 +384,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
+                <a href="javascript:void(0)">公众形象</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -428,7 +396,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">公众形象</a>
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">

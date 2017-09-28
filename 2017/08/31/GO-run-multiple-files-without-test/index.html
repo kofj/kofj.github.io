@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>GO run multiple files without test | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;WTF?! So">
-<meta name="keywords" content="Golang,skill">
+  <meta name="description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files">
+<meta name="keywords" content="golang,skills">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GO run multiple files without test">
-<meta property="og:url" content="//blog.kongfanjian.com/2017/08/31/GO-run-multiple-files-without-test/index.html">
+<meta property="og:url" content="//blog.kongfanjian.com/2017/08/31/go-run-multiple-files-without-test/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;WTF?! So">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-31T03:31:39.000Z">
+<meta property="og:updated_time" content="2017-09-28T22:43:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GO run multiple files without test">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files (shortener_test.go)  &amp;emsp;&amp;emsp;WTF?! So">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;I am writing a project which has multiple files in the main package, after run go run *.go, I get this assert:  go run: cannot run *_test.go files">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -148,7 +148,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-GO-run-multiple-files-without-test" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-go-run-multiple-files-without-test" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -159,8 +159,8 @@
     </h1>
   
 
-        <a href="/2017/08/31/GO-run-multiple-files-without-test/" class="archive-article-date">
-  	<time datetime="2017-08-31T02:43:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-31</time>
+        <a href="/2017/08/31/go-run-multiple-files-without-test/" class="archive-article-date">
+  	<time datetime="2017-08-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-31</time>
 </a>
       </header>
     
@@ -168,12 +168,12 @@
       
         <p>&emsp;&emsp;I am writing a project which has multiple files in the main package, after run <code>go run *.go</code>, I get this assert:</p>
 <blockquote>
-<p>go run: cannot run *_test.go files (shortener_test.go)</p>
+<p>go run: cannot run *_test.go files<br><a id="more"></a><br>(shortener_test.go)</p>
 </blockquote>
 <p>&emsp;&emsp;WTF?! So I search Google and get this suggestion:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build &amp;&amp; ./&lt;executable&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">go</span> build &amp;&amp; ./&lt;executable&gt;</div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;I don’t think this one is a good solution, so I find another one:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run !(*_test).go</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">go</span> run !(*_test).<span class="keyword">go</span></div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;Wow, this one is perfect!</p>
 
       
@@ -185,7 +185,7 @@
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skills/">skills</a></li></ul>
 	</div>
 
       
@@ -282,63 +282,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -346,7 +290,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">微软</a>
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -358,6 +310,22 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">appleid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">spam</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -366,23 +334,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">mount</a>
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">奇巧淫技</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">暴风音影</a>
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -390,11 +362,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">DNS</a>
+                <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">CAA</a>
+                <a href="javascript:void(0)">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -418,11 +390,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
+                <a href="javascript:void(0)">公众形象</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -434,7 +402,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">公众形象</a>
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">

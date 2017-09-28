@@ -6,20 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
-  <title>Golang 用 gRPC 构建高性能 API | 慕薇</title>
+  <title>golang 用 gRPC 构建高性能 API | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="&amp;emsp;&amp;emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的要求我们构建更加高性能的 API。&amp;emsp;&amp;emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。gPR">
-<meta name="keywords" content="gRPC,高性能,API,Golang">
+<meta name="keywords" content="golang,API,高性能,gRPC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Golang 用 gRPC 构建高性能 API">
-<meta property="og:url" content="//blog.kongfanjian.com/2017/09/27/Golang用gRPC构建高性能API/index.html">
+<meta property="og:title" content="golang 用 gRPC 构建高性能 API">
+<meta property="og:url" content="//blog.kongfanjian.com/2017/09/27/golang用gRPC构建高性能API/index.html">
 <meta property="og:site_name" content="慕薇">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的要求我们构建更加高性能的 API。&amp;emsp;&amp;emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。gPR">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="//blog.kongfanjian.com/images/accross_lang.png">
-<meta property="og:updated_time" content="2017-09-28T15:39:23.000Z">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-45-55.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-29-00-03-21.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-46-41.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-47-29.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-47-56.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-48-29.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-49-11.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-49-54.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-50-23.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-50-47.png">
+<meta property="og:image" content="//blog.kongfanjian.com/images/2017-09-28-23-51-20.png">
+<meta property="og:updated_time" content="2017-09-28T16:19:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Golang 用 gRPC 构建高性能 API">
+<meta name="twitter:title" content="golang 用 gRPC 构建高性能 API">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的要求我们构建更加高性能的 API。&amp;emsp;&amp;emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。gPR">
 <meta name="twitter:image" content="//blog.kongfanjian.com/images/accross_lang.png">
   
@@ -150,48 +161,53 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Golang用gRPC构建高性能API" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-golang用gRPC构建高性能API" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Golang 用 gRPC 构建高性能 API
+      golang 用 gRPC 构建高性能 API
     </h1>
   
 
-        <a href="/2017/09/27/Golang用gRPC构建高性能API/" class="archive-article-date">
+        <a href="/2017/09/27/golang用gRPC构建高性能API/" class="archive-article-date">
   	<time datetime="2017-09-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的要求我们构建更加高性能的 API。<br>&emsp;&emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。gPRC 和 Golang 结合起来则能够让我们非常方便的开发出高性能的 API。<br><a id="more"></a><br><img src="/images/accross_lang.png" alt="gRPC"></p>
+        <p>&emsp;&emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的要求我们构建更加高性能的 API。<br>&emsp;&emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。gPRC 和 Golang 结合起来则能够让我们非常方便的开发出高性能的 API。<br><img src="/images/accross_lang.png" alt="gRPC"></p>
 <h2 id="0x1-gRPC-与-Protocol-Buffers-是什么"><a href="#0x1-gRPC-与-Protocol-Buffers-是什么" class="headerlink" title="0x1 gRPC 与 Protocol Buffers 是什么"></a>0x1 gRPC 与 Protocol Buffers 是什么</h2><p>&emsp;&emsp;<code>RPC</code> 是 <code>Remote Procedure Call</code> 的缩写，<code>gRPC</code> 是 Google 开源的 RPC 框架和库。gRPC 使用 Protocol Buffers 作为其序列化协议。</p>
-<h2 id="0x2-安装-gRPC-与-Protocol-Buffers"><a href="#0x2-安装-gRPC-与-Protocol-Buffers" class="headerlink" title="0x2 安装 gRPC 与 Protocol Buffers"></a>0x2 安装 gRPC 与 Protocol Buffers</h2><p>&emsp;&emsp;首先，我们安装 Protocol Buffers 的 Golang 插件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go get -u github.com/golang/protobuf/&#123;proto,protoc-gen-go&#125;</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;接着， 安装 Protocol Buffers 工具。在 MacOS 上，我们可以通过 homebrew 来安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install protobuf</div></pre></td></tr></table></figure></p>
+<h2 id="0x2-安装-gRPC-与-Protocol-Buffers"><a href="#0x2-安装-gRPC-与-Protocol-Buffers" class="headerlink" title="0x2 安装 gRPC 与 Protocol Buffers"></a>0x2 安装 gRPC 与 Protocol Buffers</h2><p>&emsp;&emsp;首先，我们安装 Protocol Buffers 的 Golang 插件：</p>
+<p><img src="/images/2017-09-28-23-45-55.png" alt=""></p>
+<p>&emsp;&emsp;接着， 安装 Protocol Buffers 工具。在 MacOS 上，我们可以通过 homebrew 来安装：</p>
+<p><img src="/images/2017-09-29-00-03-21.png" alt=""></p>
 <h2 id="0x3-构建-API-服务"><a href="#0x3-构建-API-服务" class="headerlink" title="0x3 构建 API 服务"></a>0x3 构建 API 服务</h2><p>&emsp;&emsp;本文以构建一个可以新建、通过 <strong>uid</strong> 查找用户的命令行交互程序为例来演示如何通过 <strong>gRPC</strong> 构建高性能的 API。完整的代码可以访问 <a href="https://github.com/kofj/ggrpc" target="_blank" rel="external">https://github.com/kofj/ggrpc</a> 获得。程序代码结构如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">├── api</div><div class="line">│   └── users</div><div class="line">│       └── users.pb.go</div><div class="line">├── client</div><div class="line">│   └── client.go</div><div class="line">├── server</div><div class="line">│   └── server.go</div><div class="line">└── users.proto</div></pre></td></tr></table></figure>
-<h3 id="定义服务与消息"><a href="#定义服务与消息" class="headerlink" title="定义服务与消息"></a>定义服务与消息</h3><p>&emsp;&emsp;要使用 gRPC，我们需要先定义远程调用的服务和调用服务时传递的消息。gRPC 服务由 <code>.proto</code> 文件定义，并用于生成对应的 <code>.pb.go</code> 文件。下列代码是定义好的 users.proto。<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">syntax = &quot;proto3&quot;;</div><div class="line"></div><div class="line">package users;</div><div class="line"></div><div class="line">// Define the user service.</div><div class="line">service User &#123;</div><div class="line">    // Get user info with filter.</div><div class="line">    rpc GetUser (UserFilter) returns (stream UserInfo) &#123;&#125;</div><div class="line">    // Create a new user.</div><div class="line">    rpc CreateUser  (UserInfo) returns (CreateUserState) &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">message UserFilter &#123;</div><div class="line">    int32 id = 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">message UserInfo &#123;</div><div class="line">    int32 id = 1;</div><div class="line">    string name = 2;</div><div class="line">    string email = 3;</div><div class="line">    message Phone &#123;</div><div class="line">        string number = 1;</div><div class="line">        bool isOffice = 2;</div><div class="line">    &#125;</div><div class="line">    repeated Phone Phones = 4;</div><div class="line">&#125;</div><div class="line"></div><div class="line">message CreateUserState &#123;</div><div class="line">    int32 id = 1;</div><div class="line">    bool success = 2;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/images/2017-09-28-23-46-41.png" alt=""></p>
+<h3 id="定义服务与消息"><a href="#定义服务与消息" class="headerlink" title="定义服务与消息"></a>定义服务与消息</h3><p>&emsp;&emsp;要使用 gRPC，我们需要先定义远程调用的服务和调用服务时传递的消息。gRPC 服务由 <code>.proto</code> 文件定义，并用于生成对应的 <code>.pb.go</code> 文件。下列代码是定义好的 users.proto。</p>
+<p><img src="/images/2017-09-28-23-47-29.png" alt=""></p>
 <h3 id="生成-gPRC-代码"><a href="#生成-gPRC-代码" class="headerlink" title="生成 gPRC 代码"></a>生成 gPRC 代码</h3><p>&emsp;&emsp;定义好了服务和通讯消息，我们需要使用 Protocol Buffers 的协议编译工具 <code>protoc</code> 来编译生成对应的 <code>.pb.go</code> 文件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">protoc  users.proto --go_out=plugins=grpc:api/users</div></pre></td></tr></table></figure>
+<p><img src="/images/2017-09-28-23-47-56.png" alt=""></p>
 <p>&emsp;&emsp;通过上述命令，我们能编译得到位于 <strong>api/users</strong> 文件夹的 <code>users.pb.go</code> 文件。这个文件包含了:</p>
 <ul>
 <li>生成的服务端和客户端代码；</li>
 <li>用于填充，序列化和检索 <code>UserFilter</code>、<code>UserInfo</code> 和 <code>CreateUserState</code> 消息类型的代码。</li>
 </ul>
 <h3 id="实现服务端程序"><a href="#实现服务端程序" class="headerlink" title="实现服务端程序"></a>实现服务端程序</h3><p>&emsp;&emsp;<code>users.pb.go</code> 中的服务器代码只是一个 Interface，具体的逻辑还需要我们自己来实现。<code>UserServer</code> 代码实现如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Users implement apiUsers.UserServer interface.</span></div><div class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</div><div class="line">	users []*apiUsers.UserInfo</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *Users)</span> <span class="title">GetUser</span><span class="params">(filter *apiUsers.UserFilter, stream apiUsers.User_GetUserServer)</span> <span class="title">error</span></span> &#123;</div><div class="line">	log.Println(<span class="string">"find user via id:"</span>, filter.Id)</div><div class="line">	<span class="keyword">for</span> _, user := <span class="keyword">range</span> u.users &#123;</div><div class="line">		<span class="keyword">if</span> filter.Id == user.Id &#123;</div><div class="line">			err := stream.Send(user)</div><div class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">				<span class="keyword">return</span> err</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *Users)</span> <span class="title">CreateUser</span><span class="params">(c context.Context, user *apiUsers.UserInfo)</span> <span class="params">(state *apiUsers.CreateUserState, err error)</span></span> &#123;</div><div class="line">	user.Id = <span class="keyword">int32</span>(<span class="built_in">len</span>(u.users) + <span class="number">1</span>)</div><div class="line">	u.users = <span class="built_in">append</span>(u.users, user)</div><div class="line">	log.Println(<span class="string">"new user:"</span>, user.Id)</div><div class="line">	<span class="keyword">return</span> &amp;apiUsers.CreateUserState&#123;Id: user.Id, Success: <span class="literal">true</span>&#125;, <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> _ apiUsers.UserServer = &amp;Users&#123;&#125;</div></pre></td></tr></table></figure>
+<p><img src="/images/2017-09-28-23-48-29.png" alt=""></p>
 <h3 id="实现客户端程序"><a href="#实现客户端程序" class="headerlink" title="实现客户端程序"></a>实现客户端程序</h3><p>&emsp;&emsp;和服务端代码只是个 Interface 不同，<code>users.pb.go</code> 已经为我们实现了客户端代码，我们可以直接调用客户端。首先，连接服务器并创建客户端：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// connect to gRPC server</span></div><div class="line">conn, err := grpc.Dial(server, grpc.WithInsecure())</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">	log.Fatal(<span class="string">"cannot connect to server:"</span>, err)</div><div class="line">&#125;</div><div class="line"><span class="keyword">defer</span> conn.Close()</div><div class="line">client := apiUsers.NewUserClient(conn)</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;接着，我们就可以直接调用远程服务了：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Call CreateUser function on Server via gPRC</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">createUser</span><span class="params">(client apiUsers.UserClient, user *apiUsers.UserInfo)</span></span> &#123;</div><div class="line">	resp, err := client.CreateUser(context.Background(), user)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		log.Println(<span class="string">"Could not create user:"</span>, err)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> resp.Success &#123;</div><div class="line">		log.Println(<span class="string">"A new user has been added, id:"</span>, resp.Id)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Call GetUser function on Server via gPRC</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findUser</span><span class="params">(client apiUsers.UserClient, uid <span class="keyword">int32</span>)</span></span> &#123;</div><div class="line">	filter := &amp;apiUsers.UserFilter&#123;Id: uid&#125;</div><div class="line">	stream, err := client.GetUser(context.Background(), filter)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		log.Println(<span class="string">"failed on get user info:"</span>, err)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> &#123;</div><div class="line">		user, err := stream.Recv()</div><div class="line">		<span class="keyword">if</span> err == io.EOF &#123;</div><div class="line">			<span class="keyword">break</span></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">			log.Printf(<span class="string">"%v.GetPersons(_) = _, %v"</span>, client, err)</div><div class="line">		&#125;</div><div class="line">		fmt.Println(user)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>&emsp;&emsp;前文给出的只是代码片段，我们可以 clone 下完整的代码来运行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/kofj/ggrpc</div><div class="line"><span class="built_in">cd</span> ggrpc</div></pre></td></tr></table></figure></p>
+<p><img src="/images/2017-09-28-23-49-11.png" alt=""></p>
+<p>&emsp;&emsp;接着，我们就可以直接调用远程服务了：</p>
+<p><img src="/images/2017-09-28-23-49-54.png" alt=""></p>
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>&emsp;&emsp;前文给出的只是代码片段，我们可以 clone 下完整的代码来运行。</p>
+<p><img src="/images/2017-09-28-23-50-23.png" alt=""></p>
 <p>&emsp;&emsp;启动服务器：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run server/server.go</div></pre></td></tr></table></figure>
+<p><img src="/images/2017-09-28-23-50-47.png" alt=""></p>
 <p>&emsp;&emsp;启动客户端：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run client/client.go</div></pre></td></tr></table></figure>
+<p><img src="/images/2017-09-28-23-51-20.png" alt=""></p>
 <h2 id="0x4-结语"><a href="#0x4-结语" class="headerlink" title="0x4 结语"></a>0x4 结语</h2><p>&emsp;&emsp;好了，到现在我们已经成功的构建了一个基于 gRPC 的 API 服务。其性能真的更高吗？下次，我们可以尝试与 <strong>HTTP REST</strong> 构建的 API 服务做一次性能对比实验。</p>
 
       
@@ -203,7 +219,7 @@
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/API/">API</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高性能/">高性能</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/API/">API</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高性能/">高性能</a></li></ul>
 	</div>
 
       
@@ -224,9 +240,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2017/09/29/强化扩展公钥——更安全的选择/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          强化扩展公钥——更安全的选择
+        
+      </div>
+    </a>
   
-    <a href="/2017/09/27/mount-compressed-tar-file/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mount compressed tar file</div>
+  
+    <a href="/2017/09/25/OneNote代码高亮/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OneNote代码高亮</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -291,63 +316,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -355,7 +324,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">微软</a>
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -367,6 +344,22 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">appleid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">spam</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -375,23 +368,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">mount</a>
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">奇巧淫技</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">暴风音影</a>
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -399,11 +396,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">DNS</a>
+                <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">CAA</a>
+                <a href="javascript:void(0)">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -427,11 +424,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
+                <a href="javascript:void(0)">公众形象</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,7 +436,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">公众形象</a>
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">

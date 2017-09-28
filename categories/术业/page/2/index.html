@@ -145,80 +145,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-talk-about-CAA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-go-run-multiple-files-without-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/09/talk-about-CAA/">说说CAA记录</a>
+      <a class="article-title" href="/2017/08/31/go-run-multiple-files-without-test/">GO run multiple files without test</a>
     </h1>
   
 
-        <a href="/2017/09/09/talk-about-CAA/" class="archive-article-date">
-  	<time datetime="2017-09-09T14:59:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-09</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;自2017年9月9日起，所有的 CA 在签发域名证书的时候都必须要检查 CAA DNS 记录。自此，域名所有者可以控制由哪些 CA 给持有的域名签发证书。</p>
-<h3 id="0x1-什么是-CAA-DNS-记录？"><a href="#0x1-什么是-CAA-DNS-记录？" class="headerlink" title="0x1 什么是 CAA DNS 记录？"></a>0x1 什么是 CAA DNS 记录？</h3><p>&emsp;&emsp;CAA 是  <code>Certificate Authority Authorization</code>（CA 授权）的缩写，是一种用于授权指定 CA 为你的域名和子域名签发证书的特殊 DNS 记录。<br>&emsp;&emsp;CAA 可以让 CA 在收到新证书签发请求的时候通过邮件向你发送警报。CAA 记录有三种类型：<code>issue</code>，<code>issuewild</code> 和 <code>iodef</code>，更多详细内容可以阅读 <a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">CAA官方标准文档</a>：<a href="https://tools.ietf.org/html/rfc6844" target="_blank" rel="external">https://tools.ietf.org/html/rfc6844</a> 。</p>
-<h3 id="0x2-如果我的域名没有-CAA-记录，是否还能正常签发证书？"><a href="#0x2-如果我的域名没有-CAA-记录，是否还能正常签发证书？" class="headerlink" title="0x2 如果我的域名没有 CAA 记录，是否还能正常签发证书？"></a>0x2 如果我的域名没有 CAA 记录，是否还能正常签发证书？</h3><p>&emsp;&emsp;能，答案是肯定的。所有的 CA 都必须检查 CAA 记录，但是，如果没有 CAA 记录的话，等同于任意 CA 都可以为你的域名签发证书。当然，CA 依然会在实际签发证书前做所有的验证。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CAA/">CAA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DNS/">DNS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/09/talk-about-CAA/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-GO-run-multiple-files-without-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/31/GO-run-multiple-files-without-test/">GO run multiple files without test</a>
-    </h1>
-  
-
-        <a href="/2017/08/31/GO-run-multiple-files-without-test/" class="archive-article-date">
-  	<time datetime="2017-08-31T02:43:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-31</time>
+        <a href="/2017/08/31/go-run-multiple-files-without-test/" class="archive-article-date">
+  	<time datetime="2017-08-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-31</time>
 </a>
       </header>
     
@@ -226,14 +165,8 @@
       
         <p>&emsp;&emsp;I am writing a project which has multiple files in the main package, after run <code>go run *.go</code>, I get this assert:</p>
 <blockquote>
-<p>go run: cannot run *_test.go files (shortener_test.go)</p>
-</blockquote>
-<p>&emsp;&emsp;WTF?! So I search Google and get this suggestion:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build &amp;&amp; ./&lt;executable&gt;</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;I don’t think this one is a good solution, so I find another one:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run !(*_test).go</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;Wow, this one is perfect!</p>
-
+<p>go run: cannot run *_test.go files<br>
+        
       
 
       
@@ -243,7 +176,7 @@
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skills/">skills</a></li></ul>
 	</div>
 
       
@@ -255,7 +188,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/31/GO-run-multiple-files-without-test/">阅读全文 >></a>
+          <a class="article-more-a" href="/2017/08/31/go-run-multiple-files-without-test/">阅读全文 >></a>
         </p>
       
 
@@ -285,14 +218,42 @@
   
 
         <a href="/2017/04/20/300-line-blockchain-in-go/" class="archive-article-date">
-  	<time datetime="2017-04-20T07:09:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-20</time>
+  	<time datetime="2017-04-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-20</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="0x1-开篇"><a href="#0x1-开篇" class="headerlink" title="0x1 开篇"></a>0x1 开篇</h3><p>&emsp;&emsp;区块链，时下最火的技术。一篇<a href="https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54" target="_blank" rel="external">《A blockchain in 200 lines of code》</a>更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。<br>&emsp;&emsp;纸上得来终觉浅，要深入了解一门技术，终究是需要自己造一次轮子。于是，我着手用 Go 语言仿造着实现了一个 <strong><a href="https://github.com/kofj/naivechain" target="_blank" rel="external">naivechain</a></strong>。</p>
-        
+        <h3 id="0x1-开篇"><a href="#0x1-开篇" class="headerlink" title="0x1 开篇"></a>0x1 开篇</h3><p>  区块链，时下最火的技术。一篇<a href="https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54" target="_blank" rel="external">《A blockchain in 200 lines of code》</a>更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。<br>  纸上得来终觉浅，要深入了解一门技术，终究是需要自己造一次轮子。于是，我着手用 Go 语言仿造着实现了一个 <strong>naivechain</strong>。</p>
+<h3 id="0x2-区块数据结构"><a href="#0x2-区块数据结构" class="headerlink" title="0x2 区块数据结构"></a>0x2 区块数据结构</h3><p>  和 Lauri Hartikka 一样，数据结构上我们一切从简，只使用 <code>Index</code>，<code>PreviousHash</code>，<code>Timestamp</code>，<code>Data</code>，<code>Hash</code> 这几个必要的字段。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Block <span class="keyword">struct</span> &#123;</div><div class="line">	Index        <span class="keyword">int64</span>  <span class="string">`json:"index"`</span>        <span class="comment">// 区块索引</span></div><div class="line">	PreviousHash <span class="keyword">string</span> <span class="string">`json:"previousHash"`</span> <span class="comment">// 前块哈希</span></div><div class="line">	Timestamp    <span class="keyword">int64</span>  <span class="string">`json:"timestamp"`</span>    <span class="comment">// 时间戳</span></div><div class="line">	Data         <span class="keyword">string</span> <span class="string">`json:"data"`</span>         <span class="comment">// 区块数据</span></div><div class="line">	Hash         <span class="keyword">string</span> <span class="string">`json:"hash"`</span>         <span class="comment">// 区块哈希</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="0x3-区块哈希"><a href="#0x3-区块哈希" class="headerlink" title="0x3 区块哈希"></a>0x3 区块哈希</h3><p>  <code>区块哈希</code>用于验证<code>区块数据</code>的完整性，使用 <strong>SHA-256</strong> 算法生成<code>Index</code>， <code>PreviousHash</code>，<code>Timestamp</code>， <code>Data</code> 拼接字符串的摘要。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateHashForBlock</span><span class="params">(b *Block)</span> <span class="title">string</span></span> &#123;</div><div class="line">	<span class="keyword">return</span> fmt.Sprintf(<span class="string">"%x"</span>,</div><div class="line">		sha256.Sum256(</div><div class="line">			[]<span class="keyword">byte</span>(fmt.Sprintf(<span class="string">"%d%s%d%s"</span>,</div><div class="line">				b.Index, b.PreviousHash, b.Timestamp, b.Data))))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="0x4-创建新区块"><a href="#0x4-创建新区块" class="headerlink" title="0x4 创建新区块"></a>0x4 创建新区块</h3><p>  为了生成新区块，我们需要知道<code>前区块</code>和新区块的必要数据（<code>Index</code>，<code>Hash</code>，<code>Timestamp</code>， <code>Data</code>）;<code>区块数据</code>由终端用户提供。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">generateNextBlock</span><span class="params">(data <span class="keyword">string</span>)</span> <span class="params">(nb *Block)</span></span> &#123;</div><div class="line">	<span class="keyword">var</span> previousBlock = getLatestBlock()</div><div class="line">	nb = &amp;Block&#123;</div><div class="line">		Data:         data,</div><div class="line">		PreviousHash: previousBlock.Hash,</div><div class="line">		Index:        previousBlock.Index + <span class="number">1</span>,</div><div class="line">		Timestamp:    time.Now().Unix(),</div><div class="line">	&#125;</div><div class="line">	nb.Hash = calculateHashForBlock(nb)</div><div class="line">	<span class="keyword">return</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="0x5-创世块"><a href="#0x5-创世块" class="headerlink" title="0x5 创世块"></a>0x5 创世块</h3><p>  区块链的第一个区块被称之为<code>创世块</code>，被硬编码在程序内。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> genesisBlock = &amp;Block&#123;</div><div class="line">	Index:        <span class="number">0</span>,</div><div class="line">	PreviousHash: <span class="string">"0"</span>,</div><div class="line">	Timestamp:    <span class="number">1465154705</span>,</div><div class="line">	Data:         <span class="string">"my genesis block!!"</span>,</div><div class="line">	Hash: <span class="string">"816534932c2b7154836da6afc367695e6337db8a921823784c14378abed4f7d7"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="0x6-区块存储"><a href="#0x6-区块存储" class="headerlink" title="0x6 区块存储"></a>0x6 区块存储</h3><p>  这里使用 Go 语言的 Slice 存储区块。区块链是有序 List，为了保证有序性，需要对内存中保存区块的数组进行排序。定义按 <code>Index</code> 排序的结构体 <code>ByIndex</code>，并实现 <code>sort.Interface</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> ByIndex []*Block</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b ByIndex)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(b) &#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b ByIndex)</span> <span class="title">Swap</span><span class="params">(i, j <span class="keyword">int</span>)</span></span>      &#123; b[i], b[j] = b[j], b[i] &#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b ByIndex)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123; <span class="keyword">return</span> b[i].Index &lt; b[j].Index &#125;</div></pre></td></tr></table></figure>
+<h3 id="0x7-区块完整性验证"><a href="#0x7-区块完整性验证" class="headerlink" title="0x7 区块完整性验证"></a>0x7 区块完整性验证</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">isValidNewBlock</span><span class="params">(nb, pb *Block)</span> <span class="params">(ok <span class="keyword">bool</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> nb.Hash == calculateHashForBlock(nb) &amp;&amp;</div><div class="line">		pb.Index+<span class="number">1</span> == nb.Index &amp;&amp;</div><div class="line">		pb.Hash == nb.PreviousHash &#123;</div><div class="line">		ok = <span class="literal">true</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="0x8-节点通讯"><a href="#0x8-节点通讯" class="headerlink" title="0x8 节点通讯"></a>0x8 节点通讯</h3><p>  每个节点在启动时监听一个端口（由 <code>-p2p</code> 参数指定），使用 <strong>websocket</strong> 协议和其它节点通讯。</p>
+<h3 id="0x9-节点控制"><a href="#0x9-节点控制" class="headerlink" title="0x9 节点控制"></a>0x9 节点控制</h3><p>  没个节点在启动时监听一个端口（由 <code>-api</code> 参数指定），接收 <strong>HTTP</strong> 协议的 <strong>JSON</strong> 控制命令。使用示例：</p>
+<ul>
+<li><p>查看区块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl http://localhost:3001/blocks</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建区块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -H <span class="string">"Content-type:application/json"</span> --data <span class="string">'&#123;"data" : "Some data to the first block"&#125;'</span> http://localhost:3001/mine_block</div></pre></td></tr></table></figure>
+</li>
+<li><p>添加节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -H <span class="string">"Content-type:application/json"</span> --data <span class="string">'&#123;"peer" : "ws://localhost:6002"&#125;'</span> http://localhost:3001/add_peer</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl http://localhost:3001/peers</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="0xA-结语"><a href="#0xA-结语" class="headerlink" title="0xA 结语"></a>0xA 结语</h3><p>  这是一个最简单的区块链实现，用于学习区块链的工作原理，因为没用实现工作量证明这一类的挖矿算法，不适宜在公共网络使用。更多的细节请访问 Github: <a href="https://github.com/kofj/naivechain" target="_blank" rel="external">https://github.com/kofj/naivechain</a>。</p>
+
       
 
       
@@ -350,11 +311,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>阅读提示</strong></p>
-<pre><code>- 文章领域：计算机专业
-- 阅读时长：大约3分钟
-</code></pre><h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;我博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></span></div><div class="line"><span class="function"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</span></div><div class="line"><span class="function"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<code>$tags</code> 是一个 <code>NodeList</code> 对象，在 Macbook <strong>Chrome</strong> 上 <code>forEach</code> 方法对其进行遍历没有问题，但是在 Android 手机的原生浏览器和 Chrome浏览器都会出现错误。<br>
+        <h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;本博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></span></div><div class="line"><span class="function"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</span></div><div class="line"><span class="function"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
         
       
 
@@ -454,6 +411,65 @@
 
 
   
+    <article id="post-永久删除git仓库中的文件与历史记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/02/永久删除git仓库中的文件与历史记录/">永久删除git仓库中的文件与历史记录</a>
+    </h1>
+  
+
+        <a href="/2015/03/02/永久删除git仓库中的文件与历史记录/" class="archive-article-date">
+  	<time datetime="2015-03-02T07:14:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-02</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;之前托管在git@osc的私有项目<code>神马磁力搜索</code>想要开源,作为个人技能展示作品.这就遇到了一个问题,脱离敏感数据.通过<code>git rm file</code>肯定是不能够满足这一需求的,git历史记录中还是能够查看被删除的内容的,导致敏感数据的泄露.那么,就必须要彻底删除git的历史记录了.<br>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/03/02/永久删除git仓库中的文件与历史记录/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/categories/术业/">&laquo; Prev</a><a class="page-number" href="/categories/术业/">1</a><span class="page-number current">2</span><a class="page-number" href="/categories/术业/page/3/">3</a><a class="extend next" rel="next" href="/categories/术业/page/3/">Next &raquo;</a>
@@ -511,63 +527,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,7 +535,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">微软</a>
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,6 +555,22 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">appleid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">spam</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -595,23 +579,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">mount</a>
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">奇巧淫技</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">暴风音影</a>
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,11 +607,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">DNS</a>
+                <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">CAA</a>
+                <a href="javascript:void(0)">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,11 +635,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
+                <a href="javascript:void(0)">公众形象</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -663,7 +647,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">公众形象</a>
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">

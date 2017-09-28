@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>JS 遍历 NodeList 对象 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="阅读提示 - 文章领域：计算机专业 - 阅读时长：大约3分钟 0x1 问题描述&amp;emsp;&amp;emsp;我博客使用的 Yilia 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：123Uncaught TypeError: $tags.forEach is not a functioninit @ fix.js?9699:25windo">
+  <meta name="description" content="0x1 问题描述&amp;emsp;&amp;emsp;本博客使用的 Yilia 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：123Uncaught TypeError: $tags.forEach is not a functioninit @ fix.js?9699:25window.onload @ main.js?8359:24">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS 遍历 NodeList 对象">
 <meta property="og:url" content="//blog.kongfanjian.com/2016/12/14/foreach-NodeList-of-JavaScript/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="阅读提示 - 文章领域：计算机专业 - 阅读时长：大约3分钟 0x1 问题描述&amp;emsp;&amp;emsp;我博客使用的 Yilia 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：123Uncaught TypeError: $tags.forEach is not a functioninit @ fix.js?9699:25windo">
+<meta property="og:description" content="0x1 问题描述&amp;emsp;&amp;emsp;本博客使用的 Yilia 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：123Uncaught TypeError: $tags.forEach is not a functioninit @ fix.js?9699:25window.onload @ main.js?8359:24">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-12T03:56:52.000Z">
+<meta property="og:updated_time" content="2017-09-28T15:53:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 遍历 NodeList 对象">
-<meta name="twitter:description" content="阅读提示 - 文章领域：计算机专业 - 阅读时长：大约3分钟 0x1 问题描述&amp;emsp;&amp;emsp;我博客使用的 Yilia 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：123Uncaught TypeError: $tags.forEach is not a functioninit @ fix.js?9699:25windo">
+<meta name="twitter:description" content="0x1 问题描述&amp;emsp;&amp;emsp;本博客使用的 Yilia 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：123Uncaught TypeError: $tags.forEach is not a functioninit @ fix.js?9699:25window.onload @ main.js?8359:24">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -166,12 +166,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>阅读提示</strong></p>
-<pre><code>- 文章领域：计算机专业
-- 阅读时长：大约3分钟
-</code></pre><h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;我博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></span></div><div class="line"><span class="function"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</span></div><div class="line"><span class="function"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<code>$tags</code> 是一个 <code>NodeList</code> 对象，在 Macbook <strong>Chrome</strong> 上 <code>forEach</code> 方法对其进行遍历没有问题，但是在 Android 手机的原生浏览器和 Chrome浏览器都会出现错误。<br><a id="more"></a></p>
-<h2 id="0x2-溯源"><a href="#0x2-溯源" class="headerlink" title="0x2 溯源"></a>0x2 溯源</h2><p>&emsp;&emsp;JavaScript 的继承机制是基于原型的。例如，一个数组元素 <code>arr</code> 上之所以有一些数组方法（比如 <code>forEach</code>）,是因为它的原型链上有这些方法：<br>&emsp;&emsp;arr → Arrary.prototype → Object.prototype → null<br>&emsp;&emsp;<code>NodeList</code> 元素 tags 的原型链如下：<br>&emsp;&emsp;tags → NodeList.prototype → Object.prototype → null<br>&emsp;&emsp;如果 NodeList 的原型上没有 <code>forEach</code> 方法，调用该方法必然会报错。查阅文档可知，<a href="https://www.w3.org/TR/dom/#interface-nodelist" target="_blank" rel="external">DOM4</a> 中的 <code>NodeList</code> 接口只实现了 <code>item</code> 方法。<br>&emsp;&emsp;不过，只有一些旧的浏览器中 <code>NodeList</code> 对象还没有实现 <code>forEach</code>、<code>values</code> 这些方法。所以，尽管 <code>NodeList</code> 不是 <code>Array</code>，它也是能够使用 <code>forEach</code> 方法遍历元素的。<br>  我在手机上使用的 Chrome 浏览器比较老旧，版本是 <code>47.0.2526.83</code>。使用 <code>Object.getPrototypeOf</code> 查看 <code>NodeList</code> 原型，发现确实是只实现了 <code>item</code> 方法。而在 Macbook 上安装的则是最新版的 Chrome 浏览器。<br>&emsp;&emsp;归根结底，问题是出在了对老版本浏览器的兼容上。</p>
+        <h2 id="0x1-问题描述"><a href="#0x1-问题描述" class="headerlink" title="0x1 问题描述"></a>0x1 问题描述</h2><p>&emsp;&emsp;本博客使用的 <code>Yilia</code> 主题在移动设备上有这样一个问题：标签无法正常显示。使用 Chrome 浏览器进行远程调试，捕捉到了下列错误信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uncaught <span class="built_in">TypeError</span>: $tags.forEach is not a <span class="function"><span class="keyword">function</span></span></div><div class="line"><span class="function"><span class="title">init</span> @ <span class="title">fix</span>.<span class="title">js</span>?9699:25</span></div><div class="line"><span class="function"><span class="title">window</span>.<span class="title">onload</span> @ <span class="title">main</span>.<span class="title">js</span>?8359:24</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="0x2-溯源"><a href="#0x2-溯源" class="headerlink" title="0x2 溯源"></a>0x2 溯源</h2><p>&emsp;&emsp;JavaScript 的继承机制是基于原型的。例如，一个数组元素 <code>arr</code> 上之所以有一些数组方法（比如 <code>forEach</code>）,是因为它的原型链上有这些方法：<br>&emsp;&emsp;arr → Arrary.prototype → Object.prototype → null<br>&emsp;&emsp;<code>NodeList</code> 元素 tags 的原型链如下：<br>&emsp;&emsp;tags → NodeList.prototype → Object.prototype → null<br>&emsp;&emsp;如果 NodeList 的原型上没有 <code>forEach</code> 方法，调用该方法必然会报错。查阅文档可知，<a href="https://www.w3.org/TR/dom/#interface-nodelist" target="_blank" rel="external">DOM4</a> 中的 <code>NodeList</code> 接口只实现了 <code>item</code> 方法。<br>&emsp;&emsp;但是，只是一些旧的浏览器中 <code>NodeList</code> 对象还没有实现 <code>forEach</code>、<code>values</code> 这些方法。所以，尽管 <code>NodeList</code> 不是 <code>Array</code>，它也是能够使用 <code>forEach</code> 方法遍历元素的。<br>&emsp;&emsp;我在手机上使用的 Chrome 浏览器比较老旧，版本是 <code>47.0.2526.83</code>。使用 <code>Object.getPrototypeOf</code> 查看 <code>NodeList</code> 原型，发现确实是只实现了 <code>item</code> 方法。而在 Macbook 上安装的则是最新版的 Chrome 浏览器。<br>&emsp;&emsp;归根结底，问题原因是处在了对老版本浏览器的兼容上了。</p>
 <h2 id="0x3-解决方案"><a href="#0x3-解决方案" class="headerlink" title="0x3 解决方案"></a>0x3 解决方案</h2><p>&emsp;&emsp;我们可以简单的通过 <code>prototypes</code> 扩展 NodeList 的方法来兼容老浏览器。不过这样做可能会遇到一些问题，具体可以查阅参考文献第三条。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NodeList.prototype.forEach = <span class="built_in">Array</span>.prototype.forEach</div></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;除了通过 <code>prototypes</code> 扩展 <code>DOM</code> 方法外，我们还可以直接使用 <code>for</code> 循环或者是自定义一个 forEach 的函数来遍历 NodeList。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
@@ -220,8 +217,8 @@
     </a>
   
   
-    <a href="/2015/04/03/始与终/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">始与终</div>
+    <a href="/2016/07/10/a-spam-email-from-appleid/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一封来自苹果AppleID官方的垃圾邮件</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -286,63 +283,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vsc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">基准测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hierarchical Deterministic</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -350,7 +291,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">微软</a>
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -362,6 +311,22 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">appleid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">spam</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -370,23 +335,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">mount</a>
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">奇巧淫技</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">暴风音影</a>
+                <a href="javascript:void(0)">keys</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -394,11 +363,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">DNS</a>
+                <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">CAA</a>
+                <a href="javascript:void(0)">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -422,11 +391,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
+                <a href="javascript:void(0)">公众形象</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -438,7 +403,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">公众形象</a>
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
