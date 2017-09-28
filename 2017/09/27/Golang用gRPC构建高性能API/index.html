@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="//blog.kongfanjian.com">
+  <title>Golang 用 gRPC 构建高性能 API | 慕薇</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;emsp;&amp;emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的让我们需要构建更加性能的 API。 &amp;emsp;&amp;emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。&amp;e">
+<meta name="keywords" content="Golang,gRPC,高性能,API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang 用 gRPC 构建高性能 API">
+<meta property="og:url" content="//blog.kongfanjian.com/2017/09/27/Golang用gRPC构建高性能API/index.html">
+<meta property="og:site_name" content="慕薇">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的让我们需要构建更加性能的 API。 &amp;emsp;&amp;emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。&amp;e">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="//blog.kongfanjian.com/accross_lang.png">
+<meta property="og:updated_time" content="2017-09-28T10:09:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Golang 用 gRPC 构建高性能 API">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的让我们需要构建更加性能的 API。 &amp;emsp;&amp;emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。&amp;e">
+<meta name="twitter:image" content="//blog.kongfanjian.com/accross_lang.png">
+  
+    <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
+  
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://ww2.sinaimg.cn/crop.0.0.180.180.180/6816152bjw1e8qgp5bmzyj2050050aa8.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" title="by 疯魔慕薇">慕薇</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">不疯魔，不成活</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/%E6%B5%AE%E7%94%9F/">浮生</a></li>
+	        
+				<li><a href="/categories/%E6%9C%AF%E4%B8%9A/">术业</a></li>
+	        
+				<li><a href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a></li>
+	        
+				<li><a href="/archives/">归档</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/kofj" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="twitter" target="_blank" href="https://twitter.com/kfanjian" title="twitter"><i class="icon-twitter"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">慕薇</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://ww2.sinaimg.cn/crop.0.0.180.180.180/6816152bjw1e8qgp5bmzyj2050050aa8.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">慕薇</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">不疯魔，不成活</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/%E6%B5%AE%E7%94%9F/">浮生</a></li>
+		        
+					<li><a href="/categories/%E6%9C%AF%E4%B8%9A/">术业</a></li>
+		        
+					<li><a href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a></li>
+		        
+					<li><a href="/archives/">归档</a></li>
+		        
+		        
+		        	<li><a href="/archives/">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/kofj" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/kfanjian" title="twitter"><i class="icon-twitter"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-Golang用gRPC构建高性能API" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Golang 用 gRPC 构建高性能 API
+    </h1>
+  
+
+        <a href="/2017/09/27/Golang用gRPC构建高性能API/" class="archive-article-date">
+  	<time datetime="2017-09-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;作为拥有多年经验的软件开发者，我们都知道 API 在系统当中的重要性——它们无处不在，是应用程序的基石，定义着应用程序之间怎么样通讯。日益增进的技术，爆发式增长的用户需求都在不断的让我们需要构建更加性能的 API。</p>
+<p>&emsp;&emsp;gRPC定义服务简便；夸语言、跨平台；快捷且可扩展；全双工通讯并内置认证。Golang 原生支持高并发；程序执行高效，语言设计优秀。<br>&emsp;&emsp;gPRC 和 Golang 结合起来则能够让我们非常方便的开发出高性能的 API。<br><a id="more"></a><br><img src="/accross_lang.png" alt="gRPC"></p>
+<h2 id="0x1-gRPC-与-Protocol-Buffers-是什么"><a href="#0x1-gRPC-与-Protocol-Buffers-是什么" class="headerlink" title="0x1 gRPC 与 Protocol Buffers 是什么"></a>0x1 gRPC 与 Protocol Buffers 是什么</h2><p>&emsp;&emsp;<code>RPC</code> 是 <code>Remote Procedure Call</code> 的缩写，<code>gRPC</code> 是 Google 开源的 RPC 框架和库。gRPC 使用 Protocol Buffers 作为其序列化协议。</p>
+<h2 id="0x2-安装-gRPC-与-Protocol-Buffers"><a href="#0x2-安装-gRPC-与-Protocol-Buffers" class="headerlink" title="0x2 安装 gRPC 与 Protocol Buffers"></a>0x2 安装 gRPC 与 Protocol Buffers</h2><p>&emsp;&emsp;首先，我们安装 Protocol Buffers 的 Golang 插件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go get -u github.com/golang/protobuf/&#123;proto,protoc-gen-go&#125;</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;接着， 安装 Protocol Buffers 工具。安装在 MacOS 上，我们可以通过 homebrew 来安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install protobuf</div></pre></td></tr></table></figure></p>
+<h2 id="0x3-构建-API-服务"><a href="#0x3-构建-API-服务" class="headerlink" title="0x3 构建 API 服务"></a>0x3 构建 API 服务</h2><p>&emsp;&emsp;本文以构建一个可以新建、通过 <strong>uid</strong> 查找用户的命令行交互程序为例来演示如何通过 <strong>gRPC</strong> 构建高性能的 API。所有代码访问 <a href="https://github.com/kofj/ggrpc" target="_blank" rel="external">https://github.com/kofj/ggrpc</a> 获得。项目代码结构如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">├── api</div><div class="line">│   └── users</div><div class="line">│       └── users.pb.go</div><div class="line">├── client</div><div class="line">│   └── client.go</div><div class="line">├── server</div><div class="line">│   └── server.go</div><div class="line">└── users.proto</div></pre></td></tr></table></figure>
+<h3 id="定义服务与消息"><a href="#定义服务与消息" class="headerlink" title="定义服务与消息"></a>定义服务与消息</h3><p>&emsp;&emsp;要使用 gRPC，我们需要先定义远程调用的服务和调用服务时传递的消息。gRPC 服务由 <code>.proto</code> 文件定义，并用于生成对应的 <code>.pb.go</code>。下列代码是定义好的 users.proto。<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">syntax = &quot;proto3&quot;;</div><div class="line"></div><div class="line">package users;</div><div class="line"></div><div class="line">// Define the user service.</div><div class="line">service User &#123;</div><div class="line">    // Get user info with filter.</div><div class="line">    rpc GetUser (UserFilter) returns (stream UserInfo) &#123;&#125;</div><div class="line">    // Create a new user.</div><div class="line">    rpc CreateUser  (UserInfo) returns (CreateUserState) &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">message UserFilter &#123;</div><div class="line">    int32 id = 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">message UserInfo &#123;</div><div class="line">    int32 id = 1;</div><div class="line">    string name = 2;</div><div class="line">    string email = 3;</div><div class="line">    message Phone &#123;</div><div class="line">        string number = 1;</div><div class="line">        bool isOffice = 2;</div><div class="line">    &#125;</div><div class="line">    repeated Phone Phones = 4;</div><div class="line">&#125;</div><div class="line"></div><div class="line">message CreateUserState &#123;</div><div class="line">    int32 id = 1;</div><div class="line">    bool success = 2;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="生成-gPRC-代码"><a href="#生成-gPRC-代码" class="headerlink" title="生成 gPRC 代码"></a>生成 gPRC 代码</h3><p>&emsp;&emsp;定义好了服务和通讯消息，我们需要使用 Protocol Buffers 的协议编译工具 <code>protoc</code> 来编译生成对应的 <code>.pb.go</code> 文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">protoc  users.proto --go_out=plugins=grpc:api/users</div></pre></td></tr></table></figure>
+<p>&emsp;&emsp;通过上述命令，我们能编译生成得位于 <strong>api/users</strong> 文件夹的 <code>users.pb.go</code> 文件。这个文件包含了:</p>
+<ul>
+<li>生成的服务端和客户端代码；</li>
+<li>用于填充，序列化和检索我们 <code>UserFilter</code>、<code>UserInfo</code> 和 <code>CreateUserState</code> 消息类型的代码。</li>
+</ul>
+<h3 id="实现服务端程序"><a href="#实现服务端程序" class="headerlink" title="实现服务端程序"></a>实现服务端程序</h3><p>&emsp;&emsp;<code>users.pb.go</code> 中的服务器代码是一个 Interface，具体的逻辑还需要我们自己来实现。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Users implement apiUsers.UserServer interface.</span></div><div class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</div><div class="line">	users []*apiUsers.UserInfo</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *Users)</span> <span class="title">GetUser</span><span class="params">(filter *apiUsers.UserFilter, stream apiUsers.User_GetUserServer)</span> <span class="title">error</span></span> &#123;</div><div class="line">	log.Println(<span class="string">"find user via id:"</span>, filter.Id)</div><div class="line">	<span class="keyword">for</span> _, user := <span class="keyword">range</span> u.users &#123;</div><div class="line">		<span class="keyword">if</span> filter.Id == user.Id &#123;</div><div class="line">			err := stream.Send(user)</div><div class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">				<span class="keyword">return</span> err</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *Users)</span> <span class="title">CreateUser</span><span class="params">(c context.Context, user *apiUsers.UserInfo)</span> <span class="params">(state *apiUsers.CreateUserState, err error)</span></span> &#123;</div><div class="line">	user.Id = <span class="keyword">int32</span>(<span class="built_in">len</span>(u.users) + <span class="number">1</span>)</div><div class="line">	u.users = <span class="built_in">append</span>(u.users, user)</div><div class="line">	log.Println(<span class="string">"new user:"</span>, user.Id)</div><div class="line">	<span class="keyword">return</span> &amp;apiUsers.CreateUserState&#123;Id: user.Id, Success: <span class="literal">true</span>&#125;, <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> _ apiUsers.UserServer = &amp;Users&#123;&#125;</div></pre></td></tr></table></figure>
+<h3 id="实现客户端程序"><a href="#实现客户端程序" class="headerlink" title="实现客户端程序"></a>实现客户端程序</h3><p>&emsp;&emsp;和服务端代码只是个 Interface 不同，<code>users.pb.go</code> 已经为我们实现了客户端代码。首先，连接服务器并创建客户端：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// connect to gRPC server</span></div><div class="line">conn, err := grpc.Dial(server, grpc.WithInsecure())</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">	log.Fatal(<span class="string">"cannot connect to server:"</span>, err)</div><div class="line">&#125;</div><div class="line"><span class="keyword">defer</span> conn.Close()</div><div class="line">client := apiUsers.NewUserClient(conn)</div></pre></td></tr></table></figure>
+<p>&emsp;&emsp;接着，我们就可以直接调用服务器上的服务了：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Call CreateUser function on Server via gPRC</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">createUser</span><span class="params">(client apiUsers.UserClient, user *apiUsers.UserInfo)</span></span> &#123;</div><div class="line">	resp, err := client.CreateUser(context.Background(), user)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		log.Println(<span class="string">"Could not create user:"</span>, err)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> resp.Success &#123;</div><div class="line">		log.Println(<span class="string">"A new user has been added, id:"</span>, resp.Id)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Call GetUser function on Server via gPRC</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findUser</span><span class="params">(client apiUsers.UserClient, uid <span class="keyword">int32</span>)</span></span> &#123;</div><div class="line">	filter := &amp;apiUsers.UserFilter&#123;Id: uid&#125;</div><div class="line">	stream, err := client.GetUser(context.Background(), filter)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		log.Println(<span class="string">"failed on get user info:"</span>, err)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> &#123;</div><div class="line">		user, err := stream.Recv()</div><div class="line">		<span class="keyword">if</span> err == io.EOF &#123;</div><div class="line">			<span class="keyword">break</span></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">			log.Printf(<span class="string">"%v.GetPersons(_) = _, %v"</span>, client, err)</div><div class="line">		&#125;</div><div class="line">		fmt.Println(user)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>&emsp;&emsp;前文给出的只是代码片段，我们可以 clone 下完整的代码来运行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/kofj/ggrpc</div><div class="line"><span class="built_in">cd</span> ggrpc</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;启动服务器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run server/server.go</div></pre></td></tr></table></figure>
+<p>&emsp;&emsp;启动客户端：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run client/client.go</div></pre></td></tr></table></figure>
+<h2 id="0x4-结语"><a href="#0x4-结语" class="headerlink" title="0x4 结语"></a>0x4 结语</h2><p>&emsp;&emsp;好了，到现在我们已经成功的构建了一个基于 gRPC 的 API。其性能真的更高吗？我们可以下次尝试与 <strong>HTTP REST</strong> 构建的 API 做一次性能对比实验。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/API/">API</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高性能/">高性能</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/27/mount-compressed-tar-file/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mount compressed tar file</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 疯魔慕薇
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vsc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skill</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">基准测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hierarchical Deterministic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">keys</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">OneNote</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">微软</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">mount</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">tar</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">奇巧淫技</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">暴风音影</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">CAA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">归档</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">增量</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">自省</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">谨言慎行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">公众形象</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">感言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">密钥</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">美食</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">西蜀</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">&lt;b&gt;不为己丑而羞，不为己笨而愧，不为己弱而退。&lt;/b&gt;</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
