@@ -145,6 +145,60 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ensure-a-type-implements-an-interface-at-compile-in-go" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/30/ensure-a-type-implements-an-interface-at-compile-in-go/">golang 编译时确认类型的接口实现</a>
+    </h1>
+  
+
+        <a href="/2017/09/30/ensure-a-type-implements-an-interface-at-compile-in-go/" class="archive-article-date">
+  	<time datetime="2017-09-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-30</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;有经验的同学都会知道，golang 的编译器并不会在代码编译的时候帮我们检查自定义的类型是否正确实现了某个接口。想象一下，一个复杂的应用程序，在编译的时候没有问题，上线运行了很长时间也没有问题。但是，某天程序突然出现了 Panic ！如果没有处理好 Panic 那就会直接宕机。如果回头发现居然是没有正确的实现某个接口，心中想必是万马奔腾的。个中滋味的酸爽想必尝试过的人才懂。<br>&emsp;&emsp;要避免重蹈覆辙掉进坑里，就必须想个法子解决这种低级错误——在编译时确认类型是否正确实现了接口。<br>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/30/ensure-a-type-implements-an-interface-at-compile-in-go/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-golang用gRPC构建高性能API" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -381,69 +435,9 @@
 
 
   
-    <article id="post-hierarchical-deterministic-keys" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/24/hierarchical-deterministic-keys/">分层确定密钥及 Golang 实现</a>
-    </h1>
-  
-
-        <a href="/2017/09/24/hierarchical-deterministic-keys/" class="archive-article-date">
-  	<time datetime="2017-09-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-24</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;本文三章节分别讲述 <code>分层确定密钥</code> 的起源、基本原理、程序实现。前两节面向所有人科普，第三节需要阅读者掌握 Go 编程语言。阅读全文预计需要 3-5 分钟，感谢 <strong>Tinvee</strong> 帮助审阅。</p>
-<p>&emsp;&emsp;<code>分层确定密钥</code>(Hierarchical Deterministic keys) 是一种应用在比特币系统中的密钥管理技术，源自于 <strong>BIP32 分层确定性钱包</strong>。使用<code>分层确定密钥</code>可以帮助用户更加方便的备份、找回自己的密钥串。<br>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hierarchical-Deterministic/">Hierarchical Deterministic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keys/">keys</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/24/hierarchical-deterministic-keys/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -499,31 +493,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">编辑器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">golang</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">blockchain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skill</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,19 +517,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
+                <a href="javascript:void(0)">OneNote</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
+                <a href="javascript:void(0)">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skills</a>
+                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -567,6 +541,30 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
@@ -576,14 +574,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">政治正确</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">CAA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,11 +589,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">CAA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">古诗词</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">感言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -627,27 +633,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">安全</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">密钥</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">感言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">美食</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">西蜀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">密钥</a>
               </li>
             
             <div class="clearfix"></div>
