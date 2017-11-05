@@ -145,6 +145,65 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-使用git-archive构建增量包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/16/使用git-archive构建增量包/">使用git archive增量包</a>
+    </h1>
+  
+
+        <a href="/2015/03/16/使用git-archive构建增量包/" class="archive-article-date">
+  	<time datetime="2015-03-16T08:22:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-16</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;在没有项目版本仓库的使用权限的情况时,或者客户的生产环境没有自动化部署工具时,我们在修改了程序后需要生成一个增量包给同事/客户.逐个的检出文件到压缩包里面是个笨办法,若你马虎一下,便可能会落下个文件.保持代码的目录结构也是个麻烦事儿.使用<code>git archive</code>生成增量包则要方便很多.当然,前提是你本地有用git管理代码版本.<br>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/增量/">增量</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/归档/">归档</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/03/16/使用git-archive构建增量包/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-永久删除git仓库中的文件与历史记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -381,66 +440,6 @@
 
 
   
-    <article id="post-boot2docker共享目录unicode文件名支持问题修复" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/23/boot2docker共享目录unicode文件名支持问题修复/">boot2docker共享目录unicode文件名支持问题修复</a>
-    </h1>
-  
-
-        <a href="/2015/01/23/boot2docker共享目录unicode文件名支持问题修复/" class="archive-article-date">
-  	<time datetime="2015-01-22T17:08:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-23</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;这是一篇补记,问题在两周之前就已经解决了,并且给官方发送了pull request.目前官方只是把这个PR添加到了v1.5.0版的milestone当中,如果你需要.可以看我fork修改后的代码,或者直接下载生成好的<a href="http://pan.baidu.com/s/1hqKiLgw" target="_blank" rel="external">ISO镜像</a>.</p>
-<h3 id="0x1-问题"><a href="#0x1-问题" class="headerlink" title="0x1 问题"></a>0x1 问题</h3><p>&emsp;&emsp;Docker是个非常不错的工具,但是源于其本身的实现原理(依赖于Linux的LXC)的原因,Windows和OS X系统的用户是没有办法使用原生的docker的.幸运的是,docker官方为我们这一类<code>非Linux用户</code>提供了一个很好的工具——boot2docker.
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/boot2docker/">boot2docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a><a class="article-category-link" href="/categories/术业/docker/">docker</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/01/23/boot2docker共享目录unicode文件名支持问题修复/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -515,6 +514,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
               </li>
              
@@ -524,14 +531,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">高亮</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">编辑器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hotkey</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,15 +550,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -572,10 +567,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">gRPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skills</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,6 +590,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">git</a>
               </li>
              
@@ -611,22 +610,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">公众形象</a>
               </li>
              
@@ -636,6 +619,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">谨言慎行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -660,6 +651,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">西蜀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">分组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">配置</a>
               </li>
             
             <div class="clearfix"></div>
