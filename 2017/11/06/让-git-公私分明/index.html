@@ -16,15 +16,10 @@
 <meta property="og:site_name" content="慕薇">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;作为开源爱好者，我们会大量使用开源代码构建项目，开源自己的代码。同时我们也会受雇于商业公司，为公司开发商业程序。显然的，我们应该公私分明，在商业项目和开源项目中使用不同的用户名和邮箱。最粗笨的方法就是在每个项目代码仓库当中修改配置。但是这样做太过繁琐，我们需要个更简单的方法——让 git 公私分明，自动的帮我们在不同分组的项目使用不同的配置。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="//blog.kongfanjian.com/images/2017-11-05-23-49-16.png">
-<meta property="og:image" content="//blog.kongfanjian.com/images/2017-11-05-23-49-43.png">
-<meta property="og:image" content="//blog.kongfanjian.com/images/2017-11-05-23-51-36.png">
-<meta property="og:image" content="//blog.kongfanjian.com/images/2017-11-05-23-50-23.png">
-<meta property="og:updated_time" content="2017-11-05T23:10:16.000Z">
+<meta property="og:updated_time" content="2017-11-05T23:13:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让 git 公私分明">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;作为开源爱好者，我们会大量使用开源代码构建项目，开源自己的代码。同时我们也会受雇于商业公司，为公司开发商业程序。显然的，我们应该公私分明，在商业项目和开源项目中使用不同的用户名和邮箱。最粗笨的方法就是在每个项目代码仓库当中修改配置。但是这样做太过繁琐，我们需要个更简单的方法——让 git 公私分明，自动的帮我们在不同分组的项目使用不同的配置。">
-<meta name="twitter:image" content="//blog.kongfanjian.com/images/2017-11-05-23-49-16.png">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -172,13 +167,17 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>&emsp;&emsp;作为开源爱好者，我们会大量使用开源代码构建项目，开源自己的代码。同时我们也会受雇于商业公司，为公司开发商业程序。显然的，我们应该公私分明，在商业项目和开源项目中使用不同的用户名和邮箱。最粗笨的方法就是在每个项目代码仓库当中修改配置。但是这样做太过繁琐，我们需要个更简单的方法——让 git 公私分明，自动的帮我们在不同分组的项目使用不同的配置。<br><a id="more"></a><br>&emsp;&emsp;使用 <a href="https://git-scm.com/docs/git-config#_includes" target="_blank" rel="external">conditional configuration includes</a> 可以轻松解决这一问题。首先，需要确定你的 git 版本不低于 2.13，否则需要升级 git 到新版本。</p>
-<p><img src="/images/2017-11-05-23-49-16.png" alt=""><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fengmomuwei:~$git version</div><div class="line">git version 2.14.1</div></pre></td></tr></table></figure></p>
+<!-- ![](/images/2017-11-05-23-49-16.png) -->
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fengmomuwei:~$git version</div><div class="line">git version 2.14.1</div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;接着，你需要把代码分组放置在不同的目录下。例如，开源代码放置在 <code>opensource</code> 目录，商业代码放置在 <code>company</code> 目录。<code>opensource</code> 目录的代码使用默认的全局配置，<code>company</code> 目录的代码使用单独的用户名和邮箱。当然，如果之前你的代码已经是类似分组的状态，那就直接下一步吧。</p>
-<p><img src="/images/2017-11-05-23-49-43.png" alt=""><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fengmomuwei:projects$ls</div><div class="line">company    opensource</div></pre></td></tr></table></figure></p>
+<!-- ![](/images/2017-11-05-23-49-43.png) -->
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fengmomuwei:projects$ls</div><div class="line">company    opensource</div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;做好准备工作，那我们可以开始修改配置了。使用 <code>git config --global --edit</code> 修改 git 全局配置文件，在末尾添加下列配置：</p>
-<p><img src="/images/2017-11-05-23-51-36.png" alt=""><br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="section">[includeIf "gitdir:*/company/*"]</span></div><div class="line">    path = ~/.gitconfig.company</div></pre></td></tr></table></figure></p>
+<!-- ![](/images/2017-11-05-23-51-36.png) -->
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="section">[includeIf "gitdir:*/company/*"]</span></div><div class="line">    path = ~/.gitconfig.company</div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;使用上述配置执行 git 命令时，如果目录当中能够匹配到 <strong><code>/company/</code></strong> 路径，则加载 <strong><code>~/.gitconfig.company</code></strong> 文件覆盖全局配置中对应的字段。我们为 <code>company</code> 目录当中的代码设置不同的用户名和邮箱，只需要编辑 <strong><code>~/.gitconfig.company</code></strong>  添加下述配置即可：</p>
-<p><img src="/images/2017-11-05-23-50-23.png" alt=""><br><figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="section">[user]</span></div><div class="line"><span class="attr">name</span> = Yourname</div><div class="line"><span class="attr">email</span> = Yourname@company.com</div></pre></td></tr></table></figure></p>
+<!-- ![](/images/2017-11-05-23-50-23.png) -->
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="section">[user]</span></div><div class="line"><span class="attr">name</span> = Yourname</div><div class="line"><span class="attr">email</span> = Yourname@company.com</div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;当然，你还可以为 <code>company</code> 目录设定其它的专属配置。自此，我们不必再一个个的在不同的代码仓库中修改配置。尽情享受工作与开源的乐趣吧！</p>
 
       
@@ -294,14 +293,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">编辑器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">hotkey</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">OneNote</a>
               </li>
              
@@ -314,6 +305,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">编辑器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">hotkey</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">appleid</a>
               </li>
              
@@ -323,6 +322,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">email</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">boot2docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -370,14 +377,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">git</a>
               </li>
              
@@ -390,6 +389,22 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">公众形象</a>
               </li>
              
@@ -399,14 +414,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">谨言慎行</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,18 +438,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">西蜀</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">boot2docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">独立配置</a>
               </li>
              
               <li class="article-tag-list-item">
