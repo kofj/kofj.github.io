@@ -145,6 +145,65 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-谈谈umask" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/16/谈谈umask/">谈谈umask</a>
+    </h1>
+  
+
+        <a href="/2017/11/16/谈谈umask/" class="archive-article-date">
+  	<time datetime="2017-11-16T15:26:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-16</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;今天做 <code>POC(Proof of Concept)</code> 的时候，遇到了一个小问题——使用 golang 标准库的 <code>os.Mkdir(name string, perm FileMode)</code> 创建得到的文件夹的文件权限和 <code>perm</code> 权限设置的不一样。为什么会这样呢？那就得要谈谈<strong>文件权限掩码 (umask)</strong>了。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/umask/">umask</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/16/谈谈umask/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-让-git-公私分明" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -381,68 +440,9 @@
 
 
   
-    <article id="post-OneNote代码高亮" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/25/OneNote代码高亮/">OneNote代码高亮</a>
-    </h1>
-  
-
-        <a href="/2017/09/25/OneNote代码高亮/" class="archive-article-date">
-  	<time datetime="2017-09-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-25</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;有言道<strong>『好记性不如烂笔头』</strong>。记笔记是个非常不错的习惯：一来可以帮助我们增强对笔记内容的记忆；二来则是可以在我们遗忘了的时候有处可查。多终端多平台同步能力以及对微软在办公领域专业性的信任，让我选择了 OneNote 作为主要的笔记软件。<br>&emsp;&emsp;不过 OneNote 不支持代码高亮却是让人倍感遗憾。网上虽然有一些 OneNote 代码高亮的方法，但却复杂繁琐到让人望而却步。今天就来说说<strong>怎么样简单漂亮的在 OneNote 插入源代码</strong>。<br>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OneNote/">OneNote</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高亮/">高亮</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/25/OneNote代码高亮/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/categories/术业/page/2/">2</a><a class="page-number" href="/categories/术业/page/3/">3</a><a class="extend next" rel="next" href="/categories/术业/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/categories/术业/page/2/">2</a><a class="page-number" href="/categories/术业/page/3/">3</a><a class="page-number" href="/categories/术业/page/4/">4</a><a class="extend next" rel="next" href="/categories/术业/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -497,19 +497,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">SSH</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">私钥</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,6 +522,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,11 +561,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">skills</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skills</a>
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -582,10 +586,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">政治正确</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -617,11 +617,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">职业</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">反思</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">感言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,14 +646,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">谨言慎行</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">感言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -666,6 +670,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">umask</a>
               </li>
             
             <div class="clearfix"></div>

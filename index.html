@@ -145,6 +145,65 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-谈谈umask" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/16/谈谈umask/">谈谈umask</a>
+    </h1>
+  
+
+        <a href="/2017/11/16/谈谈umask/" class="archive-article-date">
+  	<time datetime="2017-11-16T15:26:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-16</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&emsp;&emsp;今天做 <code>POC(Proof of Concept)</code> 的时候，遇到了一个小问题——使用 golang 标准库的 <code>os.Mkdir(name string, perm FileMode)</code> 创建得到的文件夹的文件权限和 <code>perm</code> 权限设置的不一样。为什么会这样呢？那就得要谈谈<strong>文件权限掩码 (umask)</strong>了。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/umask/">umask</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/术业/">术业</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/16/谈谈umask/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-让-git-公私分明" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -376,65 +435,6 @@
 
 
   
-    <article id="post-强化扩展公钥——更安全的选择" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/26/强化扩展公钥——更安全的选择/">强化扩展公钥——更安全的选择</a>
-    </h1>
-  
-
-        <a href="/2017/09/26/强化扩展公钥——更安全的选择/" class="archive-article-date">
-  	<time datetime="2017-09-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-26</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;想象一下这样的场景：在电商网站上，我们需要为每一个用户提供一个比特币的收款地址。如果使用传统的方法，我们需要通过私钥来产生公钥和地址，这使得我们不得不在服务器上部署私钥。但是世界上没有不透风的墙，任何人都不能保证绝对的安全，这么做简直和公开自己银行账户、密码无异。<br>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密钥/">密钥</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-book icon"></i>
-	<a class="article-category-link" href="/categories/术业/">术业</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/26/强化扩展公钥——更安全的选择/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -493,19 +493,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">SSH</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">私钥</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">golang</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,6 +518,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">blockchain</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,11 +557,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">skills</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skills</a>
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,10 +582,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">keys</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">政治正确</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,11 +613,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">职业</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">反思</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">感言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,14 +642,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">谨言慎行</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">感言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -662,6 +666,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">umask</a>
               </li>
             
             <div class="clearfix"></div>
