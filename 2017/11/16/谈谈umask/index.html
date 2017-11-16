@@ -17,7 +17,7 @@
 <meta property="og:description" content="&amp;emsp;&amp;emsp;今天做 POC(Proof of Concept) 的时候，遇到了一个小问题——使用 golang 标准库的 os.Mkdir(name string, perm FileMode) 创建得到的文件夹的文件权限和 perm 权限设置的不一样。为什么会这样呢？那就得要谈谈文件权限掩码 (umask)了。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="//blog.kongfanjian.com/images/2017-11-16-23-23-20.png">
-<meta property="og:updated_time" content="2017-11-16T15:26:41.873Z">
+<meta property="og:updated_time" content="2017-11-16T15:31:47.870Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈umask">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;今天做 POC(Proof of Concept) 的时候，遇到了一个小问题——使用 golang 标准库的 os.Mkdir(name string, perm FileMode) 创建得到的文件夹的文件权限和 perm 权限设置的不一样。为什么会这样呢？那就得要谈谈文件权限掩码 (umask)了。">
@@ -170,9 +170,8 @@
       
         <p>&emsp;&emsp;今天做 <code>POC(Proof of Concept)</code> 的时候，遇到了一个小问题——使用 golang 标准库的 <code>os.Mkdir(name string, perm FileMode)</code> 创建得到的文件夹的文件权限和 <code>perm</code> 权限设置的不一样。为什么会这样呢？那就得要谈谈<strong>文件权限掩码 (umask)</strong>了。</p>
 <a id="more"></a>
-<p>&emsp;&emsp;用户在 linux 系统中创建一个文件的默认权限是由两部分决定的——<strong>基本码</strong>和<strong>文件权限掩码 (umask)</strong>。文件夹的基本码是 <strong>rwxrwxrwx(777)</strong>，文件的基本码是 <strong>rw-rw-rw- (666)</strong>。默认情况下 <code>umask</code> 值是<strong>022</strong>，这时建立的文件夹的默认权限是<strong>755(7-0, 7-2, 7-2)</strong>，建立的文件的默认权限是<strong>644 (6-0, 6-2, 6-2)</strong>。通过 <code>umask</code> 命令可以查看/修改当前系统的<strong>文件权限掩码 (umask)</strong>。</p>
-<p>&emsp;&emsp;那么，有没有办法在创建文件夹的时候忽略掉 <code>umask</code> 呢？当然有，以 <code>mkdir</code> 命令为例：使用 <code>man mkdir</code> 查看帮助能看到 <code>mkdir</code> 有个 <strong>-m</strong> 参数可以直接设置文件夹的最终权限，从而避开 <code>umask</code>。</p>
-<p>&emsp;&emsp;说到这里，让我们回头看看最开始说的小问题。显然我们可以通过 <code>os.Exec</code> 函数执行带有 <strong>-m</strong> 参数的  <code>mkdir</code> 命令来达到目标。不过，我这里还有另外一个方法来解决这个问题。创建文件夹时设置 <code>umask</code> 为 <strong>000</strong>，创建完成后改回原来的 <code>umask</code>，代码如下：<br><img src="/images/2017-11-16-23-23-20.png" alt=""></p>
+<p>&emsp;&emsp;用户在 linux 系统中创建一个文件的默认权限是由两部分决定的——<strong>基本码</strong>和<strong>文件权限掩码 (umask)</strong>。文件夹的基本码是 <strong>rwxrwxrwx(777)</strong>，文件的基本码是 <strong>rw-rw-rw- (666)</strong>。默认情况下 <code>umask</code> 值是<strong>022</strong>，这时建立的文件夹的默认权限是<strong>755(7-0, 7-2, 7-2)</strong>，建立的文件的默认权限是<strong>644 (6-0, 6-2, 6-2)</strong>。通过 <code>umask</code> 命令可以查看/修改当前系统的<strong>文件权限掩码 (umask)</strong>。<br>&emsp;&emsp;那么，有没有办法在创建文件夹的时候忽略掉 <code>umask</code> 吗？当然有，以 <code>mkdir</code> 命令为例：使用 <code>man mkdir</code> 查看帮助能看到 <code>mkdir</code> 有个 <strong>-m</strong> 参数可以直接设置文件夹的最终权限，从而避开 <code>umask</code>。</p>
+<p>&emsp;&emsp;说到这里，让我们回头看看最开始说的小问题。显然，我们可以通过 <code>os.Exec</code> 函数执行带有 <strong>-m</strong> 参数的  <code>mkdir</code> 命令来达到目标。不过，我这里还有另外一个方法来解决这个问题。创建文件夹时设置 <code>umask</code> 为 <strong>000</strong>，之后改回原来的 <code>umask</code>。代码如下：<br><img src="/images/2017-11-16-23-23-20.png" alt=""></p>
 
       
 
@@ -271,6 +270,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">私钥</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">golang</a>
               </li>
              
@@ -279,11 +286,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">SSH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">私钥</a>
+                <a href="javascript:void(0)">umask</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -335,11 +338,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skills</a>
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">skills</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -360,6 +363,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">keys</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -391,23 +398,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">政治正确</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">职业</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">反思</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">感言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -420,6 +415,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">谨言慎行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">感言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -444,10 +447,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">umask</a>
               </li>
             
             <div class="clearfix"></div>
