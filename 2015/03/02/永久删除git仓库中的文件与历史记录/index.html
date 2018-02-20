@@ -167,11 +167,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>&emsp;&emsp;之前托管在git@osc的私有项目<code>神马磁力搜索</code>想要开源,作为个人技能展示作品.这就遇到了一个问题,脱离敏感数据.通过<code>git rm file</code>肯定是不能够满足这一需求的,git历史记录中还是能够查看被删除的内容的,导致敏感数据的泄露.那么,就必须要彻底删除git的历史记录了.<br><a id="more"></a></p>
-<h2 id="0x1-从仓库总清除文件"><a href="#0x1-从仓库总清除文件" class="headerlink" title="0x1 从仓库总清除文件"></a>0x1 从仓库总清除文件</h2><p>&emsp;&emsp;打开bash,进入项目目录,执行以下命令:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch path-of-remove-file' --prune-empty --tag-name-filter cat -- --all</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<code>path-of-remove-file</code>是你要删除的文件的相对目录(相对于git repo的根目录),可以使用通配符<code>*</code>匹配文件进行批量删除.当看到类似于下面的提示信息说明删除成功了:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Rewrite 59b2e9e1bdc898daa52085648d3a8def767560dc (429/429)</div><div class="line"><span class="meta">#</span><span class="bash"> Ref <span class="string">'refs/heads/master'</span> was rewritten</span></div></pre></td></tr></table></figure></p>
+<h2 id="0x1-从仓库总清除文件"><a href="#0x1-从仓库总清除文件" class="headerlink" title="0x1 从仓库总清除文件"></a>0x1 从仓库总清除文件</h2><p>&emsp;&emsp;打开bash,进入项目目录,执行以下命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git filter-branch --force --index-filter &apos;git rm --cached --ignore-unmatch path-of-remove-file&apos; --prune-empty --tag-name-filter cat -- --all</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<code>path-of-remove-file</code>是你要删除的文件的相对目录(相对于git repo的根目录),可以使用通配符<code>*</code>匹配文件进行批量删除.当看到类似于下面的提示信息说明删除成功了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Rewrite 59b2e9e1bdc898daa52085648d3a8def767560dc (429/429)</div><div class="line"># Ref &apos;refs/heads/master&apos; was rewritten</div></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;如果执行上述命令后出现的提示信息中有<code>unchanged</code>字样,说明repo中没有找到<code>path-of-remove-file</code>,请仔细检查路径和文件名是否正确.</p>
-<h2 id="0x2-推送修改结果"><a href="#0x2-推送修改结果" class="headerlink" title="0x2 推送修改结果"></a>0x2 推送修改结果</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin master --force #强制覆盖</div></pre></td></tr></table></figure>
-<h2 id="0x3-回收磁盘空间"><a href="#0x3-回收磁盘空间" class="headerlink" title="0x3 回收磁盘空间"></a>0x3 回收磁盘空间</h2><p>&emsp;&emsp;经过上述操作后,我们已经删除了文件,但是本地仓库中任然保留着这些objects.我们需要使用GC命令进行垃圾回收,彻底清除这些文件,回收磁盘空间.<code>#</code>后面为执行结果,我们可以看见.git目录大小明显缩小了.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">rm -rf .git/refs/original/</div><div class="line">du -sh .git</div><div class="line"><span class="meta">#</span><span class="bash"> 11M	.git</span></div><div class="line">git reflog expire --expire=now --all</div><div class="line">git gc --prune=now</div><div class="line"><span class="meta">#</span><span class="bash">Counting objects: 3370, <span class="keyword">done</span>.</span></div><div class="line"><span class="meta">#</span><span class="bash">Delta compression using up to 4 threads.</span></div><div class="line"><span class="meta">#</span><span class="bash">Compressing objects: 100% (2047/2047), <span class="keyword">done</span>.</span></div><div class="line"><span class="meta">#</span><span class="bash">Writing objects: 100% (3370/3370), <span class="keyword">done</span>.</span></div><div class="line"><span class="meta">#</span><span class="bash">Total 3370 (delta 1333), reused 2891 (delta 1108)</span></div><div class="line">du -sh .git/*</div><div class="line"><span class="meta">#</span><span class="bash">7.5M	.git</span></div><div class="line">git gc --aggressive --prune=now</div><div class="line"><span class="meta">#</span><span class="bash">Counting objects: 3370, <span class="keyword">done</span>.</span></div><div class="line"><span class="meta">#</span><span class="bash">Delta compression using up to 4 threads.</span></div><div class="line"><span class="meta">#</span><span class="bash">Compressing objects: 100% (3155/3155), <span class="keyword">done</span>.</span></div><div class="line"><span class="meta">#</span><span class="bash">Writing objects: 100% (3370/3370), <span class="keyword">done</span>.</span></div><div class="line"><span class="meta">#</span><span class="bash">Total 3370 (delta 1419), reused 1944 (delta 0)</span></div><div class="line">du -sh .git</div><div class="line"><span class="meta">#</span><span class="bash">7.3M	.git</span></div></pre></td></tr></table></figure></p>
+<h2 id="0x2-推送修改结果"><a href="#0x2-推送修改结果" class="headerlink" title="0x2 推送修改结果"></a>0x2 推送修改结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin master --force #强制覆盖</div></pre></td></tr></table></figure>
+<h2 id="0x3-回收磁盘空间"><a href="#0x3-回收磁盘空间" class="headerlink" title="0x3 回收磁盘空间"></a>0x3 回收磁盘空间</h2><p>&emsp;&emsp;经过上述操作后,我们已经删除了文件,但是本地仓库中任然保留着这些objects.我们需要使用GC命令进行垃圾回收,彻底清除这些文件,回收磁盘空间.<code>#</code>后面为执行结果,我们可以看见.git目录大小明显缩小了.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">rm -rf .git/refs/original/</div><div class="line">du -sh .git</div><div class="line"># 11M	.git</div><div class="line">git reflog expire --expire=now --all</div><div class="line">git gc --prune=now</div><div class="line">#Counting objects: 3370, done.</div><div class="line">#Delta compression using up to 4 threads.</div><div class="line">#Compressing objects: 100% (2047/2047), done.</div><div class="line">#Writing objects: 100% (3370/3370), done.</div><div class="line">#Total 3370 (delta 1333), reused 2891 (delta 1108)</div><div class="line">du -sh .git/*</div><div class="line">#7.5M	.git</div><div class="line">git gc --aggressive --prune=now</div><div class="line">#Counting objects: 3370, done.</div><div class="line">#Delta compression using up to 4 threads.</div><div class="line">#Compressing objects: 100% (3155/3155), done.</div><div class="line">#Writing objects: 100% (3370/3370), done.</div><div class="line">#Total 3370 (delta 1419), reused 1944 (delta 0)</div><div class="line">du -sh .git</div><div class="line">#7.3M	.git</div></pre></td></tr></table></figure></p>
 
       
 
@@ -235,7 +235,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 疯魔慕薇
+    		&copy; 2018 疯魔慕薇
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -287,23 +287,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">json</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">golang</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">buffer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">decode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">blockchain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -327,6 +327,18 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">OneNote</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -335,15 +347,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">skills</a>
+                <a href="javascript:void(0)">skill</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -359,6 +367,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Hierarchical Deterministic</a>
               </li>
              
@@ -367,15 +379,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">政治正确</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -388,22 +416,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">增量</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -435,6 +447,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">美食</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">西蜀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vscode</a>
               </li>
              
@@ -444,14 +464,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">美食</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">西蜀</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -468,6 +480,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">umask</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">字符串</a>
               </li>
             
             <div class="clearfix"></div>
