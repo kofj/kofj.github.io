@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//blog.kongfanjian.com">
   <title>Go 1.10 高效连接构建字符串 | 慕薇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x1 简明方法&amp;emsp;&amp;emsp;当程序的效率不是你所在意的问题的时候，fmt.Sprintf  方法是非常好用的： 1var s = fmt.Sprintf(&quot;Hello, %s!&quot;, &quot;kofj&quot;) // Hello, kofj! 0x2  Go 1.10 以下版本&amp;emsp;&amp;emsp;当我们构建高性能程序的时候，字符串连接的性能问题就是一个绕不开的问题了。字符串在 Golang 中是">
+  <meta name="description" content="0x1 简明方法&amp;emsp;&amp;emsp;当程序的效率不是你所在意的问题的时候，fmt.Sprintf  方法是非常好用的： 1var s = fmt.Sprintf(&quot;Hello, %s!&quot;, &quot;kofj&quot;) // Hello, kofj!">
 <meta name="keywords" content="golang,高性能,字符串">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 1.10 高效连接构建字符串">
 <meta property="og:url" content="//blog.kongfanjian.com/2018/02/20/build-append-concatenate-strings-efficiently/index.html">
 <meta property="og:site_name" content="慕薇">
-<meta property="og:description" content="0x1 简明方法&amp;emsp;&amp;emsp;当程序的效率不是你所在意的问题的时候，fmt.Sprintf  方法是非常好用的： 1var s = fmt.Sprintf(&quot;Hello, %s!&quot;, &quot;kofj&quot;) // Hello, kofj! 0x2  Go 1.10 以下版本&amp;emsp;&amp;emsp;当我们构建高性能程序的时候，字符串连接的性能问题就是一个绕不开的问题了。字符串在 Golang 中是">
+<meta property="og:description" content="0x1 简明方法&amp;emsp;&amp;emsp;当程序的效率不是你所在意的问题的时候，fmt.Sprintf  方法是非常好用的： 1var s = fmt.Sprintf(&quot;Hello, %s!&quot;, &quot;kofj&quot;) // Hello, kofj!">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-20T08:57:28.587Z">
+<meta property="og:updated_time" content="2018-02-20T08:59:15.593Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 1.10 高效连接构建字符串">
-<meta name="twitter:description" content="0x1 简明方法&amp;emsp;&amp;emsp;当程序的效率不是你所在意的问题的时候，fmt.Sprintf  方法是非常好用的： 1var s = fmt.Sprintf(&quot;Hello, %s!&quot;, &quot;kofj&quot;) // Hello, kofj! 0x2  Go 1.10 以下版本&amp;emsp;&amp;emsp;当我们构建高性能程序的时候，字符串连接的性能问题就是一个绕不开的问题了。字符串在 Golang 中是">
+<meta name="twitter:description" content="0x1 简明方法&amp;emsp;&amp;emsp;当程序的效率不是你所在意的问题的时候，fmt.Sprintf  方法是非常好用的： 1var s = fmt.Sprintf(&quot;Hello, %s!&quot;, &quot;kofj&quot;) // Hello, kofj!">
   
     <link rel="alternative" href="/atom.xml" title="慕薇" type="application/atom+xml">
   
@@ -168,6 +168,7 @@
       
         <h2 id="0x1-简明方法"><a href="#0x1-简明方法" class="headerlink" title="0x1 简明方法"></a>0x1 简明方法</h2><p>&emsp;&emsp;当程序的效率不是你所在意的问题的时候，<code>fmt.Sprintf</code>  方法是非常好用的：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s = fmt.Sprintf(<span class="string">"Hello, %s!"</span>, <span class="string">"kofj"</span>) <span class="comment">// Hello, kofj!</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="0x2-Go-1-10-以下版本"><a href="#0x2-Go-1-10-以下版本" class="headerlink" title="0x2  Go 1.10 以下版本"></a>0x2  Go 1.10 以下版本</h2><p>&emsp;&emsp;当我们构建高性能程序的时候，字符串连接的性能问题就是一个绕不开的问题了。字符串在 Golang 中是只读类型，这意味着你对字符串的操作会伴随内存冗余复制，这会导致效率低下；为了避免内存冗余复制，我们通常把字符串转化为 <code>[]byte</code> 来操作（很多标准库的方法内部就是这么操作的），最后在必须的时候再转化回 <code>string</code> 类型。在 Go 1.10 之前，想要高效的构建字符串，我们可以新建一个  <a href="https://golang.org/pkg/bytes/#Buffer" target="_blank" rel="external"><code>bytes.Buffer</code></a> 缓冲器，然后使用 <a href="https://golang.org/pkg/fmt/#Fprintf" target="_blank" rel="external"><strong><code>fmt.Fprintf</code></strong></a> 写入这个缓冲器中，最后再转换成 <code>string</code> 类型。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> buf bytes.Buffer</div><div class="line">fmt.Fprintf(&amp;buf, <span class="string">"Hi, I'm %s."</span>, <span class="string">"Frank Kung"</span>)</div><div class="line">s := buf.String() <span class="comment">// Copy into a new string</span></div><div class="line">fmt.Println(s)</div></pre></td></tr></table></figure>
 <p>&emsp;&emsp;这个方案性能很棒，但是却可能会产生过多的垃圾，导致额外的 GC 。为了更高的性能，我们可以尝试 <code>strconv</code> 包中的 <strong>Append</strong> 系列函数。</p>
@@ -304,6 +305,18 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">OneNote</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">编辑器</a>
               </li>
              
@@ -324,18 +337,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -344,7 +345,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">字符串</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -352,19 +357,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -376,31 +381,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">政治正确</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -413,6 +402,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">增量</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -444,14 +449,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">美食</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">西蜀</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vscode</a>
               </li>
              
@@ -464,11 +461,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">分组</a>
+                <a href="javascript:void(0)">美食</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">配置</a>
+                <a href="javascript:void(0)">西蜀</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -480,7 +477,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">字符串</a>
+                <a href="javascript:void(0)">分组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">配置</a>
               </li>
             
             <div class="clearfix"></div>

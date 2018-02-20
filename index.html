@@ -165,17 +165,7 @@
       
         <h2 id="0x1-简明方法"><a href="#0x1-简明方法" class="headerlink" title="0x1 简明方法"></a>0x1 简明方法</h2><p>&emsp;&emsp;当程序的效率不是你所在意的问题的时候，<code>fmt.Sprintf</code>  方法是非常好用的：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s = fmt.Sprintf(<span class="string">"Hello, %s!"</span>, <span class="string">"kofj"</span>) <span class="comment">// Hello, kofj!</span></div></pre></td></tr></table></figure>
-<h2 id="0x2-Go-1-10-以下版本"><a href="#0x2-Go-1-10-以下版本" class="headerlink" title="0x2  Go 1.10 以下版本"></a>0x2  Go 1.10 以下版本</h2><p>&emsp;&emsp;当我们构建高性能程序的时候，字符串连接的性能问题就是一个绕不开的问题了。字符串在 Golang 中是只读类型，这意味着你对字符串的操作会伴随内存冗余复制，这会导致效率低下；为了避免内存冗余复制，我们通常把字符串转化为 <code>[]byte</code> 来操作（很多标准库的方法内部就是这么操作的），最后在必须的时候再转化回 <code>string</code> 类型。在 Go 1.10 之前，想要高效的构建字符串，我们可以新建一个  <a href="https://golang.org/pkg/bytes/#Buffer" target="_blank" rel="external"><code>bytes.Buffer</code></a> 缓冲器，然后使用 <a href="https://golang.org/pkg/fmt/#Fprintf" target="_blank" rel="external"><strong><code>fmt.Fprintf</code></strong></a> 写入这个缓冲器中，最后再转换成 <code>string</code> 类型。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> buf bytes.Buffer</div><div class="line">fmt.Fprintf(&amp;buf, <span class="string">"Hi, I'm %s."</span>, <span class="string">"Frank Kung"</span>)</div><div class="line">s := buf.String() <span class="comment">// Copy into a new string</span></div><div class="line">fmt.Println(s)</div></pre></td></tr></table></figure>
-<p>&emsp;&emsp;这个方案性能很棒，但是却可能会产生过多的垃圾，导致额外的 GC 。为了更高的性能，我们可以尝试 <code>strconv</code> 包中的 <strong>Append</strong> 系列函数。</p>
-<h2 id="0x3-使用-strings-Builder"><a href="#0x3-使用-strings-Builder" class="headerlink" title="0x3 使用 strings.Builder"></a>0x3 使用 <a href="https://golang.org/pkg/strings/#Builder" target="_blank" rel="external">strings.Builder</a></h2><p>&emsp;&emsp;在本月最新发布的 Go 1.10 版本运行时中，新增了实现了 Writer 接口的 <a href="https://golang.org/pkg/strings/#Builder" target="_blank" rel="external"><code>strings.Builder</code></a> 类型用于高效的构建、连接字符串。</p>
-<ul>
-<li>它提供了一些<a href="https://golang.org/pkg/bytes/#Buffer" target="_blank" rel="external"><code>bytes.Buffer</code></a>方法的子集，可以安全地避免内存冗余复制。</li>
-<li><a href="https://golang.org/pkg/strings/#Builder.Grow" target="_blank" rel="external"><code>Grow</code></a> 方法可用于在已知字符串的最大大小时预先分配内存。</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> b strings.Builder</div><div class="line">b.Grow(<span class="number">32</span>)</div><div class="line"><span class="keyword">for</span> i, p := <span class="keyword">range</span> []<span class="keyword">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125; &#123;</div><div class="line">	fmt.Fprintf(&amp;b, <span class="string">"%d:%d, "</span>, i+<span class="number">1</span>, p)</div><div class="line">&#125;</div><div class="line">s := b.String()   <span class="comment">// no copying</span></div><div class="line">s = s[:b.Len()<span class="number">-2</span>] <span class="comment">// no copying (removes trailing ", ")</span></div><div class="line">fmt.Println(s)</div></pre></td></tr></table></figure>
-<p>本文编译改写自<a href="http://yourbasic.org/golang/build-append-concatenate-strings-efficiently/" target="_blank" rel="external">《Build and concatenate strings efficiently》</a>，内容非翻译。</p>
-
+        
       
 
       
@@ -537,6 +527,18 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">OneNote</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">高亮</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">编辑器</a>
               </li>
              
@@ -557,18 +559,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">OneNote</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高亮</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">docker</a>
               </li>
              
@@ -577,7 +567,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JavaScript</a>
+                <a href="javascript:void(0)">高性能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">字符串</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,19 +579,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">高性能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">gRPC</a>
+                <a href="javascript:void(0)">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">skills</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">gRPC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,31 +603,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">政治正确</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">CAA</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">古诗词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">文言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">政治正确</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">职业</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -646,6 +624,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">增量</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">古诗词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">文言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">职业</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">反思</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -677,14 +671,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">美食</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">西蜀</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vscode</a>
               </li>
              
@@ -697,11 +683,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">分组</a>
+                <a href="javascript:void(0)">美食</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">配置</a>
+                <a href="javascript:void(0)">西蜀</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -713,7 +699,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">字符串</a>
+                <a href="javascript:void(0)">分组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">配置</a>
               </li>
             
             <div class="clearfix"></div>
