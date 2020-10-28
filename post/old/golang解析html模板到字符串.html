@@ -1,0 +1,70 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>- 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="title: golang解析html模板到字符串 date: 2015-01-30 00:05:22 tags: golang categories: 术业 golang 说来自己对golang的掌握也就半壶水,不过我向来认为学习就是一个不断踩坑的过程.只"><meta name=keywords content><meta name=generator content="Hugo 0.76.5 with theme even"><link rel=canonical href=https://blog.kongfanjian.com/post/old/golang%E8%A7%A3%E6%9E%90html%E6%A8%A1%E6%9D%BF%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.cab03f0476bdd5bd0a4c1b3a5d424dbe66e840d607615774f84dd42bf74d9c3a.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content><meta property="og:description" content="title: golang解析html模板到字符串 date: 2015-01-30 00:05:22 tags: golang categories: 术业 golang 说来自己对golang的掌握也就半壶水,不过我向来认为学习就是一个不断踩坑的过程.只"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kongfanjian.com/post/old/golang%E8%A7%A3%E6%9E%90html%E6%A8%A1%E6%9D%BF%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2.html"><meta itemprop=name content><meta itemprop=description content="title: golang解析html模板到字符串 date: 2015-01-30 00:05:22 tags: golang categories: 术业 golang 说来自己对golang的掌握也就半壶水,不过我向来认为学习就是一个不断踩坑的过程.只"><meta itemprop=wordCount content="589"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="title: golang解析html模板到字符串 date: 2015-01-30 00:05:22 tags: golang categories: 术业 golang 说来自己对golang的掌握也就半壶水,不过我向来认为学习就是一个不断踩坑的过程.只"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title></h1><div class=post-meta><span class=post-time>0001-01-01</span>
+<span class=more-meta>约 589 字</span>
+<span class=more-meta>预计阅读 2 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents></nav></div></div><div class=post-content><p>title: golang解析html模板到字符串
+date: 2015-01-30 00:05:22
+tags: golang
+categories:</p><ul><li>术业</li><li>golang</li></ul><hr><p>  说来自己对golang的掌握也就半壶水,不过我向来认为学习就是一个不断踩坑的过程.只有在实践中才能不断的取得进步.最近在独力编写golang版本的影梭管理面板,其中有个需求就是给用户发送激活邮件,本着尽善尽美的原则,计划提供可编辑的html邮件模板.那么,问题就来了.使用<code>html/template</code>包对html模板进行解析,但是<code>Execute</code>函数是输出到<code>io.Writer</code>,而我需要的是把模板解析结果保存到<code>string</code>类型的变量中,以便直接传送给下一步负责发送邮件的函数使用.
+  在网络上查阅资料后得知实现上述要求方法非常简单,只需要设置一个<code>bytes.Buffer</code>,<code>Execute</code>的时候把数据写入到这个缓存器当中,再调用<code>String</code>方法转换成字符串即可.
+  Don&rsquo;t talk,show me code!So,there is a sample:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-golang data-lang=golang><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=p>(</span>
+    <span class=s>&#34;html/template&#34;</span>
+    <span class=s>&#34;bytes&#34;</span>
+    <span class=s>&#34;fmt&#34;</span>
+<span class=p>)</span>
+
+<span class=kd>type</span> <span class=nx>Mail</span> <span class=kd>struct</span> <span class=p>{</span>
+    <span class=nx>UserName</span> <span class=kt>string</span>
+    <span class=nx>SiteName</span> <span class=kt>string</span>
+    <span class=nx>ActiveLink</span> <span class=kt>string</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=kd>var</span> <span class=nx>doc</span> <span class=nx>bytes</span><span class=p>.</span><span class=nx>Buffer</span>
+    <span class=kd>var</span> <span class=nx>templateString</span> <span class=p>=</span> <span class=s>&#34;{&amp;#123;.UserName}}你好,您在{&amp;#123;.SiteName}}注册了帐号,请点&lt;a href=\&#34;{&amp;#123;.ActiveLink}}\&#34;&gt;击这里激活!&lt;/a&gt;&#34;</span>
+    <span class=nx>t</span> <span class=o>:=</span> <span class=nx>template</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;fieldname example&#34;</span><span class=p>)</span>
+    <span class=nx>t</span><span class=p>,</span> <span class=nx>_</span> <span class=p>=</span> <span class=nx>t</span><span class=p>.</span><span class=nf>Parse</span><span class=p>(</span><span class=nx>templateString</span><span class=p>)</span>
+    <span class=nx>p</span> <span class=o>:=</span> <span class=nx>Mail</span><span class=p>{</span><span class=nx>UserName</span><span class=p>:</span> <span class=s>&#34;Frank&#34;</span><span class=p>,</span><span class=nx>SiteName</span><span class=p>:</span> <span class=s>&#34;SSP&#34;</span><span class=p>,</span> <span class=nx>ActiveLink</span><span class=p>:</span> <span class=s>&#34;http://xizhimen.com/active/9a32f2&#34;</span><span class=p>}</span>
+    <span class=nx>t</span><span class=p>.</span><span class=nf>Execute</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>doc</span><span class=p>,</span><span class=nx>p</span><span class=p>)</span>
+    <span class=nx>html</span> <span class=o>:=</span> <span class=nx>doc</span><span class=p>.</span><span class=nf>String</span><span class=p>()</span>
+    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>html</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>  Sweet dream,Frank.</p><p>参考文献:</p><p>[1] <a href=http://golang.org/pkg/html/template/>Package template</a></p><p>[2] <a href=http://golang.org/pkg/bytes/#Buffer.String>Package bytes #Buffer.string</a></p><p>[3] <a href=https://groups.google.com/forum/#!topic/golang-nuts/dSFHCV-e6Nw>Make template.Execute write output to a string</a></p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>0001-01-01</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/old/boot2docker%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95unicode%E6%96%87%E4%BB%B6%E5%90%8D%E6%94%AF%E6%8C%81%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D.html><i class="iconfont icon-left"></i><span class="prev-text nav-default"></span><span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/old/refresh-project-folder-hotkey-of-sublime-text-2-build-2221.html><span class="next-text nav-default"></span><span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a><a href=https://blog.kongfanjian.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=text/javascript>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],tags:'ams',}};</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

@@ -1,0 +1,117 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>300行 Golang 实现区块链 - 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="0x1 开篇 区块链，时下最火的技术。一篇《A blockchain in 200 lines of code》更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。 纸上得"><meta name=keywords content><meta name=generator content="Hugo 0.76.5 with theme even"><link rel=canonical href=https://blog.kongfanjian.com/post/old/300-line-blockchain-in-go.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.cab03f0476bdd5bd0a4c1b3a5d424dbe66e840d607615774f84dd42bf74d9c3a.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="300行 Golang 实现区块链"><meta property="og:description" content="0x1 开篇 区块链，时下最火的技术。一篇《A blockchain in 200 lines of code》更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。 纸上得"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kongfanjian.com/post/old/300-line-blockchain-in-go.html"><meta property="article:published_time" content="2017-04-20T00:00:00+00:00"><meta property="article:modified_time" content="2020-10-28T16:25:49+08:00"><meta itemprop=name content="300行 Golang 实现区块链"><meta itemprop=description content="0x1 开篇 区块链，时下最火的技术。一篇《A blockchain in 200 lines of code》更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。 纸上得"><meta itemprop=datePublished content="2017-04-20T00:00:00+00:00"><meta itemprop=dateModified content="2020-10-28T16:25:49+08:00"><meta itemprop=wordCount content="920"><meta itemprop=keywords content="golang,blockchain,"><meta name=twitter:card content="summary"><meta name=twitter:title content="300行 Golang 实现区块链"><meta name=twitter:description content="0x1 开篇 区块链，时下最火的技术。一篇《A blockchain in 200 lines of code》更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。 纸上得"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>300行 Golang 实现区块链</h1><div class=post-meta><span class=post-time>2017-04-20</span><div class=post-category><a href=/categories/%E6%9C%AF%E4%B8%9A/>术业</a></div><span class=more-meta>约 920 字</span>
+<span class=more-meta>预计阅读 2 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><ul><li><ul><li><a href=#0x1-开篇>0x1 开篇</a></li><li><a href=#0x2-区块数据结构>0x2 区块数据结构</a></li><li><a href=#0x3-区块哈希>0x3 区块哈希</a></li><li><a href=#0x4-创建新区块>0x4 创建新区块</a></li><li><a href=#0x5-创世块>0x5 创世块</a></li><li><a href=#0x6-区块存储>0x6 区块存储</a></li><li><a href=#0x7-区块完整性验证>0x7 区块完整性验证</a></li><li><a href=#0x8-节点通讯>0x8 节点通讯</a></li><li><a href=#0x9-节点控制>0x9 节点控制</a></li><li><a href=#0xa-结语>0xA 结语</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><h3 id=0x1-开篇>0x1 开篇</h3><p>  区块链，时下最火的技术。一篇<a href=https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54>《A blockchain in 200 lines of code》</a>更是在技术圈里刷屏。在读过 Lauri Hartikka 写的这篇文章和代码后，我愈发对区块链兴趣浓厚。
+  纸上得来终觉浅，要深入了解一门技术，终究是需要自己造一次轮子。于是，我着手用 Go 语言仿造着实现了一个 <strong>naivechain</strong>。</p><h3 id=0x2-区块数据结构>0x2 区块数据结构</h3><p>  和 Lauri Hartikka 一样，数据结构上我们一切从简，只使用 <code>Index</code>，<code>PreviousHash</code>，<code>Timestamp</code>，<code>Data</code>，<code>Hash</code> 这几个必要的字段。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>type</span> <span class=nx>Block</span> <span class=kd>struct</span> <span class=p>{</span>
+	<span class=nx>Index</span>        <span class=kt>int64</span>  <span class=s>`json:&#34;index&#34;`</span>        <span class=c1>// 区块索引
+</span><span class=c1></span>	<span class=nx>PreviousHash</span> <span class=kt>string</span> <span class=s>`json:&#34;previousHash&#34;`</span> <span class=c1>// 前块哈希
+</span><span class=c1></span>	<span class=nx>Timestamp</span>    <span class=kt>int64</span>  <span class=s>`json:&#34;timestamp&#34;`</span>    <span class=c1>// 时间戳
+</span><span class=c1></span>	<span class=nx>Data</span>         <span class=kt>string</span> <span class=s>`json:&#34;data&#34;`</span>         <span class=c1>// 区块数据
+</span><span class=c1></span>	<span class=nx>Hash</span>         <span class=kt>string</span> <span class=s>`json:&#34;hash&#34;`</span>         <span class=c1>// 区块哈希
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=0x3-区块哈希>0x3 区块哈希</h3><p>  <code>区块哈希</code>用于验证<code>区块数据</code>的完整性，使用 <strong>SHA-256</strong> 算法生成<code>Index</code>， <code>PreviousHash</code>，<code>Timestamp</code>， <code>Data</code> 拼接字符串的摘要。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>calculateHashForBlock</span><span class=p>(</span><span class=nx>b</span> <span class=o>*</span><span class=nx>Block</span><span class=p>)</span> <span class=kt>string</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;%x&#34;</span><span class=p>,</span>
+		<span class=nx>sha256</span><span class=p>.</span><span class=nf>Sum256</span><span class=p>(</span>
+			<span class=p>[]</span><span class=nb>byte</span><span class=p>(</span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;%d%s%d%s&#34;</span><span class=p>,</span>
+				<span class=nx>b</span><span class=p>.</span><span class=nx>Index</span><span class=p>,</span> <span class=nx>b</span><span class=p>.</span><span class=nx>PreviousHash</span><span class=p>,</span> <span class=nx>b</span><span class=p>.</span><span class=nx>Timestamp</span><span class=p>,</span> <span class=nx>b</span><span class=p>.</span><span class=nx>Data</span><span class=p>))))</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=0x4-创建新区块>0x4 创建新区块</h3><p>  为了生成新区块，我们需要知道<code>前区块</code>和新区块的必要数据（<code>Index</code>，<code>Hash</code>，<code>Timestamp</code>， <code>Data</code>）;<code>区块数据</code>由终端用户提供。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>generateNextBlock</span><span class=p>(</span><span class=nx>data</span> <span class=kt>string</span><span class=p>)</span> <span class=p>(</span><span class=nx>nb</span> <span class=o>*</span><span class=nx>Block</span><span class=p>)</span> <span class=p>{</span>
+	<span class=kd>var</span> <span class=nx>previousBlock</span> <span class=p>=</span> <span class=nf>getLatestBlock</span><span class=p>()</span>
+	<span class=nx>nb</span> <span class=p>=</span> <span class=o>&amp;</span><span class=nx>Block</span><span class=p>{</span>
+		<span class=nx>Data</span><span class=p>:</span>         <span class=nx>data</span><span class=p>,</span>
+		<span class=nx>PreviousHash</span><span class=p>:</span> <span class=nx>previousBlock</span><span class=p>.</span><span class=nx>Hash</span><span class=p>,</span>
+		<span class=nx>Index</span><span class=p>:</span>        <span class=nx>previousBlock</span><span class=p>.</span><span class=nx>Index</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span>
+		<span class=nx>Timestamp</span><span class=p>:</span>    <span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>().</span><span class=nf>Unix</span><span class=p>(),</span>
+	<span class=p>}</span>
+	<span class=nx>nb</span><span class=p>.</span><span class=nx>Hash</span> <span class=p>=</span> <span class=nf>calculateHashForBlock</span><span class=p>(</span><span class=nx>nb</span><span class=p>)</span>
+	<span class=k>return</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=0x5-创世块>0x5 创世块</h3><p>  区块链的第一个区块被称之为<code>创世块</code>，被硬编码在程序内。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>var</span> <span class=nx>genesisBlock</span> <span class=p>=</span> <span class=o>&amp;</span><span class=nx>Block</span><span class=p>{</span>
+	<span class=nx>Index</span><span class=p>:</span>        <span class=mi>0</span><span class=p>,</span>
+	<span class=nx>PreviousHash</span><span class=p>:</span> <span class=s>&#34;0&#34;</span><span class=p>,</span>
+	<span class=nx>Timestamp</span><span class=p>:</span>    <span class=mi>1465154705</span><span class=p>,</span>
+	<span class=nx>Data</span><span class=p>:</span>         <span class=s>&#34;my genesis block!!&#34;</span><span class=p>,</span>
+	<span class=nx>Hash</span><span class=p>:</span> <span class=s>&#34;816534932c2b7154836da6afc367695e6337db8a921823784c14378abed4f7d7&#34;</span><span class=p>,</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=0x6-区块存储>0x6 区块存储</h3><p>  这里使用 Go 语言的 Slice 存储区块。区块链是有序 List，为了保证有序性，需要对内存中保存区块的数组进行排序。定义按 <code>Index</code> 排序的结构体 <code>ByIndex</code>，并实现 <code>sort.Interface</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>type</span> <span class=nx>ByIndex</span> <span class=p>[]</span><span class=o>*</span><span class=nx>Block</span>
+
+<span class=kd>func</span> <span class=p>(</span><span class=nx>b</span> <span class=nx>ByIndex</span><span class=p>)</span> <span class=nf>Len</span><span class=p>()</span> <span class=kt>int</span>           <span class=p>{</span> <span class=k>return</span> <span class=nb>len</span><span class=p>(</span><span class=nx>b</span><span class=p>)</span> <span class=p>}</span>
+<span class=kd>func</span> <span class=p>(</span><span class=nx>b</span> <span class=nx>ByIndex</span><span class=p>)</span> <span class=nf>Swap</span><span class=p>(</span><span class=nx>i</span><span class=p>,</span> <span class=nx>j</span> <span class=kt>int</span><span class=p>)</span>      <span class=p>{</span> <span class=nx>b</span><span class=p>[</span><span class=nx>i</span><span class=p>],</span> <span class=nx>b</span><span class=p>[</span><span class=nx>j</span><span class=p>]</span> <span class=p>=</span> <span class=nx>b</span><span class=p>[</span><span class=nx>j</span><span class=p>],</span> <span class=nx>b</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span> <span class=p>}</span>
+<span class=kd>func</span> <span class=p>(</span><span class=nx>b</span> <span class=nx>ByIndex</span><span class=p>)</span> <span class=nf>Less</span><span class=p>(</span><span class=nx>i</span><span class=p>,</span> <span class=nx>j</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>bool</span> <span class=p>{</span> <span class=k>return</span> <span class=nx>b</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>Index</span> <span class=p>&lt;</span> <span class=nx>b</span><span class=p>[</span><span class=nx>j</span><span class=p>].</span><span class=nx>Index</span> <span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=0x7-区块完整性验证>0x7 区块完整性验证</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>isValidNewBlock</span><span class=p>(</span><span class=nx>nb</span><span class=p>,</span> <span class=nx>pb</span> <span class=o>*</span><span class=nx>Block</span><span class=p>)</span> <span class=p>(</span><span class=nx>ok</span> <span class=kt>bool</span><span class=p>)</span> <span class=p>{</span>
+	<span class=k>if</span> <span class=nx>nb</span><span class=p>.</span><span class=nx>Hash</span> <span class=o>==</span> <span class=nf>calculateHashForBlock</span><span class=p>(</span><span class=nx>nb</span><span class=p>)</span> <span class=o>&amp;&amp;</span>
+		<span class=nx>pb</span><span class=p>.</span><span class=nx>Index</span><span class=o>+</span><span class=mi>1</span> <span class=o>==</span> <span class=nx>nb</span><span class=p>.</span><span class=nx>Index</span> <span class=o>&amp;&amp;</span>
+		<span class=nx>pb</span><span class=p>.</span><span class=nx>Hash</span> <span class=o>==</span> <span class=nx>nb</span><span class=p>.</span><span class=nx>PreviousHash</span> <span class=p>{</span>
+		<span class=nx>ok</span> <span class=p>=</span> <span class=kc>true</span>
+	<span class=p>}</span>
+	<span class=k>return</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=0x8-节点通讯>0x8 节点通讯</h3><p>  每个节点在启动时监听一个端口（由 <code>-p2p</code> 参数指定），使用 <strong>websocket</strong> 协议和其它节点通讯。</p><h3 id=0x9-节点控制>0x9 节点控制</h3><p>  没个节点在启动时监听一个端口（由 <code>-api</code> 参数指定），接收 <strong>HTTP</strong> 协议的 <strong>JSON</strong> 控制命令。使用示例：</p><ul><li><p>查看区块</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>curl http://localhost:3001/blocks
+</code></pre></td></tr></table></div></div></li><li><p>创建区块</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>curl -H <span class=s2>&#34;Content-type:application/json&#34;</span> --data <span class=s1>&#39;{&#34;data&#34; : &#34;Some data to the first block&#34;}&#39;</span> http://localhost:3001/mine_block
+</code></pre></td></tr></table></div></div></li><li><p>添加节点</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>curl -H <span class=s2>&#34;Content-type:application/json&#34;</span> --data <span class=s1>&#39;{&#34;peer&#34; : &#34;ws://localhost:6002&#34;}&#39;</span> http://localhost:3001/add_peer
+</code></pre></td></tr></table></div></div></li><li><p>查看节点</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>curl http://localhost:3001/peers
+</code></pre></td></tr></table></div></div></li></ul><h3 id=0xa-结语>0xA 结语</h3><p>  这是一个最简单的区块链实现，用于学习区块链的工作原理，因为没用实现工作量证明这一类的挖矿算法，不适宜在公共网络使用。更多的细节请访问 Github: <a href=https://github.com/kofj/naivechain>https://github.com/kofj/naivechain</a>。</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2020-10-28
+<a href=/commit/e0c0e4682e63b3ed09b148e2de8f07fb00bb30c2 title="Rust 笔记">(e0c0e46)</a></span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/golang/>golang</a>
+<a href=/tags/blockchain/>blockchain</a></div><nav class=post-nav><a class=prev href=/post/old/my-boyfriend-has-been-kill-by-his-company.html><i class="iconfont icon-left"></i><span class="prev-text nav-default">我的男朋友被暴风音影杀了祭天</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/old/foreach-nodelist-of-javascript.html><span class="next-text nav-default">JS 遍历 NodeList 对象</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a><a href=https://blog.kongfanjian.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=text/javascript>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],tags:'ams',}};</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

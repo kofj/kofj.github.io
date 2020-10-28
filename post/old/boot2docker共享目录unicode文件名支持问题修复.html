@@ -1,0 +1,113 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>- 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="title: boot2docker共享目录unicode文件名支持问题修复 tags: docker boot2docker categories: 术业 docker date: 2015-01-23 01:08:03 这是一篇补记,问题在两周之前就已经解决了,并且给官方发送"><meta name=keywords content><meta name=generator content="Hugo 0.76.5 with theme even"><link rel=canonical href=https://blog.kongfanjian.com/post/old/boot2docker%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95unicode%E6%96%87%E4%BB%B6%E5%90%8D%E6%94%AF%E6%8C%81%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.cab03f0476bdd5bd0a4c1b3a5d424dbe66e840d607615774f84dd42bf74d9c3a.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content><meta property="og:description" content="title: boot2docker共享目录unicode文件名支持问题修复 tags: docker boot2docker categories: 术业 docker date: 2015-01-23 01:08:03 这是一篇补记,问题在两周之前就已经解决了,并且给官方发送"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kongfanjian.com/post/old/boot2docker%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95unicode%E6%96%87%E4%BB%B6%E5%90%8D%E6%94%AF%E6%8C%81%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D.html"><meta itemprop=name content><meta itemprop=description content="title: boot2docker共享目录unicode文件名支持问题修复 tags: docker boot2docker categories: 术业 docker date: 2015-01-23 01:08:03 这是一篇补记,问题在两周之前就已经解决了,并且给官方发送"><meta itemprop=wordCount content="1848"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="title: boot2docker共享目录unicode文件名支持问题修复 tags: docker boot2docker categories: 术业 docker date: 2015-01-23 01:08:03 这是一篇补记,问题在两周之前就已经解决了,并且给官方发送"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title></h1><div class=post-meta><span class=post-time>0001-01-01</span>
+<span class=more-meta>约 1848 字</span>
+<span class=more-meta>预计阅读 4 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><ul><li><ul><li><a href=#0x1-问题>0x1 问题</a></li><li><a href=#0x2-溯源>0x2 溯源</a></li><li><a href=#0x3-除病>0x3 除病</a></li><li><a href=#0x4-结语>0x4 结语</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><p>title: boot2docker共享目录unicode文件名支持问题修复
+tags:</p><ul><li>docker</li><li>boot2docker
+categories:</li><li>术业</li><li>docker
+date: 2015-01-23 01:08:03</li></ul><hr><p>  这是一篇补记,问题在两周之前就已经解决了,并且给官方发送了pull request.目前官方只是把这个PR添加到了v1.5.0版的milestone当中,如果你需要.可以看我fork修改后的代码,或者直接下载生成好的<a href=http://pan.baidu.com/s/1hqKiLgw>ISO镜像</a>.</p><h3 id=0x1-问题>0x1 问题</h3><p>  Docker是个非常不错的工具,但是源于其本身的实现原理(依赖于Linux的LXC)的原因,Windows和OS X系统的用户是没有办法使用原生的docker的.幸运的是,docker官方为我们这一类<code>非Linux用户</code>提供了一个很好的工具——boot2docker.
+  正如官方项目描述所言,boot2docker实质就是一个轻量级的支持Docker的Linux系统,事实上它就是基于<code>Tiny Core Linux</code>这一五脏俱全的小麻雀定制而成的.boot2docker虽是好用,但是在实际运用当中我却遇到了麻烦:boot2docker中的容器无法正常处理文件名使用unicode编码的文件的问题(注意:是文件名编码为unicode,而不是文件内容).
+  或者简单点说,这个问题就是boot2docker中无法显示(<code>ls -al</code>)出自动挂载的VBox共享目录中的中文文件名的文件.</p><h3 id=0x2-溯源>0x2 溯源</h3><p>  存在即合理,既然必须要在docker容器当中处理中文文件名的文件,那么这个问题就应该解决掉.找准病因,才能对症下药.面对困难我们应当大胆假设,小心求证.
+  首先怀疑是docker官方提供的image不支持中文,启动一个容器使用<code>locale</code>查看系统默认编码并不是GBK或者UTF-8.
+<img src=https://ww2.sinaimg.cn/large/6816152bgw1eojcme1s2rj20fa0a6dgp.jpg alt="docker CentOS 默认编码">
+  回想起来,当时这个假设还是相当的粗放,大胆的,根本没有仔细思考为什么是<code>不显示文件</code>而非<code>文件名乱码</code>.无知无畏,既然有了假设,不管这个假设正确与否,只有实践验证方知结果.通过<code>localedef</code>生成中文locale文件,并设置系统默认编码集为UTF-8.
+<img src=https://ww2.sinaimg.cn/large/6816152bgw1eojce2nyzrj20fa0a6dh1.jpg alt=修改系统locale和编码集>
+  但是,结果还是让人让人失望的,依然无法显示中文名的文件.
+<img src=https://ww3.sinaimg.cn/large/6816152bgw1eojedcbf5kj20nu05wgm9.jpg alt=试验失败>
+  既然在容器中修改系统编码,同样是无法列出中文名的文件.那只能猜测是boot2docker这个轻量级的Linux系统存在问题了.
+<img src=https://ww1.sinaimg.cn/large/6816152bgw1eojek6sk49j20nu0ci0uy.jpg alt=boot2docker中无法列出VBox共享目录中的中文文件>
+  通过ssh登录到boot2docker,在Home目录当中创建和查看中文名文件,验证了boot2docker本身是能够处理中文名文件的.而在VBox挂载进来的共享目录当中却是不能正常处理中文名文件.这说明问题是出在了boot2docker挂载共享目录这一环节.
+<img src=https://ww4.sinaimg.cn/large/6816152bgw1eojez26e6yj20cf05it95.jpg alt=在boot2docker的home目录中测试中文名文件></p><h3 id=0x3-除病>0x3 除病</h3><p>  既然找到了病症所在,那我们就能够开始下药方了.通过阅读boot2docker代码得知,它是使用<code>rootfs/rootfs/etc/rc.d/automount-shares</code>这一脚本自动挂载共享目录的.脚本中核心函数如下:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-BASH data-lang=BASH>	<span class=c1># try mounting &#34;$name&#34; (which defaults to &#34;$dir&#34;) at &#34;$dir&#34;,</span>
+	<span class=c1># but quietly clean up empty directories if it fails</span>
+	try_mount_share<span class=o>()</span> <span class=o>{</span>
+		<span class=nv>dir</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+		<span class=nv>name</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>2</span><span class=k>:-</span><span class=nv>$dir</span><span class=si>}</span><span class=s2>&#34;</span>
+		
+		mkdir -p <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null
+		<span class=k>if</span> ! mount -t vboxsf -o <span class=s2>&#34;</span><span class=nv>$mountOptions</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$name</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null<span class=p>;</span> <span class=k>then</span>
+			rmdir <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null <span class=o>||</span> <span class=nb>true</span>
+			<span class=k>while</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span> !<span class=o>=</span> <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>do</span>
+				<span class=nv>dir</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+				rmdir <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null <span class=o>||</span> <span class=nb>break</span>
+			<span class=k>done</span>
+			
+			<span class=k>return</span> <span class=m>1</span>
+		<span class=k>fi</span>
+		
+		<span class=k>return</span> <span class=m>0</span>
+	<span class=o>}</span>
+</code></pre></td></tr></table></div></div><p>  boot2docker是基于<code>Tiny Core Linux</code>构建的,而Tiny Core Linux的rootfs是使用<code>busybox</code>构建的.并且Tiny Core Linux中mount工具源自busybox工具集,挂载共享目录时的默认编码并非UTF-8,这就导致了在宿主机中使用UTF-8编码的中文名文件挂载进boot2docker后无法显示出来.
+  幸运的是,boot2docker集成了VBox的Gust Additions,其中包含了共享目录的专用挂载工具<code>mount.vboxsf</code>.我们可以通过<code>mount.vboxsf</code>的参数<code>iocharset</code>来设定挂载共享目录的编码集为UTF-8.修改后的shell脚本代码如下:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-BASH data-lang=BASH>	<span class=c1># try mounting &#34;$name&#34; (which defaults to &#34;$dir&#34;) at &#34;$dir&#34;,</span>
+	<span class=c1># but quietly clean up empty directories if it fails</span>
+	try_mount_share<span class=o>()</span> <span class=o>{</span>
+		<span class=nv>dir</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+		<span class=nv>name</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>2</span><span class=k>:-</span><span class=nv>$dir</span><span class=si>}</span><span class=s2>&#34;</span>
+		
+		mkdir -p <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null
+		<span class=k>if</span> ! mount.vboxsf -o <span class=s2>&#34;</span><span class=nv>$mountOptions</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$name</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null<span class=p>;</span> <span class=k>then</span>
+			rmdir <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null <span class=o>||</span> <span class=nb>true</span>
+			<span class=k>while</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span> !<span class=o>=</span> <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>do</span>
+				<span class=nv>dir</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+				rmdir <span class=s2>&#34;</span><span class=nv>$dir</span><span class=s2>&#34;</span> 2&gt;/dev/null <span class=o>||</span> <span class=nb>break</span>
+			<span class=k>done</span>
+			
+			<span class=k>return</span> <span class=m>1</span>
+		<span class=k>fi</span>
+		
+		<span class=k>return</span> <span class=m>0</span>
+	<span class=o>}</span>
+</code></pre></td></tr></table></div></div><p>  最后,让我们一起来看一下是使用修改了<code>automount-shares</code>的boot2docker中对中文名文件的支持情况:
+<img src=https://ww4.sinaimg.cn/large/6816152bgw1eojium0q9qj20il0ci0uy.jpg alt=能够显示中文名文件,虽然是乱码>
+  目前已经能够显示中文名文件,虽然是乱码,但是并不影响容器当中处理文件.</p><h3 id=0x4-结语>0x4 结语</h3><p>  通过boot2docker的Dockfile来构建镜像是比较耗费资源的,而且由于大陆网络的原因,还有可能无法下载构建过程中的某些包.为了方便大家使用,我在本地重新构建了一个修改自动挂载脚本后的boot2docker的ISO镜像上传到了百度网盘.
+下载地址:<a href=http://pan.baidu.com/s/1hqKiLgw>共享目录支持中文文件名的boot2dokcer镜像</a>
+密码: 5qoc</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>0001-01-01</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/old/a-spam-email-from-appleid.html><i class="iconfont icon-left"></i><span class="prev-text nav-default"></span><span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/old/golang%E8%A7%A3%E6%9E%90html%E6%A8%A1%E6%9D%BF%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2.html><span class="next-text nav-default"></span><span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a><a href=https://blog.kongfanjian.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=text/javascript>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],tags:'ams',}};</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
