@@ -1,0 +1,540 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Windows 容器镜像实验笔记 - 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="最近一些客户反馈，希望能够在 Windows 系统使用 TCR 镜像仓库。以及一些内部用户场景，需要使用 Windows 镜像，并且希望能够有代理服务，能够缓存加速 Windows Core 镜像。特此记"><meta name=keywords content><meta name=generator content="Hugo 0.103.0 with theme even"><link rel=canonical href=https://blog.kongfanjian.com/post/2022-02/windows-docker-image-note.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.eeae260563cd6859206edc003bd340406f7f46fdbcca0a1c3ff4f1ecc5db53ed.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Windows 容器镜像实验笔记"><meta property="og:description" content="最近一些客户反馈，希望能够在 Windows 系统使用 TCR 镜像仓库。以及一些内部用户场景，需要使用 Windows 镜像，并且希望能够有代理服务，能够缓存加速 Windows Core 镜像。特此记"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kongfanjian.com/post/2022-02/windows-docker-image-note.html"><meta property="article:section" content="post"><meta property="article:published_time" content="2022-02-18T14:33:52+08:00"><meta property="article:modified_time" content="2022-02-18T14:33:52+08:00"><meta itemprop=name content="Windows 容器镜像实验笔记"><meta itemprop=description content="最近一些客户反馈，希望能够在 Windows 系统使用 TCR 镜像仓库。以及一些内部用户场景，需要使用 Windows 镜像，并且希望能够有代理服务，能够缓存加速 Windows Core 镜像。特此记"><meta itemprop=datePublished content="2022-02-18T14:33:52+08:00"><meta itemprop=dateModified content="2022-02-18T14:33:52+08:00"><meta itemprop=wordCount content="1170"><meta itemprop=keywords content="容器镜像,Windows,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Windows 容器镜像实验笔记"><meta name=twitter:description content="最近一些客户反馈，希望能够在 Windows 系统使用 TCR 镜像仓库。以及一些内部用户场景，需要使用 Windows 镜像，并且希望能够有代理服务，能够缓存加速 Windows Core 镜像。特此记"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>主页</li></a><a href=/projects.html><li class=mobile-menu-item>项目</li></a><a href=/post.html><li class=mobile-menu-item>归档</li></a><a href=/tags.html><li class=mobile-menu-item>标签</li></a><a href=/categories.html><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>主页</a></li><li class=menu-item><a class=menu-item-link href=/projects.html>项目</a></li><li class=menu-item><a class=menu-item-link href=/post.html>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags.html>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories.html>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Windows 容器镜像实验笔记</h1><div class=post-meta><span class=post-time>2022-02-18</span><div class=post-category><a href=/categories/%E6%9C%AF%E4%B8%9A/>术业</a></div><span class=more-meta>约 1170 字</span>
+<span class=more-meta>预计阅读 3 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#环境准备>环境准备</a><ul><li><a href=#部署-containerd>部署 Containerd</a></li><li><a href=#部署-registry-mirror>部署 Registry Mirror</a></li></ul></li><li><a href=#测试记录>测试记录</a><ul><li><a href=#服务端>服务端</a></li><li><a href=#客户端>客户端</a></li></ul></li><li><a href=#结论>结论</a><ul><li><a href=#2022-02-18>2022-02-18</a></li></ul></li></ul></nav></div></div><div class=post-content><p>  最近一些客户反馈，希望能够在 Windows 系统使用 TCR 镜像仓库。以及一些内部用户场景，需要使用 Windows 镜像，并且希望能够有代理服务，能够缓存加速 Windows Core 镜像。特此记录下操作过程和笔记。</p><h1 id=环境准备>环境准备</h1><h2 id=部署-containerd>部署 Containerd</h2><p>参考文章：</p><p><a href=https://www.jamessturtevant.com/posts/Windows-Containers-on-Windows-10-without-Docker-using-Containerd/>Windows Containers on Windows 10 without Docker (using Containerd)</a></p><p>配置文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># crictl.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>runtime-endpoint</span><span class=p>:</span><span class=w> </span><span class=l>npipe://./pipe/containerd-containerd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>image-endpoint</span><span class=p>:</span><span class=w> </span><span class=l>npipe://./pipe/containerd-containerd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>timeout</span><span class=p>:</span><span class=w> </span><span class=m>10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>debug</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>Containerd 配置 Mirror</p><p>参考文档： <a href=https://github.com/containerd/containerd/blob/main/docs/cri/registry.md>containerd/registry.md at main · containerd/containerd (github.com)</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># containerd.toml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>disabled_plugins = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>imports = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>oom_score = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>plugin_dir = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>required_plugins = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>root = &#34;C:\\ProgramData\\containerd\\root&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>state = &#34;C:\\ProgramData\\containerd\\state&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>temp = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>version = 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>cgroup]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>path = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>debug]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>address = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>format = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>gid = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>level = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>uid = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>grpc]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>address = &#34;\\\\.\\pipe\\containerd-containerd&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>gid = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>max_recv_message_size = 16777216</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>max_send_message_size = 16777216</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>tcp_address = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>tcp_tls_ca = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>tcp_tls_cert = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>tcp_tls_key = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>uid = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>metrics]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>address = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>grpc_histogram = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>plugins]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.gc.v1.scheduler&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>deletion_threshold = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>mutation_threshold = 100</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>pause_threshold = 0.02</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>schedule_delay = &#34;0s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>startup_delay = &#34;100ms&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>device_ownership_from_security_context = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>disable_apparmor = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>disable_cgroup = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>disable_hugetlb_controller = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>disable_proc_mount = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>disable_tcp_service = true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>enable_selinux = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>enable_tls_streaming = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>enable_unprivileged_icmp = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>enable_unprivileged_ports = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>ignore_image_defined_volumes = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>max_concurrent_downloads = 3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>max_container_log_line_size = 16384</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>netns_mounts_under_state_dir = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>restrict_oom_score_adj = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>sandbox_image = &#34;k8s.gcr.io/pause:3.6&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>selinux_category_range = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>stats_collect_period = 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>stream_idle_timeout = &#34;4h0m0s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>stream_server_address = &#34;127.0.0.1&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>stream_server_port = &#34;0&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>systemd_cgroup = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>tolerate_missing_hugetlb_controller = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>unset_seccomp_profile = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.cni]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>bin_dir = &#34;C:\\Program Files\\containerd\\cni\\bin&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>conf_dir = &#34;C:\\Program Files\\containerd\\cni\\conf&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>conf_template = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>ip_pref = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>max_conf_num = 1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>default_runtime_name = &#34;runhcs-wcow-process&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>disable_snapshot_annotations = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>discard_unpacked_layers = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>ignore_rdt_not_enabled_errors = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>no_pivot = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>snapshotter = &#34;windows&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.default_runtime]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>base_runtime_spec = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>cni_conf_dir = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>cni_max_conf_num = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>container_annotations = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>pod_annotations = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>privileged_without_host_devices = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_engine = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_path = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_root = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_type = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.default_runtime.options]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runhcs-wcow-process]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>base_runtime_spec = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>cni_conf_dir = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>cni_max_conf_num = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>container_annotations = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>pod_annotations = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>privileged_without_host_devices = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>runtime_engine = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>runtime_path = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>runtime_root = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=l>runtime_type = &#34;io.containerd.runhcs.v1&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runhcs-wcow-process.options]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.untrusted_workload_runtime]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>base_runtime_spec = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>cni_conf_dir = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>cni_max_conf_num = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>container_annotations = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>pod_annotations = []</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>privileged_without_host_devices = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_engine = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_path = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_root = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=l>runtime_type = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.untrusted_workload_runtime.options]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.image_decryption]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>key_model = &#34;node&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>config_path = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.auths]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.configs]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.headers]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.mirrors]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.x509_key_pair_streaming]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>tls_cert_file = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>tls_key_file = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.internal.v1.opt&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>path = &#34;C:\\ProgramData\\containerd\\root\\opt&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.internal.v1.restart&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>interval = &#34;10s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.internal.v1.tracing&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>sampling_ratio = 1.0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>service_name = &#34;containerd&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.metadata.v1.bolt&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>content_sharing_policy = &#34;shared&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.runtime.v2.task&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>platforms = [&#34;windows/amd64&#34;, &#34;linux/amd64&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>sched_core = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.service.v1.diff-service&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>default = [&#34;windows&#34;, &#34;windows-lcow&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.service.v1.tasks-service&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>rdt_config_file = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.tracing.processor.v1.otlp&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>endpoint = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>insecure = false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>protocol = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>proxy_plugins]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>stream_processors]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>stream_processors.&#34;io.containerd.ocicrypt.decoder.v1.tar&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>accepts = [&#34;application/vnd.oci.image.layer.v1.tar+encrypted&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>args = [&#34;--decryption-keys-path&#34;, &#34;C:\\Program Files\\containerd\\ocicrypt\\keys&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>env = [&#34;OCICRYPT_KEYPROVIDER_CONFIG=C:\\Program Files\\containerd\\ocicrypt\\ocicrypt_keyprovider.conf&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>path = &#34;ctd-decoder&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>returns = &#34;application/vnd.oci.image.layer.v1.tar&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>[</span><span class=l>stream_processors.&#34;io.containerd.ocicrypt.decoder.v1.tar.gzip&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>accepts = [&#34;application/vnd.oci.image.layer.v1.tar+gzip+encrypted&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>args = [&#34;--decryption-keys-path&#34;, &#34;C:\\Program Files\\containerd\\ocicrypt\\keys&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>env = [&#34;OCICRYPT_KEYPROVIDER_CONFIG=C:\\Program Files\\containerd\\ocicrypt\\ocicrypt_keyprovider.conf&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>path = &#34;ctd-decoder&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>returns = &#34;application/vnd.oci.image.layer.v1.tar+gzip&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>timeouts]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;io.containerd.timeout.bolt.open&#34;</span><span class=w> </span><span class=l>= &#34;0s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;io.containerd.timeout.shim.cleanup&#34;</span><span class=w> </span><span class=l>= &#34;5s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;io.containerd.timeout.shim.load&#34;</span><span class=w> </span><span class=l>= &#34;5s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;io.containerd.timeout.shim.shutdown&#34;</span><span class=w> </span><span class=l>= &#34;3s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;io.containerd.timeout.task.state&#34;</span><span class=w> </span><span class=l>= &#34;2s&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>ttrpc]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>address = &#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>gid = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=l>uid = 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>[</span><span class=l>plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.mirrors.&#34;mcr.microsoft.com&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>endpoint = [&#34;http://49.232.217.60:5000&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#[plugins.cri.registry.mirrors]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#[plugins.cri.registry.mirrors.&#34;mcr.microsoft.com&#34;]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#endpoint = [&#34;http://49.232.217.60:5000&#34;]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=部署-registry-mirror>部署 Registry Mirror</h2><p>配置文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=m>0.1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>log</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>level</span><span class=p>:</span><span class=w> </span><span class=l>debug</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>fields</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>service</span><span class=p>:</span><span class=w> </span><span class=l>registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>proxy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>remoteurl</span><span class=p>:</span><span class=w> </span><span class=l>https://mcr.microsoft.com</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>storage</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>cache</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>blobdescriptor</span><span class=p>:</span><span class=w> </span><span class=l>inmemory</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>filesystem</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>rootdirectory</span><span class=p>:</span><span class=w> </span><span class=l>/var/lib/registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>http</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>addr</span><span class=p>:</span><span class=w> </span><span class=p>:</span><span class=m>5000</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>headers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>X-Content-Type-Options</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>nosniff]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>health</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>storagedriver</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>10s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>threshold</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>启动 Mirror 容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker run --name lab -p 5000:5000 -v data:/var/lib/registry -v config.yml:/etc/docker/registry/config.yml ccr.ccs.tencentyun.com/library/registry
+</span></span></code></pre></td></tr></table></div></div><h1 id=测试记录>测试记录</h1><h2 id=服务端>服务端</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>ime</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:33:35.858558666Z&#34;</span> <span class=nv>level</span><span class=o>=</span>warning <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;No HTTP secret provided - generated random secret. This may cause problems with uploads if multiple registries are behind a load-balancer. To provide a shared secret, fill in http.secret in the configuration file or set the REGISTRY_HTTP_SECRET environment variable.&#34;</span> go.version<span class=o>=</span>go1.11.2 instance.id<span class=o>=</span>1455028d-da6d-4743-9ad5-940bba016f10 <span class=nv>service</span><span class=o>=</span>registry <span class=nv>version</span><span class=o>=</span>v2.7.1
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:33:35.85863219Z&#34;</span> <span class=nv>level</span><span class=o>=</span>info <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;redis not configured&#34;</span> go.version<span class=o>=</span>go1.11.2 instance.id<span class=o>=</span>1455028d-da6d-4743-9ad5-940bba016f10 <span class=nv>service</span><span class=o>=</span>registry <span class=nv>version</span><span class=o>=</span>v2.7.1
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:33:35.860982269Z&#34;</span> <span class=nv>level</span><span class=o>=</span>info <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;Starting upload purge in 53m0s&#34;</span> go.version<span class=o>=</span>go1.11.2 instance.id<span class=o>=</span>1455028d-da6d-4743-9ad5-940bba016f10 <span class=nv>service</span><span class=o>=</span>registry <span class=nv>version</span><span class=o>=</span>v2.7.1
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:33:35.872414901Z&#34;</span> <span class=nv>level</span><span class=o>=</span>info <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;using inmemory blob descriptor cache&#34;</span> go.version<span class=o>=</span>go1.11.2 instance.id<span class=o>=</span>1455028d-da6d-4743-9ad5-940bba016f10 <span class=nv>service</span><span class=o>=</span>registry <span class=nv>version</span><span class=o>=</span>v2.7.1
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:33:35.87439159Z&#34;</span> <span class=nv>level</span><span class=o>=</span>info <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;listening on [::]:5000&#34;</span> go.version<span class=o>=</span>go1.11.2 instance.id<span class=o>=</span>1455028d-da6d-4743-9ad5-940bba016f10 <span class=nv>service</span><span class=o>=</span>registry <span class=nv>version</span><span class=o>=</span>v2.7.1
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:34:00.48305885Z&#34;</span> <span class=nv>level</span><span class=o>=</span>error <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;response completed with error&#34;</span> err.code<span class=o>=</span><span class=s2>&#34;manifest unknown&#34;</span> err.detail<span class=o>=</span><span class=s2>&#34;unknown tag=ltsc2019&#34;</span> err.message<span class=o>=</span><span class=s2>&#34;manifest unknown&#34;</span> go.version<span class=o>=</span>go1.11.2 http.request.host<span class=o>=</span><span class=s2>&#34;49.232.217.60:5000&#34;</span> http.request.id<span class=o>=</span>1b62b54d-553b-4d2e-9487-c0d7fe8f7115 http.request.method<span class=o>=</span>HEAD http.request.remoteaddr<span class=o>=</span><span class=s2>&#34;10.88.0.1:60703&#34;</span> http.request.uri<span class=o>=</span><span class=s2>&#34;/v2/windows/servercore/manifests/ltsc2019?ns=mcr.microsoft.com&#34;</span> http.request.useragent<span class=o>=</span><span class=s2>&#34;containerd/v1.6.0&#34;</span> http.response.contenttype<span class=o>=</span><span class=s2>&#34;application/json; charset=utf-8&#34;</span> http.response.duration<span class=o>=</span>1.273899ms http.response.status<span class=o>=</span><span class=m>404</span> http.response.written<span class=o>=</span><span class=m>98</span> vars.name<span class=o>=</span><span class=s2>&#34;windows/servercore&#34;</span> vars.reference<span class=o>=</span>ltsc2019
+</span></span><span class=line><span class=cl>10.88.0.1 - - <span class=o>[</span>18/Feb/2022:06:34:00 +0000<span class=o>]</span> <span class=s2>&#34;HEAD /v2/windows/servercore/manifests/ltsc2019?ns=mcr.microsoft.com HTTP/1.1&#34;</span> <span class=m>404</span> <span class=m>98</span> <span class=s2>&#34;&#34;</span> <span class=s2>&#34;containerd/v1.6.0&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:34:01.050691255Z&#34;</span> <span class=nv>level</span><span class=o>=</span>error <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;response completed with error&#34;</span> err.code<span class=o>=</span><span class=s2>&#34;manifest unknown&#34;</span> err.detail<span class=o>=</span><span class=s2>&#34;unknown manifest name=windows/servercore revision=sha256:d8c2b69511a49e9eb6fd2a17f2727ae011b0382cd11562fa5cb4c70bb460cf12&#34;</span> err.message<span class=o>=</span><span class=s2>&#34;manifest unknown&#34;</span> go.version<span class=o>=</span>go1.11.2 http.request.host<span class=o>=</span><span class=s2>&#34;49.232.217.60:5000&#34;</span> http.request.id<span class=o>=</span>88e632bc-5eec-49b9-b625-624eaf8b96fa http.request.method<span class=o>=</span>GET http.request.remoteaddr<span class=o>=</span><span class=s2>&#34;10.88.0.1:60705&#34;</span> http.request.uri<span class=o>=</span><span class=s2>&#34;/v2/windows/servercore/manifests/sha256:d8c2b69511a49e9eb6fd2a17f2727ae011b0382cd11562fa5cb4c70bb460cf12?ns=mcr.microsoft.com&#34;</span> http.request.useragent<span class=o>=</span><span class=s2>&#34;containerd/v1.6.0&#34;</span> http.response.contenttype<span class=o>=</span><span class=s2>&#34;application/json; charset=utf-8&#34;</span> http.response.duration<span class=o>=</span>1.457987ms http.response.status<span class=o>=</span><span class=m>404</span> http.response.written<span class=o>=</span><span class=m>194</span> vars.name<span class=o>=</span><span class=s2>&#34;windows/servercore&#34;</span> vars.reference<span class=o>=</span><span class=s2>&#34;sha256:d8c2b69511a49e9eb6fd2a17f2727ae011b0382cd11562fa5cb4c70bb460cf12&#34;</span>
+</span></span><span class=line><span class=cl>10.88.0.1 - - <span class=o>[</span>18/Feb/2022:06:34:01 +0000<span class=o>]</span> <span class=s2>&#34;GET /v2/windows/servercore/manifests/sha256:d8c2b69511a49e9eb6fd2a17f2727ae011b0382cd11562fa5cb4c70bb460cf12?ns=mcr.microsoft.com HTTP/1.1&#34;</span> <span class=m>404</span> <span class=m>194</span> <span class=s2>&#34;&#34;</span> <span class=s2>&#34;containerd/v1.6.0&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:34:04.339934302Z&#34;</span> <span class=nv>level</span><span class=o>=</span>error <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;response completed with error&#34;</span> err.code<span class=o>=</span><span class=s2>&#34;manifest unknown&#34;</span> err.detail<span class=o>=</span><span class=s2>&#34;unknown manifest name=windows/servercore revision=sha256:596c8a02a8e73b53688052907d121879357d2a9208700306bafaa1ffb533cbab&#34;</span> err.message<span class=o>=</span><span class=s2>&#34;manifest unknown&#34;</span> go.version<span class=o>=</span>go1.11.2 http.request.host<span class=o>=</span><span class=s2>&#34;49.232.217.60:5000&#34;</span> http.request.id<span class=o>=</span>65d32ca4-113f-4acc-b035-e73baff05c48 http.request.method<span class=o>=</span>GET http.request.remoteaddr<span class=o>=</span><span class=s2>&#34;10.88.0.1:60707&#34;</span> http.request.uri<span class=o>=</span><span class=s2>&#34;/v2/windows/servercore/manifests/sha256:596c8a02a8e73b53688052907d121879357d2a9208700306bafaa1ffb533cbab?ns=mcr.microsoft.com&#34;</span> http.request.useragent<span class=o>=</span><span class=s2>&#34;containerd/v1.6.0&#34;</span> http.response.contenttype<span class=o>=</span><span class=s2>&#34;application/json; charset=utf-8&#34;</span> http.response.duration<span class=o>=</span>1.546302ms http.response.status<span class=o>=</span><span class=m>404</span> http.response.written<span class=o>=</span><span class=m>194</span> vars.name<span class=o>=</span><span class=s2>&#34;windows/servercore&#34;</span> vars.reference<span class=o>=</span><span class=s2>&#34;sha256:596c8a02a8e73b53688052907d121879357d2a9208700306bafaa1ffb533cbab&#34;</span>
+</span></span><span class=line><span class=cl>10.88.0.1 - - <span class=o>[</span>18/Feb/2022:06:34:04 +0000<span class=o>]</span> <span class=s2>&#34;GET /v2/windows/servercore/manifests/sha256:596c8a02a8e73b53688052907d121879357d2a9208700306bafaa1ffb533cbab?ns=mcr.microsoft.com HTTP/1.1&#34;</span> <span class=m>404</span> <span class=m>194</span> <span class=s2>&#34;&#34;</span> <span class=s2>&#34;containerd/v1.6.0&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>time</span><span class=o>=</span><span class=s2>&#34;2022-02-18T06:34:04.459994991Z&#34;</span> <span class=nv>level</span><span class=o>=</span>error <span class=nv>msg</span><span class=o>=</span><span class=s2>&#34;response completed with error&#34;</span> err.code<span class=o>=</span><span class=s2>&#34;blob unknown&#34;</span> err.detail<span class=o>=</span>sha256:c703d4d605332bcb954f514c7d2c6cd53ee51024d7a7a3f13eb907abbeedbca2 err.message<span class=o>=</span><span class=s2>&#34;blob unknown to registry&#34;</span> go.version<span class=o>=</span>go1.11.2 http.request.host<span class=o>=</span><span class=s2>&#34;49.232.217.60:5000&#34;</span> http.request.id<span class=o>=</span>80f71f7f-4fed-4a87-af23-31d88614cde0 http.request.method<span class=o>=</span>GET http.request.remoteaddr<span class=o>=</span><span class=s2>&#34;10.88.0.1:60708&#34;</span> http.request.uri<span class=o>=</span><span class=s2>&#34;/v2/windows/servercore/blobs/sha256:c703d4d605332bcb954f514c7d2c6cd53ee51024d7a7a3f13eb907abbeedbca2?ns=mcr.microsoft.com&#34;</span> http.request.useragent<span class=o>=</span><span class=s2>&#34;containerd/v1.6.0&#34;</span> http.response.contenttype<span class=o>=</span><span class=s2>&#34;application/json; charset=utf-8&#34;</span> http.response.duration<span class=o>=</span>1.659114ms http.response.status<span class=o>=</span><span class=m>404</span> http.response.written<span class=o>=</span><span class=m>157</span> vars.digest<span class=o>=</span><span class=s2>&#34;sha256:c703d4d605332bcb954f514c7d2c6cd53ee51024d7a7a3f13eb907abbeedbca2&#34;</span> vars.name<span class=o>=</span><span class=s2>&#34;windows/servercore&#34;</span>
+</span></span><span class=line><span class=cl>10.88.0.1 - - <span class=o>[</span>18/Feb/2022:06:34:04 +0000<span class=o>]</span> <span class=s2>&#34;GET /v2/windows/servercore/blobs/sha256:c703d4d605332bcb954f514c7d2c6cd53ee51024d7a7a3f13eb907abbeedbca2?ns=mcr.microsoft.com HTTP/1.1&#34;</span> <span class=m>404</span> <span class=m>157</span> <span class=s2>&#34;&#34;</span> <span class=s2>&#34;containerd/v1.6.0&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=客户端>客户端</h2><p><img src=../../images/2022/window-docker-image.webp alt=window-docker-image></p><h1 id=结论>结论</h1><h2 id=2022-02-18>2022-02-18</h2><p>初步看，没法通过一般法的方法设置 MCR 的 Mirror。</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2022-02-18</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F.html>容器镜像</a>
+<a href=/tags/windows.html>Windows</a></div><nav class=post-nav><a class=prev href=/post/2022-05/golang-rust-bad-case.html><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Golang Rust Bad Case</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/2021-09/libfuse-compilation-notes.html><span class="next-text nav-default">libfuse 编译笔记</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a>
+<a href=https://blog.kongfanjian.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2025<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams"}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

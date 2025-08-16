@@ -1,0 +1,313 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>碳迹——碳足迹小程序 - 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="概述 报名参加了我大鹅厂的小程序开发大赛。我这个爆栈工程师（CSS、JavaScript、Typscript、Swift、Flutter、Go"><meta name=keywords content><meta name=generator content="Hugo 0.103.0 with theme even"><link rel=canonical href=https://blog.kongfanjian.com/post/2021-05/tanji-mini-program.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.eeae260563cd6859206edc003bd340406f7f46fdbcca0a1c3ff4f1ecc5db53ed.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="碳迹——碳足迹小程序"><meta property="og:description" content="概述 报名参加了我大鹅厂的小程序开发大赛。我这个爆栈工程师（CSS、JavaScript、Typscript、Swift、Flutter、Go"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kongfanjian.com/post/2021-05/tanji-mini-program.html"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-05-23T22:41:33+08:00"><meta property="article:modified_time" content="2021-05-23T22:41:33+08:00"><meta itemprop=name content="碳迹——碳足迹小程序"><meta itemprop=description content="概述 报名参加了我大鹅厂的小程序开发大赛。我这个爆栈工程师（CSS、JavaScript、Typscript、Swift、Flutter、Go"><meta itemprop=datePublished content="2021-05-23T22:41:33+08:00"><meta itemprop=dateModified content="2021-05-23T22:41:33+08:00"><meta itemprop=wordCount content="3025"><meta itemprop=keywords content="小程序,比赛,鹅厂,"><meta name=twitter:card content="summary"><meta name=twitter:title content="碳迹——碳足迹小程序"><meta name=twitter:description content="概述 报名参加了我大鹅厂的小程序开发大赛。我这个爆栈工程师（CSS、JavaScript、Typscript、Swift、Flutter、Go"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>主页</li></a><a href=/projects.html><li class=mobile-menu-item>项目</li></a><a href=/post.html><li class=mobile-menu-item>归档</li></a><a href=/tags.html><li class=mobile-menu-item>标签</li></a><a href=/categories.html><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>主页</a></li><li class=menu-item><a class=menu-item-link href=/projects.html>项目</a></li><li class=menu-item><a class=menu-item-link href=/post.html>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags.html>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories.html>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>碳迹——碳足迹小程序</h1><div class=post-meta><span class=post-time>2021-05-23</span><div class=post-category><a href=/categories/%E6%9C%AF%E4%B8%9A/>术业</a></div><span class=more-meta>约 3025 字</span>
+<span class=more-meta>预计阅读 7 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#概述>概述</a><ul><li><a href=#产品设计>产品设计</a></li><li><a href=#技术选型>技术选型</a></li><li><a href=#产品设想>产品设想</a></li></ul></li><li><a href=#自定义底部选项卡遇到的问题>自定义底部选项卡遇到的问题</a><ul><li><a href=#组件没有原生香>组件没有原生香</a></li><li><a href=#图标图片成了大问题>图标图片成了大问题</a></li><li><a href=#没有刀子自己造font2png>没有刀子自己造——font2png</a></li></ul></li><li><a href=#小程序开发问题随笔>小程序开发问题随笔</a><ul><li><a href=#页面背景色问题>页面背景色问题</a></li><li><a href=#关联openid-与用户信息>关联OpenId 与用户信息</a></li><li><a href=#嵌套组件报错-ts2559>嵌套组件报错 TS2559</a></li><li><a href=#碳排放数据>碳排放数据</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=概述>概述</h2><p>报名参加了我大鹅厂的小程序开发大赛。我这个爆栈工程师（CSS、JavaScript、Typscript、Swift、Flutter、Golang、Rust，容器、DevOps、安全攻防啥都会一点）必然是要去晃一圈的，名次啥的不重要，重要的是一定要拿到那件文化衫！！！</p><h3 id=产品设计>产品设计</h3><h3 id=技术选型>技术选型</h3><p><strong>后端</strong></p><p>按比赛要求，后端上是要用云开发 Cloudbase 的。讲真的，作为一个专家级的客服+运维+开发+修锅容器工程师，我绝对不会想要自己去买个服务器，建个 k8s 然后还要再买点什么 MySQL 啊 Redis 啊各种杂七杂八的基础服务的——是加班没加够，还是出去浪不够香哪？说句良心话，云开发不但对菜鸟开发者来说挺好用的，就我这种老油条级别的也觉得真的香啊！就用云开发了，不管基础设施啥的真的太香了！</p><p><strong>前端</strong></p><p>为了快速实现碳迹小程序，我选用了 @tarojs 多端统一开发解决方案，同时选用基于 Taro 框架开发的多端 UI 组件库 @taro-ui 。开发语言上 Typescript 是不二之选——懂得都懂。啥？不懂，同学你还需要磨练磨练啊。</p><h3 id=产品设想>产品设想</h3><h2 id=自定义底部选项卡遇到的问题>自定义底部选项卡遇到的问题</h2><h3 id=组件没有原生香>组件没有原生香</h3><p>在开始的时候，使用 taro-ui 的 <code>AtTabBar</code> 组件来实现，单一组件、自带成套的图标。初看起来很是美好，但是很快就发现了问题：</p><ol><li>不太方便抽象成 React Component，需要每个Page 都写 <code>AtTabBar</code> ；</li><li>整个小程序是其实只用一个页面，通过 <code>AtTabBar</code> 切换页面的时候闪屏；</li></ol><p>在翻阅微信开发者社区、Taro Issues 后发现闪屏问题基本上无解，这必然会严重的影响到用户的交互体验——遂而放弃使用 <code>AtTabBar</code> ，改用小程序原生的 <code>tabBar</code> 和多页面模式。</p><h3 id=图标图片成了大问题>图标图片成了大问题</h3><p>但是，新的问题随之而来， <code>tabBar</code> 的 icon是需要图片的。icon 用图片而不是字体貌似不是什么问题，单个 icon 图片找起来没有什么问题，在<a href=https://www.iconfont.cn/>阿里巴巴矢量图标库</a> 有海量的素材供人挑选。我们面临最大的问题就是——没有专门美术同学，要把素材变成风格一致的资源对业余选手费时费力，而我们缺乏的恰恰就是时间。</p><h3 id=没有刀子自己造font2png>没有刀子自己造——font2png</h3><p>那就用 taro-ui 里面的 icon 吧。燃鹅——这个决定硬是催生了一个 <code>rust</code> 编写的工具 <code>font2png</code> 。本身时间紧，事务多，吃饱了撑着才会没事造轮子。事实是，穷尽中英文、海内外互联网，我就没找到一个好用的把图标字体转化成图标图片的工具：</p><ul><li>github 上的 Python 代码运行不了，各种依赖、报错信息折腾的没完没了的；</li><li>某大侠在2015 年用 QT 写的 Mac/Windows 图标转换工具只能选内置丑丑的图标——哎呦喂，我只想用我选定的 taro-ui 字体里面的；</li><li>某英文在线 convert 工具硕大的大字卸载 woff to png，没地方让我输入字符不说，下载下来就是个大黑条——感觉智商受到了侮辱。</li></ul><p>这么看下去，再奢求在网上找一个可以用的字体转图片工具简直就是痴心妄想——不怕，没有粮食我们自己中，没有刀子我们自己造！在 <a href=http://crates.io>crates.io</a> 挑挑拣拣了一些可用的依赖库后，我只用了一个小时就用 rust 写了一个自己相当满意的转换工具—— <code>font2png</code>，它简单好用：</p><ul><li>自定义图片大小</li><li>自定义图标大小</li><li>自定义图标演示</li><li>默认透明背景</li><li>内置 taro-ui 的图标字体</li></ul><p>安装起来也是相当简单，在 Mac 电脑已经安装了 <strong>Homebrew</strong> 的情况下，你只需要引入我维护的 brew tap 就能轻松安装了：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl>#<span class=w> </span><span class=err>引入</span><span class=w> </span><span class=n>kofj</span><span class=w> </span><span class=err>这个</span><span class=w> </span><span class=n>tap</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>brew</span><span class=w> </span><span class=n>tap</span><span class=w> </span><span class=n>kofj</span><span class=o>/</span><span class=n>kofj</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>#<span class=w> </span><span class=err>安装</span><span class=w> </span><span class=n>font2png</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>brew</span><span class=w> </span><span class=n>install</span><span class=w> </span><span class=n>font2png</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>如果你按安装了 rust 的开发工具 <code>Cargo</code> 而且想要从源码编译的话，也是可以的。我已经把它发布到了 <a href=https://crates.io/crates/font2png>creates.io https://crates.io/crates/font2png</a> 了：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=n>cargo</span><span class=w> </span><span class=n>install</span><span class=w> </span><span class=n>font2png</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>运行起来看看使用信息吧：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=n>font2png</span><span class=w> </span><span class=o>--</span><span class=n>help</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>font2img</span><span class=w> </span><span class=n>v1</span><span class=p>.</span><span class=mf>0.0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>Fanjiankong</span><span class=w> </span><span class=o>&lt;</span><span class=n>kfanjian</span><span class=o>@</span><span class=n>gmail</span><span class=p>.</span><span class=n>com</span><span class=o>&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>A</span><span class=w> </span><span class=n>tool</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>converting</span><span class=w> </span><span class=n>TTF</span><span class=w> </span><span class=n>icon</span><span class=w> </span><span class=n>font</span><span class=w> </span><span class=n>to</span><span class=w> </span><span class=n>images</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>example</span>:
+</span></span><span class=line><span class=cl>	<span class=nc>font2png</span><span class=w> </span><span class=o>--</span><span class=n>charter</span><span class=w> </span><span class=cp>$(</span><span class=n>printf</span><span class=w> </span><span class=o>&#39;</span><span class=err>\</span><span class=n>ue957</span><span class=o>&#39;</span><span class=p>)</span><span class=w> </span><span class=o>-</span><span class=n>s</span><span class=w> </span><span class=mi>80</span><span class=w> </span><span class=o>-</span><span class=n>f</span><span class=w> </span><span class=n>a</span><span class=w> </span><span class=o>-</span><span class=n>o</span><span class=w> </span><span class=n>src</span><span class=o>/</span><span class=n>assets</span><span class=o>/</span><span class=n>on</span><span class=o>/</span><span class=n>user</span><span class=p>.</span><span class=n>png</span><span class=w> </span><span class=o>-</span><span class=n>c</span><span class=w> </span><span class=s>&#34;#d43c33&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>USAGE</span>:
+</span></span><span class=line><span class=cl>    <span class=nc>font2png</span><span class=w> </span><span class=p>[</span><span class=n>FLAGS</span><span class=p>]</span><span class=w> </span><span class=p>[</span><span class=n>OPTIONS</span><span class=p>]</span><span class=w> </span><span class=o>--</span><span class=n>charter</span><span class=w> </span><span class=o>&lt;</span><span class=n>charter</span><span class=o>&gt;</span><span class=w> </span><span class=o>--</span><span class=n>color</span><span class=w> </span><span class=o>&lt;</span><span class=n>color</span><span class=o>&gt;</span><span class=w> </span><span class=o>--</span><span class=n>font</span><span class=w> </span><span class=o>&lt;</span><span class=n>fontpath</span><span class=o>&gt;</span><span class=w> </span><span class=o>--</span><span class=n>output</span><span class=w> </span><span class=o>&lt;</span><span class=n>output</span><span class=o>&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>FLAGS</span>:
+</span></span><span class=line><span class=cl>    <span class=o>-</span><span class=n>h</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>help</span><span class=w>           </span><span class=n>Prints</span><span class=w> </span><span class=n>help</span><span class=w> </span><span class=n>information</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>t</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>transparent</span><span class=w>    </span><span class=n>transparent</span><span class=w> </span><span class=n>background</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>V</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>version</span><span class=w>        </span><span class=n>Prints</span><span class=w> </span><span class=n>version</span><span class=w> </span><span class=n>information</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>OPTIONS</span>:
+</span></span><span class=line><span class=cl>        <span class=o>--</span><span class=n>charter</span><span class=w> </span><span class=o>&lt;</span><span class=n>charter</span><span class=o>&gt;</span><span class=w>    </span><span class=n>icon</span><span class=w> </span><span class=n>charter</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>c</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>color</span><span class=w> </span><span class=o>&lt;</span><span class=n>color</span><span class=o>&gt;</span><span class=w>        </span><span class=n>icon</span><span class=w> </span><span class=n>css</span><span class=w> </span><span class=n>style</span><span class=w> </span><span class=n>color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>f</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>font</span><span class=w> </span><span class=o>&lt;</span><span class=n>fontpath</span><span class=o>&gt;</span><span class=w>      </span><span class=n>font</span><span class=w> </span><span class=n>file</span><span class=w> </span><span class=n>path</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>s</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>size</span><span class=w> </span><span class=o>&lt;</span><span class=n>iconsize</span><span class=o>&gt;</span><span class=w>      </span><span class=n>icon</span><span class=o>&#39;</span><span class=na>s</span><span class=w> </span><span class=n>height</span><span class=w> </span><span class=n>and</span><span class=w> </span><span class=n>width</span><span class=p>(</span><span class=n>pixel</span><span class=p>)</span><span class=w> </span><span class=p>[</span><span class=n>default</span>: <span class=mi>54</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>o</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>output</span><span class=w> </span><span class=o>&lt;</span><span class=n>output</span><span class=o>&gt;</span><span class=w>      </span><span class=n>output</span><span class=w> </span><span class=n>filename</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>-</span><span class=n>s</span><span class=p>,</span><span class=w> </span><span class=o>--</span><span class=n>size</span><span class=w> </span><span class=o>&lt;</span><span class=n>size</span><span class=o>&gt;</span><span class=w>          </span><span class=n>output</span><span class=w> </span><span class=n>image</span><span class=o>&#39;</span><span class=na>s</span><span class=w> </span><span class=n>height</span><span class=w> </span><span class=n>and</span><span class=w> </span><span class=n>width</span><span class=p>(</span><span class=n>pixel</span><span class=p>)</span><span class=w> </span><span class=p>[</span><span class=n>default</span>: <span class=mi>78</span><span class=p>]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>不知道有没有同学注意到——我们 <code>font2png</code> 中除了 <code>size</code> 还有一个 <code>iconsize</code> ,为啥？因为当图标和图片是一样的尺寸的时候， <code>tabBar</code> 看着实在是好丑啊。要是能够好看点谁不愿意哪？！我在微信开放社区的一片帖子里面找到了一个 <code>tabBar</code> 的尺寸建议：</p><blockquote><p>总的大小78.图标大小54
+<a href="https://developers.weixin.qq.com/community/develop/doc/00020e62594268ce0b19e83ed52800?_at=1567814400111">https://developers.weixin.qq.com/community/develop/doc/00020e62594268ce0b19e83ed52800?_at=1567814400111</a></p></blockquote><p>按照这个建议产生的图片确实是好看了不少（这俩已经作为默认参数值了）——不信对比下：</p><p>各位看官，走过路过，不要忘记给我的小工具在 Github 点个 star。当然，开 issues 提需求、贡献代码也是万分欢迎的，地址奉上：</p><ul><li><a href=https://crates.io/crates/font2png>https://crates.io/crates/font2png</a></li></ul><h2 id=小程序开发问题随笔>小程序开发问题随笔</h2><h3 id=页面背景色问题>页面背景色问题</h3><p>Taro 的配置文件 <code>app.config.ts</code> 在编译成小程序代码后会转化成为 <code>app.json</code> 。这个文件的 <code>window 窗口设置</code> 当中的 <code>backgroundColor</code> 相当有迷惑性——这是在页面下拉时的颜色，而非事页面本身的背景色。真正的背景色要在页面的样式文件中声明。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=nb>window</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>backgroundTextStyle</span><span class=o>:</span> <span class=s1>&#39;light&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>navigationBarBackgroundColor</span><span class=o>:</span> <span class=s1>&#39;#f7f7f7&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>navigationBarTextStyle</span><span class=o>:</span> <span class=s1>&#39;black&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>backgroundColor</span><span class=o>:</span> <span class=s1>&#39;#f7f7f7&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>为了全局生效，我把页面的背景色写在了 <code>app.scss</code> 当中：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-scss data-lang=scss><span class=line><span class=cl><span class=nt>page</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=na>background-color</span><span class=o>:</span> <span class=mh>#f7f7f7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=关联openid-与用户信息>关联OpenId 与用户信息</h3><p>在小程序端调用 <code>wx.getUserProfile</code> 后，云开发控制台用户列表依然匿名。</p><p>这时候，再调用一次 <code>wx.getUserInfo</code> 即可。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=nx>getUserProfile</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span> <span class=nx>deny</span><span class=o>:</span> <span class=s2>&#34;获取授权中&#34;</span> <span class=p>})</span>
+</span></span><span class=line><span class=cl>    <span class=nx>wx</span><span class=p>.</span><span class=nx>getUserProfile</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>      <span class=nx>desc</span><span class=o>:</span> <span class=s2>&#34;授权登录&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}).</span><span class=nx>then</span><span class=p>(</span><span class=nx>resp</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;getUserProfile&#34;</span><span class=p>,</span> <span class=nx>resp</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;getUserProfile&#34;</span><span class=p>,</span> <span class=nx>resp</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=nx>wx</span><span class=p>.</span><span class=nx>getUserInfo</span><span class=p>({})</span>
+</span></span><span class=line><span class=cl>      <span class=kd>let</span> <span class=nx>info</span> <span class=o>=</span> <span class=nx>resp</span><span class=p>.</span><span class=nx>userInfo</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>info</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>.</span><span class=nx>update_userinfo</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>          <span class=nx>isAuthorized</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>          <span class=nx>cloudId</span><span class=o>:</span> <span class=nx>resp</span><span class=p>[</span><span class=s2>&#34;cloudID&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>          <span class=nx>userInfo</span><span class=o>:</span> <span class=nx>info</span>
+</span></span><span class=line><span class=cl>        <span class=p>})</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}).</span><span class=k>catch</span><span class=p>(</span><span class=nx>err</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;获取授权失败&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span> <span class=nx>deny</span><span class=o>:</span> <span class=s2>&#34;授权用户信息并登录后才能使用&#34;</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=嵌套组件报错-ts2559>嵌套组件报错 TS2559</h3><p>抽象出来一个 <code>Auth</code> 组件以便于根据用户的登录状态来决定显示登录按钮还是该页面的内容。页面内容作为 children 位于标签中间——形如 <code>&lt;Auth>&lt;/Auth></code>。最早版本的实现虽然能够工作，但是当便签中嵌入其它组件标签的时候，控制台报错： <code>"类型“{ children: Element; }”与类型“IntrinsicAttributes & Omit&lt;ClassAttributes&lt;Authorized> & AuthorizedProps, \"user\" | \"update_userinfo\">”不具有相同的属性。"</code>。原始代码如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=kr>import</span> <span class=nx>React</span><span class=p>,</span> <span class=p>{</span> <span class=nx>Component</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;react&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>View</span><span class=p>,</span> <span class=nx>Button</span><span class=p>,</span> <span class=nx>Text</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;@tarojs/components&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>connect</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;react-redux&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>UserState</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;../../constants/types&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>update_userinfo</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;../../actions/user&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>type</span> <span class=nx>AuthorizedProps</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>user</span><span class=o>:</span> <span class=nx>UserState</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>update_userinfo</span><span class=p>(</span><span class=nx>user</span><span class=o>:</span> <span class=nx>UserState</span><span class=p>)</span><span class=o>:</span> <span class=k>void</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>type</span> <span class=nx>AuthorizedState</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>tips</span><span class=o>:</span> <span class=nx>string</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>Authorized</span> <span class=kr>extends</span> <span class=nx>Component</span><span class=p>&lt;</span><span class=nt>AuthorizedProps</span><span class=err>,</span> <span class=na>AuthorizedState</span><span class=p>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>tips</span><span class=o>:</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nx>getUserProfile</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span> <span class=nx>tips</span><span class=o>:</span> <span class=s2>&#34;获取授权中&#34;</span> <span class=p>})</span>
+</span></span><span class=line><span class=cl>    <span class=nx>wx</span><span class=p>.</span><span class=nx>getUserProfile</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>      <span class=nx>desc</span><span class=o>:</span> <span class=s2>&#34;授权登录&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}).</span><span class=nx>then</span><span class=p>(</span><span class=nx>resp</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;getUserProfile&#34;</span><span class=p>,</span> <span class=nx>resp</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;getUserProfile&#34;</span><span class=p>,</span> <span class=nx>resp</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=nx>wx</span><span class=p>.</span><span class=nx>getUserInfo</span><span class=p>({})</span>
+</span></span><span class=line><span class=cl>      <span class=kd>let</span> <span class=nx>info</span> <span class=o>=</span> <span class=nx>resp</span><span class=p>.</span><span class=nx>userInfo</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>info</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>.</span><span class=nx>update_userinfo</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>          <span class=nx>isAuthorized</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>          <span class=nx>cloudId</span><span class=o>:</span> <span class=nx>resp</span><span class=p>[</span><span class=s2>&#34;cloudID&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>          <span class=nx>userInfo</span><span class=o>:</span> <span class=nx>info</span>
+</span></span><span class=line><span class=cl>        <span class=p>})</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}).</span><span class=k>catch</span><span class=p>(</span><span class=nx>err</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;获取授权失败&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span> <span class=nx>tips</span><span class=o>:</span> <span class=s2>&#34;授权用户信息并登录后才能使用&#34;</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nx>render</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>.</span><span class=nx>user</span><span class=p>.</span><span class=nx>isAuthorized</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nx>React</span><span class=p>.</span><span class=nx>createElement</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=nx>View</span><span class=p>,</span> <span class=p>{},</span> <span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=o>?</span><span class=p>.</span><span class=nx>children</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nx>React</span><span class=p>.</span><span class=nx>createElement</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=nx>View</span><span class=p>,</span> <span class=p>{</span> <span class=nx>className</span><span class=o>:</span> <span class=s1>&#39;login&#39;</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>          <span class=nx>React</span><span class=p>.</span><span class=nx>createElement</span><span class=p>(</span><span class=nx>Button</span><span class=p>,</span> <span class=p>{</span> <span class=nx>onClick</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>getUserProfile</span> <span class=p>},</span> <span class=s2>&#34;授权登录&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>          <span class=nx>React</span><span class=p>.</span><span class=nx>createElement</span><span class=p>(</span><span class=nx>Text</span><span class=p>,</span> <span class=p>{},</span> <span class=k>this</span><span class=p>.</span><span class=nx>state</span><span class=p>.</span><span class=nx>tips</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=nx>connect</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nx>state</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>user</span><span class=o>:</span> <span class=nx>UserState</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=p>})</span> <span class=p>=&gt;</span> <span class=p>({</span>
+</span></span><span class=line><span class=cl>    <span class=nx>user</span><span class=o>:</span> <span class=nx>state</span><span class=p>.</span><span class=nx>user</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=p>}),</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nx>dispatch</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>({</span>
+</span></span><span class=line><span class=cl>    <span class=nx>update_userinfo</span><span class=p>(</span><span class=nx>userState</span><span class=o>:</span> <span class=nx>UserState</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>dispatch</span><span class=p>(</span><span class=nx>update_userinfo</span><span class=p>(</span><span class=nx>userState</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=p>})</span>
+</span></span><span class=line><span class=cl><span class=p>)(</span><span class=nx>Authorized</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>通过为 <code>Auth</code> 组件的 <code>AuthorizedProps</code> 声明可空成员 <code>children</code> 搞定：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=nx>type</span> <span class=nx>AuthorizedProps</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>user</span><span class=o>:</span> <span class=nx>UserState</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=nx>children</span><span class=o>?:</span> <span class=nx>JSX</span><span class=p>.</span><span class=nx>Element</span> <span class=o>|</span> <span class=nx>any</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>update_userinfo</span><span class=p>(</span><span class=nx>user</span><span class=o>:</span> <span class=nx>UserState</span><span class=p>)</span><span class=o>:</span> <span class=k>void</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Number to int32</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>static</span> <span class=nx>NumberToUint32</span><span class=p>(</span><span class=nx>x</span>:<span class=kt>number</span><span class=p>)</span><span class=o>:</span><span class=kt>number</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=nx>x</span> <span class=o>&gt;&gt;&gt;</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=碳排放数据>碳排放数据</h3><blockquote><p>一吨碳在氧气中燃烧后能产生大约3.67吨二氧化碳。 其计算是这样的：碳的分子量为12,二氧化碳的分子量为44,44/12＝3.67</p></blockquote><p>骑行减排</p><blockquote><p>每公里骑行减排50g二氧化碳 美团单车助力2020年上海公共机构节能宣传周
+<a href=https://zhuanlan.zhihu.com/p/151802473>https://zhuanlan.zhihu.com/p/151802473</a></p></blockquote><p>燃油</p><blockquote><p>按照一般的计算方法，汽车的碳排放量(公斤)=油耗消耗数(升)×2.7公斤/升，也就是说，如果一辆汽车百公里油耗在7L，其百公里碳排放量就为18.9公斤，如果每天来回跑40公里，每月跑1200公里，其每月的碳排放量就为226.8公斤，一年为2721.6公斤。</p></blockquote><blockquote><p>先看看各类汽油的平均密度：90号为0.72g/ml， 93号为0.725g/ml， 97号为0.737g/ml。 那么，1升油的重量分别为：90号0.72千克，93号0.725千克，97号0.737千克。 整体算下来1升油差不多为0.7千克，不到1千克。</p></blockquote><p>|按照平均百公里耗油8升计算</p><blockquote><p>以为例，官网公布85kWh的车型续航里程是500公里，平均百公里电耗17kWh。而的秦电动车，电池容量13kWh</p></blockquote></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-05-23</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F.html>小程序</a>
+<a href=/tags/%E6%AF%94%E8%B5%9B.html>比赛</a>
+<a href=/tags/%E9%B9%85%E5%8E%82.html>鹅厂</a></div><nav class=post-nav><a class=prev href=/post/2021-09/some-college-recruiters-prepare-outlines.html><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">一些校招面试官准备提纲</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/2021-05/question-mark-of-rust.html><span class="next-text nav-default">聊聊 Rust 问号操作符</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a>
+<a href=https://blog.kongfanjian.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2025<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams"}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

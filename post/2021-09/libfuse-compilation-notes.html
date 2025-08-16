@@ -1,0 +1,83 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>libfuse 编译笔记 - 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="最近在做一个跟文件系统的有关的项目，需要用到 libfuse。记录下 libfuse 的编译笔记： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # clone # 安装依赖于工具链 apt install meson ninja-build gcc"><meta name=keywords content><meta name=generator content="Hugo 0.103.0 with theme even"><link rel=canonical href=https://blog.kongfanjian.com/post/2021-09/libfuse-compilation-notes.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.eeae260563cd6859206edc003bd340406f7f46fdbcca0a1c3ff4f1ecc5db53ed.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="libfuse 编译笔记"><meta property="og:description" content="最近在做一个跟文件系统的有关的项目，需要用到 libfuse。记录下 libfuse 的编译笔记： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # clone # 安装依赖于工具链 apt install meson ninja-build gcc"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kongfanjian.com/post/2021-09/libfuse-compilation-notes.html"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-09-17T11:17:12+08:00"><meta property="article:modified_time" content="2021-09-17T11:17:12+08:00"><meta itemprop=name content="libfuse 编译笔记"><meta itemprop=description content="最近在做一个跟文件系统的有关的项目，需要用到 libfuse。记录下 libfuse 的编译笔记： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # clone # 安装依赖于工具链 apt install meson ninja-build gcc"><meta itemprop=datePublished content="2021-09-17T11:17:12+08:00"><meta itemprop=dateModified content="2021-09-17T11:17:12+08:00"><meta itemprop=wordCount content="184"><meta itemprop=keywords content="cpp,libfuse,编程,"><meta name=twitter:card content="summary"><meta name=twitter:title content="libfuse 编译笔记"><meta name=twitter:description content="最近在做一个跟文件系统的有关的项目，需要用到 libfuse。记录下 libfuse 的编译笔记： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # clone # 安装依赖于工具链 apt install meson ninja-build gcc"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>主页</li></a><a href=/projects.html><li class=mobile-menu-item>项目</li></a><a href=/post.html><li class=mobile-menu-item>归档</li></a><a href=/tags.html><li class=mobile-menu-item>标签</li></a><a href=/categories.html><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>主页</a></li><li class=menu-item><a class=menu-item-link href=/projects.html>项目</a></li><li class=menu-item><a class=menu-item-link href=/post.html>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags.html>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories.html>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>libfuse 编译笔记</h1><div class=post-meta><span class=post-time>2021-09-17</span><div class=post-category><a href=/categories/%E6%9C%AF%E4%B8%9A/>术业</a></div><span class=more-meta>约 184 字</span>
+<span class=more-meta>预计阅读 1 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents></nav></div></div><div class=post-content><p>  最近在做一个跟文件系统的有关的项目，需要用到 libfuse。记录下 libfuse 的编译笔记：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># clone</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 安装依赖于工具链</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>apt install meson ninja-build gcc pkg-config
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># </span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mkdir build <span class=p>&amp;</span> <span class=nb>cd</span> build
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 编译</span>
+</span></span><span class=line><span class=cl>meson ..
+</span></span><span class=line><span class=cl>ninja
+</span></span><span class=line><span class=cl>sudo ninja install
+</span></span></code></pre></td></tr></table></div></div><p>编译 example</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>$gcc</span> -Wall passthrough_fh.c <span class=sb>`</span>pkg-config fuse3 --cflags --libs<span class=sb>`</span> -lulockmgr -o passthrough_fh
+</span></span><span class=line><span class=cl>Package fuse3 was not found in the pkg-config search path.
+</span></span><span class=line><span class=cl>Perhaps you should add the directory containing <span class=sb>`</span>fuse3.pc<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>to the PKG_CONFIG_PATH environment variable
+</span></span></span><span class=line><span class=cl><span class=s1>No package &#39;</span>fuse3<span class=err>&#39;</span> found
+</span></span><span class=line><span class=cl>passthrough_fh.c:34:10: fatal error: fuse.h: No such file or directory
+</span></span><span class=line><span class=cl>   <span class=m>34</span> <span class=p>|</span> <span class=c1>#include &lt;fuse.h&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>|</span>          ^~~~~~~~
+</span></span><span class=line><span class=cl>compilation terminated.
+</span></span></code></pre></td></tr></table></div></div><p>解决方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>$cp</span> meson-private/fuse3.pc /usr/lib/pkgconfig
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>$gcc</span> -Wall passthrough_fh.c <span class=sb>`</span>pkg-config fuse3 --cflags --libs<span class=sb>`</span> -lulockmgr -o passthrough_fh
+</span></span><span class=line><span class=cl>/usr/bin/ld: cannot find -lulockmgr
+</span></span><span class=line><span class=cl>collect2: error: ld returned <span class=m>1</span> <span class=nb>exit</span> status
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-09-17</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/cpp.html>cpp</a>
+<a href=/tags/libfuse.html>libfuse</a>
+<a href=/tags/%E7%BC%96%E7%A8%8B.html>编程</a></div><nav class=post-nav><a class=prev href=/post/2022-02/windows-docker-image-note.html><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Windows 容器镜像实验笔记</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/2021-09/some-college-recruiters-prepare-outlines.html><span class="next-text nav-default">一些校招面试官准备提纲</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a>
+<a href=https://blog.kongfanjian.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2025<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams"}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
