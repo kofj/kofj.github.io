@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://blog.kongfanjian.com/sitemap.xml
+Sitemap: https://kofj.github.io/sitemap.xml
