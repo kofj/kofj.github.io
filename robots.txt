@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://kofj.github.io/sitemap.xml
+Sitemap: https://blog.kofj.net/sitemap.xml
