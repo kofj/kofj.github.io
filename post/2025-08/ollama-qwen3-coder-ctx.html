@@ -1,0 +1,183 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>如何设置 ollama 上下文长度 - 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="为了节约成本，我尝试将本地 mbp m4 部署的模型投入生产环节。在部署过程中，发现了一个问题，就是 ollama 运行的模型服务的上下文长度限制为 4096，而日常使"><meta name=keywords content><meta name=generator content="Hugo 0.103.0 with theme even"><link rel=canonical href=https://blog.kofj.net/post/2025-08/ollama-qwen3-coder-ctx.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="如何设置 ollama 上下文长度"><meta property="og:description" content="为了节约成本，我尝试将本地 mbp m4 部署的模型投入生产环节。在部署过程中，发现了一个问题，就是 ollama 运行的模型服务的上下文长度限制为 4096，而日常使"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kofj.net/post/2025-08/ollama-qwen3-coder-ctx.html"><meta property="article:section" content="post"><meta property="article:published_time" content="2025-08-15T16:07:02+08:00"><meta property="article:modified_time" content="2025-08-15T19:07:02+08:00"><meta itemprop=name content="如何设置 ollama 上下文长度"><meta itemprop=description content="为了节约成本，我尝试将本地 mbp m4 部署的模型投入生产环节。在部署过程中，发现了一个问题，就是 ollama 运行的模型服务的上下文长度限制为 4096，而日常使"><meta itemprop=datePublished content="2025-08-15T16:07:02+08:00"><meta itemprop=dateModified content="2025-08-15T19:07:02+08:00"><meta itemprop=wordCount content="2027"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="如何设置 ollama 上下文长度"><meta name=twitter:description content="为了节约成本，我尝试将本地 mbp m4 部署的模型投入生产环节。在部署过程中，发现了一个问题，就是 ollama 运行的模型服务的上下文长度限制为 4096，而日常使"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>主页</li></a><a href=/projects.html><li class=mobile-menu-item>项目</li></a><a href=/post.html><li class=mobile-menu-item>归档</li></a><a href=/tags.html><li class=mobile-menu-item>标签</li></a><a href=/categories.html><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>主页</a></li><li class=menu-item><a class=menu-item-link href=/projects.html>项目</a></li><li class=menu-item><a class=menu-item-link href=/post.html>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags.html>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories.html>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>如何设置 ollama 上下文长度</h1><div class=post-meta><span class=post-time>2025-08-15</span>
+<span class=more-meta>约 2027 字</span>
+<span class=more-meta>预计阅读 5 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#省流版结论>省流版结论</a></li><li><a href=#方法探索>方法探索</a><ul><li><a href=#方法一>方法一</a></li><li><a href=#方法二>方法二</a></li></ul></li><li><a href=#总结>总结</a></li></ul></li></ul></nav></div></div><div class=post-content><p>  为了节约成本，我尝试将本地 mbp m4 部署的模型投入生产环节。在部署过程中，发现了一个问题，就是 ollama 运行的模型服务的上下文长度限制为 4096，而日常使用的 MaaS 服务，通常提供 128k 的上下文长度，在 Cline 里面配置使用会报错。经过一番摸索，终于找到了设置 ollama 模型服务上下文长度的解决方案，记录在本文。
+<img src=../../images/2025/ollama-model-context-4k.png alt=ollama-qwen3-coder-ctx></p><h2 id=省流版结论>省流版结论</h2><p>  在 ollama 启动的环境配置中，设置 OLLAMA_CONTEXT_LENGTH=128000，即可修改上下文长度为 128k。</p><p>  128k 的上下文长度，启动后会消耗 34GB 的内存，我的 mpb m4 只有 48GB 内存，所以，我把上下文长度设置为 64k，启动后，消耗 26GB 内存，勉强可以接受。</p><p>  我是使用 brew 安装的 ollama，这里有个小坑，不能直接修改 <code>~/Library/LaunchAgents/homebrew.mxcl.ollama.plist</code>。否则 <code>brew services restart ollama</code> 后会覆盖配置，无法生效。正确的做法是，修改 <code>/opt/homebrew/opt/ollama/homebrew.mxcl.ollama.plist</code>，然后 <code>brew services restart ollama</code> 即可。添加的内容如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl>	<span class=nt>&lt;key&gt;</span>EnvironmentVariables<span class=nt>&lt;/key&gt;</span>
+</span></span><span class=line><span class=cl>	<span class=nt>&lt;dict&gt;</span>
+</span></span><span class=line><span class=cl>		<span class=nt>&lt;key&gt;</span>OLLAMA_FLASH_ATTENTION<span class=nt>&lt;/key&gt;</span>
+</span></span><span class=line><span class=cl>		<span class=nt>&lt;string&gt;</span>1<span class=nt>&lt;/string&gt;</span>
+</span></span><span class=line><span class=cl>		<span class=nt>&lt;key&gt;</span>OLLAMA_KV_CACHE_TYPE<span class=nt>&lt;/key&gt;</span>
+</span></span><span class=line><span class=cl>		<span class=nt>&lt;string&gt;</span>q8_0<span class=nt>&lt;/string&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=nt>&lt;key&gt;</span>OLLAMA_HOST<span class=nt>&lt;/key&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=nt>&lt;string&gt;</span>0.0.0.0:18443<span class=nt>&lt;/string&gt;</span>
+</span></span><span class=line><span class=cl>	<span class=nt>&lt;/dict&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=方法探索>方法探索</h2><p>  我本地和在 L20 节点上运行部署的 ollama 是 0.11.4 版本，直接查看 ollama run 的帮助信息，并没有找到设置上下文长度的参数。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ ollama -v
+</span></span><span class=line><span class=cl>ollama version is 0.11.4
+</span></span><span class=line><span class=cl>$ ollama run --help
+</span></span><span class=line><span class=cl>Run a model
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Usage:
+</span></span><span class=line><span class=cl>  ollama run MODEL <span class=o>[</span>PROMPT<span class=o>]</span> <span class=o>[</span>flags<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Flags:
+</span></span><span class=line><span class=cl>      --format string           Response format <span class=o>(</span>e.g. json<span class=o>)</span>
+</span></span><span class=line><span class=cl>  -h, --help                    <span class=nb>help</span> <span class=k>for</span> run
+</span></span><span class=line><span class=cl>      --hidethinking            Hide thinking output <span class=o>(</span><span class=k>if</span> provided<span class=o>)</span>
+</span></span><span class=line><span class=cl>      --insecure                Use an insecure registry
+</span></span><span class=line><span class=cl>      --keepalive string        Duration to keep a model loaded <span class=o>(</span>e.g. 5m<span class=o>)</span>
+</span></span><span class=line><span class=cl>      --nowordwrap              Don<span class=err>&#39;</span>t wrap words to the next line automatically
+</span></span><span class=line><span class=cl>      --think string<span class=o>[=</span><span class=s2>&#34;true&#34;</span><span class=o>]</span>   Enable thinking mode: true/false or high/medium/low <span class=k>for</span> supported models
+</span></span><span class=line><span class=cl>      --verbose                 Show timings <span class=k>for</span> response
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Environment Variables:
+</span></span><span class=line><span class=cl>      OLLAMA_HOST                IP Address <span class=k>for</span> the ollama server <span class=o>(</span>default 127.0.0.1:11434<span class=o>)</span>
+</span></span><span class=line><span class=cl>      OLLAMA_NOHISTORY           Do not preserve readline <span class=nb>history</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=方法一>方法一</h3><p>  在 ollama 的 github 仓库中，有一个 <a href=https://github.com/ollama/ollama/issues/2714>issue</a> 讨论了上下文长度的问题：可以通过 <code>/set parameter num_ctx 128000</code> 来设置上下文长度。我尝试了一下，发现可以设置，但是设置后，在终端通过 <code>ollama ps</code> 查看，显示的上下文长度还是 4096。
+  如果在 ollama 的 shell 中设置无效，那么我们通过 Modelfile 的方式，来设置上下文长度，是否会起作用呢？
+  首先，创建一个 Modelfile 文件，命令如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; Modelfile <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>FROM qwen3-coder:30b
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>PARAMETER num_ctx 64000
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>  然后，运行如下命令，构建并运行模型：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ ollama create -f Modelfile kofj/qwen3-coder:30b-64k-ctx
+</span></span><span class=line><span class=cl>$ ollama run kofj/qwen3-coder:30b-64k-ctx
+</span></span></code></pre></td></tr></table></div></div><p>  运行后，查看 ollama ps，显示的上下文长度为 64000，说明通过 Modelfile 设置上下文长度是有效的。
+<img src=../../images/2025/ollama-model-context-64k.png alt=build-model-and-run>
+  但是，通过 Modelfile 设置上下文长度，需要重新构建模型，再重新运行，比较麻烦。有没有更简单的方法呢？</p><h3 id=方法二>方法二</h3><p>  问题解决了，但是方法实在有点蠢。要想知道有没有更简单的方法，我们先看看 ollama 的源码。对于模式的开源代码，通过大模型来研读，速度是相当快的。特别是我们只想构建对项目的整体认知，或者某个功能模块的实现，通过大模型，可以快速定位到关键代码，然后通过代码注释，快速了解代码的实现逻辑。
+  我使用 CodeBudy 和 Kimi-K2 大模型，对 ollama 的源码进行研读，很快定位到了设置上下文长度的代码。
+  我的提示词是：<code>现在让我查找Ollama项目中如何使用envconfig.ContextLength()这个默认值，特别是在模型加载和Runner参数设置的地方。</code>，大模型给出的结论如下。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>通过分析Ollama项目的源代码，我已经找到了当Modelfile中没有设置PARAMETER num_ctx时的默认上下文长度。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>根据代码分析：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>1.</span> 默认上下文长度为4096 tokens
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>2.</span> 这个默认值在以下位置定义：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>在envconfig/config.go文件中，ContextLength = Uint(&#34;OLLAMA_CONTEXT_LENGTH&#34;, 4096)设置了环境变量的默认值为4096
+</span></span><span class=line><span class=cl>在api/types.go文件的DefaultOptions()函数中，Runner.NumCtx被设置为int(envconfig.ContextLength())，即4096
+</span></span><span class=line><span class=cl><span class=k>3.</span> 优先级机制：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>如果Modelfile中设置了PARAMETER num_ctx <span class=p>&lt;</span><span class=nt>value</span><span class=p>&gt;</span>，则使用该值
+</span></span><span class=line><span class=cl>如果没有设置，则使用环境变量OLLAMA_CONTEXT_LENGTH的值（默认为4096）
+</span></span><span class=line><span class=cl>如果环境变量也没有设置，则最终使用4096作为默认值
+</span></span><span class=line><span class=cl><span class=k>4.</span> 相关文档确认：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docs/modelfile.md文档中明确说明：&#34;num_ctx | Sets the size of the context window... (Default: 4096)&#34;
+</span></span><span class=line><span class=cl>docs/faq.md文档也提到可以通过OLLAMA_CONTEXT_LENGTH环境变量来覆盖这个默认值
+</span></span><span class=line><span class=cl>因此，当Modelfile中没有设置PARAMETER num_ctx时，Ollama使用的默认上下文长度是4096 tokens。
+</span></span></code></pre></td></tr></table></div></div><p>  根据给出的信息后验，我实际检查涉及的代码 @<a href=https://github.com/ollama/ollama/blob/v0.11.4/envconfig/config.go#L184-L185>envconfig/config.go</a> 和 @<a href=https://github.com/ollama/ollama/blob/v0.11.4/api/types.go#L721-L723>api/types.go</a> ，发现确实如此。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=err>#</span> <span class=nx>envconfig</span><span class=o>/</span><span class=nx>config</span><span class=p>.</span><span class=k>go</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// ContextLength sets the default context length
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>ContextLength</span> <span class=p>=</span> <span class=nf>Uint</span><span class=p>(</span><span class=s>&#34;OLLAMA_CONTEXT_LENGTH&#34;</span><span class=p>,</span> <span class=mi>4096</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=err>#</span> <span class=nx>api</span><span class=o>/</span><span class=nx>types</span><span class=p>.</span><span class=k>go</span>
+</span></span><span class=line><span class=cl>		<span class=nx>Runner</span><span class=p>:</span> <span class=nx>Runner</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=c1>// options set when the model is loaded
+</span></span></span><span class=line><span class=cl><span class=c1></span>			<span class=nx>NumCtx</span><span class=p>:</span>    <span class=nb>int</span><span class=p>(</span><span class=nx>envconfig</span><span class=p>.</span><span class=nf>ContextLength</span><span class=p>()),</span>
+</span></span><span class=line><span class=cl>			<span class=nx>NumBatch</span><span class=p>:</span>  <span class=mi>512</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>			<span class=nx>NumGPU</span><span class=p>:</span>    <span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=c1>// -1 here indicates that NumGPU should be set dynamically
+</span></span></span><span class=line><span class=cl><span class=c1></span>			<span class=nx>NumThread</span><span class=p>:</span> <span class=mi>0</span><span class=p>,</span>  <span class=c1>// let the runtime decide
+</span></span></span><span class=line><span class=cl><span class=c1></span>			<span class=nx>UseMMap</span><span class=p>:</span>   <span class=kc>nil</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=p>},</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>  根据模型分析和我们后验得到的结论，我们可以通过设置环境变量 OLLAMA_CONTEXT_LENGTH 来设置上下文长度。于是，我尝试在 ollama shell 中设置环境变量，命令如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>(</span>base<span class=o>)</span> root:~ <span class=c1># export OLLAMA_CONTEXT_LENGTH=128000</span>
+</span></span><span class=line><span class=cl><span class=o>(</span>base<span class=o>)</span> root:~ <span class=c1># export OLLAMA_CONTEXT_LENGTH=64000</span>
+</span></span><span class=line><span class=cl><span class=o>(</span>base<span class=o>)</span> root:~ <span class=c1># nohup ollama start &amp;</span>
+</span></span></code></pre></td></tr></table></div></div><p>  运行后，查看 ollama ps，显示的上下文长度为 64000，说明通过设置环境变量 OLLAMA_CONTEXT_LENGTH 来设置上下文长度是有效的。
+<img src=../../images/2025/ollama-set-parameter.png alt=set-env-context-length></p><h2 id=总结>总结</h2><p>  至此，我们解决了 ollama 本地部署模型上下文长度的问题。不过，这个环境变量设置是全局的，如果需要针对某个模型设置上下文长度，还需要进一步研究。</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2025-08-15</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><nav class=post-nav><a class=next href=/post/2024-04/record-an-metrics-abnormality-check.html><span class="next-text nav-default">记录一次指标异常排查</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a>
+<a href=https://blog.kofj.net/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2025<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams"}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
