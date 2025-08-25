@@ -1,0 +1,173 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>msb 沙箱云上实测 - 慕薇</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="疯魔慕薇"><meta name=description content="结论 msb 项目在腾讯云上无法正常运行。因为 msb 需要嵌套虚拟化，但是腾讯云上不支持嵌套虚拟化。 msb 介绍 msb 是一个轻量级的沙箱运行时，支持嵌套虚拟化，可以"><meta name=keywords content><meta name=generator content="Hugo 0.103.0 with theme even"><link rel=canonical href=https://blog.kofj.net/post/2025-07/test-msb-on-cloud.html><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="msb 沙箱云上实测"><meta property="og:description" content="结论 msb 项目在腾讯云上无法正常运行。因为 msb 需要嵌套虚拟化，但是腾讯云上不支持嵌套虚拟化。 msb 介绍 msb 是一个轻量级的沙箱运行时，支持嵌套虚拟化，可以"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.kofj.net/post/2025-07/test-msb-on-cloud.html"><meta property="article:section" content="post"><meta property="article:published_time" content="2025-07-24T23:32:20+08:00"><meta property="article:modified_time" content="2025-07-24T23:32:20+08:00"><meta itemprop=name content="msb 沙箱云上实测"><meta itemprop=description content="结论 msb 项目在腾讯云上无法正常运行。因为 msb 需要嵌套虚拟化，但是腾讯云上不支持嵌套虚拟化。 msb 介绍 msb 是一个轻量级的沙箱运行时，支持嵌套虚拟化，可以"><meta itemprop=datePublished content="2025-07-24T23:32:20+08:00"><meta itemprop=dateModified content="2025-07-24T23:32:20+08:00"><meta itemprop=wordCount content="731"><meta itemprop=keywords content="msb,tencent,qcloud,sandbox,"><meta name=twitter:card content="summary"><meta name=twitter:title content="msb 沙箱云上实测"><meta name=twitter:description content="结论 msb 项目在腾讯云上无法正常运行。因为 msb 需要嵌套虚拟化，但是腾讯云上不支持嵌套虚拟化。 msb 介绍 msb 是一个轻量级的沙箱运行时，支持嵌套虚拟化，可以"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>慕薇</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>主页</li></a><a href=/projects.html><li class=mobile-menu-item>项目</li></a><a href=/post.html><li class=mobile-menu-item>归档</li></a><a href=/tags.html><li class=mobile-menu-item>标签</li></a><a href=/categories.html><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>慕薇</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>主页</a></li><li class=menu-item><a class=menu-item-link href=/projects.html>项目</a></li><li class=menu-item><a class=menu-item-link href=/post.html>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags.html>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories.html>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>msb 沙箱云上实测</h1><div class=post-meta><span class=post-time>2025-07-24</span><div class=post-category><a href=/categories/%E6%9C%AF%E4%B8%9A/>术业</a></div><span class=more-meta>约 731 字</span>
+<span class=more-meta>预计阅读 2 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#结论>结论</a></li><li><a href=#msb-介绍>msb 介绍</a></li><li><a href=#腾讯云>腾讯云</a><ul><li><a href=#tencentos-server-release-33-final>TencentOS Server release 3.3 (Final)</a></li><li><a href=#ubuntu-2204-jammy-jellyfish>Ubuntu 22.04 (Jammy Jellyfish)</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=结论>结论</h2><p>  msb 项目在腾讯云上无法正常运行。因为 msb 需要嵌套虚拟化，但是腾讯云上不支持嵌套虚拟化。</p><h2 id=msb-介绍>msb 介绍</h2><p>  msb 是一个轻量级的沙箱运行时，支持嵌套虚拟化，可以运行在任何支持嵌套虚拟化的平台上。
+项目地址：https://github.com/microsandbox/microsandbox</p><h2 id=腾讯云>腾讯云</h2><h3 id=tencentos-server-release-33-final>TencentOS Server release 3.3 (Final)</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># msb</span>
+</span></span><span class=line><span class=cl>msb: error <span class=k>while</span> loading shared libraries: libssl.so.3: cannot open shared object file: No such file or directory
+</span></span></code></pre></td></tr></table></div></div><p>缺少 libssl3 库，<code>dnf install openssl3</code> 解决。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=o>[</span>root@VM-220-7-tencentos ~<span class=o>]</span><span class=c1># msb</span>
+</span></span><span class=line><span class=cl>msb: /lib64/libm.so.6: version <span class=sb>`</span>GLIBC_2.29<span class=s1>&#39; not found (required by msb)
+</span></span></span><span class=line><span class=cl><span class=s1>msb: /lib64/libc.so.6: version `GLIBC_2.32&#39;</span> not found <span class=o>(</span>required by msb<span class=o>)</span>
+</span></span><span class=line><span class=cl>msb: /lib64/libc.so.6: version <span class=sb>`</span>GLIBC_2.29<span class=s1>&#39; not found (required by msb)
+</span></span></span><span class=line><span class=cl><span class=s1>msb: /lib64/libc.so.6: version `GLIBC_2.33&#39;</span> not found <span class=o>(</span>required by msb<span class=o>)</span>
+</span></span><span class=line><span class=cl>msb: /lib64/libc.so.6: version <span class=sb>`</span>GLIBC_2.34<span class=s1>&#39; not found (required by msb)
+</span></span></span><span class=line><span class=cl><span class=s1>msb: /lib64/libc.so.6: version `GLIBC_2.34&#39;</span> not found <span class=o>(</span>required by /root/.local/lib/libkrun.so.1<span class=o>)</span>
+</span></span><span class=line><span class=cl>msb: /lib64/libc.so.6: version <span class=sb>`</span>GLIBC_2.33<span class=err>&#39;</span> not found <span class=o>(</span>required by /root/.local/lib/libkrun.so.1<span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>root@VM-220-7-tencentos ~<span class=o>]</span><span class=c1># cat /etc/redhat-release </span>
+</span></span><span class=line><span class=cl>TencentOS Server release 3.3 <span class=o>(</span>Final<span class=o>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>国内腾讯云上，msb 无法拉取镜像，也不能使用加速源，使用东京实例测试。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=o>[</span>root@VM-220-29-tencentos ~<span class=o>]</span><span class=c1># msb pull alpine</span>
+</span></span><span class=line><span class=cl>Error: http middleware error: Request error: error sending request <span class=k>for</span> url <span class=o>(</span>https://auth.docker.io/token?service<span class=o>=</span>registry.docker.io<span class=p>&amp;</span><span class=nv>scope</span><span class=o>=</span>repository%3Alibrary%2Falpine%3Apull<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Caused by:
+</span></span><span class=line><span class=cl>    1: Request error: error sending request <span class=k>for</span> url <span class=o>(</span>https://auth.docker.io/token?service<span class=o>=</span>registry.docker.io<span class=p>&amp;</span><span class=nv>scope</span><span class=o>=</span>repository%3Alibrary%2Falpine%3Apull<span class=o>)</span>
+</span></span><span class=line><span class=cl>    2: error sending request <span class=k>for</span> url <span class=o>(</span>https://auth.docker.io/token?service<span class=o>=</span>registry.docker.io<span class=p>&amp;</span><span class=nv>scope</span><span class=o>=</span>repository%3Alibrary%2Falpine%3Apull<span class=o>)</span>
+</span></span><span class=line><span class=cl>    3: client error <span class=o>(</span>Connect<span class=o>)</span>
+</span></span><span class=line><span class=cl>    4: tcp connect error: Connection timed out <span class=o>(</span>os error 110<span class=o>)</span>
+</span></span><span class=line><span class=cl>    5: Connection timed out <span class=o>(</span>os error 110<span class=o>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=ubuntu-2204-jammy-jellyfish>Ubuntu 22.04 (Jammy Jellyfish)</h3><p>无法嵌套虚拟化，创建 kvm 对象失败。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># msb exe alpine</span>
+</span></span><span class=line><span class=cl>✓ Initialize .menv directory
+</span></span><span class=line><span class=cl>✓ Create default config file
+</span></span><span class=line><span class=cl>thread <span class=s1>&#39;&lt;unnamed&gt;&#39;</span> panicked at src/vmm/src/linux/vstate.rs:417:30:
+</span></span><span class=line><span class=cl>Error creating the Kvm object: Error<span class=o>(</span>2<span class=o>)</span>
+</span></span><span class=line><span class=cl>stack backtrace:
+</span></span><span class=line><span class=cl>   0: rust_begin_unwind
+</span></span><span class=line><span class=cl>   1: core::panicking::panic_fmt
+</span></span><span class=line><span class=cl>   2: core::result::unwrap_failed
+</span></span><span class=line><span class=cl>   3: vmm::linux::vstate::KvmContext::new
+</span></span><span class=line><span class=cl>   4: krun_start_enter
+</span></span><span class=line><span class=cl>   5: microsandbox_core::vm::vm::MicroVm::start
+</span></span><span class=line><span class=cl>   6: msbrun::main::<span class=o>{{</span>closure<span class=o>}}</span>
+</span></span><span class=line><span class=cl>   7: tokio::runtime:🏞:CachedParkThread::block_on
+</span></span><span class=line><span class=cl>   8: tokio::runtime::context::runtime::enter_runtime
+</span></span><span class=line><span class=cl>   9: tokio::runtime::runtime::Runtime::block_on
+</span></span><span class=line><span class=cl>  10: msbrun::main
+</span></span><span class=line><span class=cl>note: Some details are omitted, run with <span class=sb>`</span><span class=nv>RUST_BACKTRACE</span><span class=o>=</span>full<span class=sb>`</span> <span class=k>for</span> a verbose backtrace.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>thread <span class=s1>&#39;&lt;unnamed&gt;&#39;</span> panicked at library/core/src/panicking.rs:218:5:
+</span></span><span class=line><span class=cl>panic in a <span class=k>function</span> that cannot unwind
+</span></span><span class=line><span class=cl>stack backtrace:
+</span></span><span class=line><span class=cl>   0:     0x7fd4c0d217cc - &lt;std::sys::backtrace::BacktraceLock::print::DisplayBacktrace as core::fmt::Display&gt;::fmt::h6d42cc84fc840290
+</span></span><span class=line><span class=cl>   1:     0x7fd4c0bee0b3 - core::fmt::write::h5af61a909e3ec64d
+</span></span><span class=line><span class=cl>   2:     0x7fd4c0d20d52 - std::io::Write::write_fmt::h5a7b54aa6e4a315d
+</span></span><span class=line><span class=cl>   3:     0x7fd4c0d214c3 - std::sys::backtrace::BacktraceLock::print::h555579e7396c26ac
+</span></span><span class=line><span class=cl>   4:     0x7fd4c0d20b27 - std::panicking::rust_panic_with_hook::h541791bcc774ef34
+</span></span><span class=line><span class=cl>   5:     0x7fd4c0d4ef55 - std::panicking::begin_panic_handler::<span class=o>{{</span>closure<span class=o>}}</span>::h6479a2f0137c7d19
+</span></span><span class=line><span class=cl>   6:     0x7fd4c0d4eee9 - std::sys::backtrace::__rust_end_short_backtrace::ha04e7c0fc61ded91
+</span></span><span class=line><span class=cl>   7:     0x7fd4c0d4f4cc - rust_begin_unwind
+</span></span><span class=line><span class=cl>   8:     0x7fd4c0b99cac - core::panicking::panic_nounwind_fmt::h6a24774852878975
+</span></span><span class=line><span class=cl>   9:     0x7fd4c0b99d0c - core::panicking::panic_nounwind::hbbbf5b15de703440
+</span></span><span class=line><span class=cl>  10:     0x7fd4c0b99cbc - core::panicking::panic_cannot_unwind::h8c0d27499c4c90fa
+</span></span><span class=line><span class=cl>  11:     0x7fd4c0bb5a4e - krun_start_enter
+</span></span><span class=line><span class=cl>  12:     0x5571f4b848bd - microsandbox_core::vm::vm::MicroVm::start::h5aba1754a3f4c051
+</span></span><span class=line><span class=cl>  13:     0x5571f4a99bd7 - msbrun::main::<span class=o>{{</span>closure<span class=o>}}</span>::h285e41ad8a1d686e
+</span></span><span class=line><span class=cl>  14:     0x5571f4a89288 - tokio::runtime:🏞:CachedParkThread::block_on::hdae61bb89cbac529
+</span></span><span class=line><span class=cl>  15:     0x5571f4ae712c - tokio::runtime::context::runtime::enter_runtime::h74d6b37c42e9139f
+</span></span><span class=line><span class=cl>  16:     0x5571f4af6b5c - tokio::runtime::runtime::Runtime::block_on::h1078d612bdfd9823
+</span></span><span class=line><span class=cl>  17:     0x5571f4aed179 - msbrun::main::h826b12470ada077f
+</span></span><span class=line><span class=cl>  18:     0x5571f4afc7f3 - std::sys::backtrace::__rust_begin_short_backtrace::he0cc31bfd45d0267
+</span></span><span class=line><span class=cl>  19:     0x5571f4ade19d - std::rt::lang_start::<span class=o>{{</span>closure<span class=o>}}</span>::h620ace340a1af2a9
+</span></span><span class=line><span class=cl>  20:     0x5571f4f5e4c0 - std::rt::lang_start_internal::h15895544e2012228
+</span></span><span class=line><span class=cl>  21:     0x5571f4aed255 - main
+</span></span><span class=line><span class=cl>  22:     0x7fd4c037dd90 - &lt;unknown&gt;
+</span></span><span class=line><span class=cl>  23:     0x7fd4c037de40 - __libc_start_main
+</span></span><span class=line><span class=cl>  24:     0x5571f4a60a61 - _start
+</span></span><span class=line><span class=cl>  25:                0x0 - &lt;unknown&gt;
+</span></span><span class=line><span class=cl>thread caused non-unwinding panic. aborting.
+</span></span><span class=line><span class=cl>2025-07-24T22:19:03.428667Z ERROR microsandbox_utils::runtime::supervisor: child process <span class=m>3794119</span> exited with status: ExitStatus<span class=o>(</span>unix_wait_status<span class=o>(</span>134<span class=o>))</span>
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>疯魔慕薇</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2025-07-24</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/msb.html>msb</a>
+<a href=/tags/tencent.html>tencent</a>
+<a href=/tags/qcloud.html>qcloud</a>
+<a href=/tags/sandbox.html>sandbox</a></div><nav class=post-nav><a class=prev href=/post/2025-08/ollama-qwen3-coder-ctx.html><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">如何设置 ollama 上下文长度</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/2025-06/qwen3-fine-tuning-note.html><span class="next-text nav-default">Qwen3 微调学习笔记</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://github.com/kofj class="iconfont icon-github" title=github></a>
+<a href=https://blog.kofj.net/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2015 -
+2025<span class=heart><i class="iconfont icon-heart"></i></span><span>疯魔慕薇</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams"}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
